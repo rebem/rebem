@@ -1,0 +1,40 @@
+{
+  "name": "yummies",
+  "version": "0.1.0",
+  "description": "React <3 BEMJSON",
+  "keywords": [ "yummies", "react", "bem", "bemjson" ],
+  "homepage": "https://github.com/yummies/yummies",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yummies/yummies.git"
+  },
+  "author": {
+    "name": "Kir Belevich",
+    "email": "kir@soulshine.in",
+    "url": "https://github.com/deepsweet"
+  },
+  "main": "build/yummies.js",
+  "peerDependencies": {
+    "react": "^0.12.2 || >=0.13.0-beta.1",
+    "babel": "^4.4.6",
+    "babel-runtime": "^4.4.6",
+    "lodash.isplainobject": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^0.15.0",
+    "jscs": "^1.11.3"
+  },
+  "scripts": {
+    "eslint": "eslint lib/",
+    "jscs": "jscs lib/",
+    "lint": "npm run jscs",
+    "test": "npm run lint",
+    "build": "babel lib/ -d build/ -i runtime",
+    "dev": "babel lib/ -d build/ -i runtime -w",
+    "postinstall": "npm run build"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "MIT"
+}
