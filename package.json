@@ -14,11 +14,14 @@
     "url": "https://github.com/deepsweet"
   },
   "main": "build/yummies.js",
-  "peerDependencies": {
-    "react": "^0.12.2 || >=0.13.0-beta.1",
+  "dependencies": {
+    "react": ">=0.13.0-beta.1",
     "babel": "^4.4.6",
     "babel-runtime": "^4.4.6",
     "lodash.isplainobject": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^0.12.2 || >=0.13.0-beta.1"
   },
   "devDependencies": {
     "eslint": "^0.15.0",
