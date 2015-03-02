@@ -35,7 +35,7 @@
     "test": "npm run lint",
     "build": "babel lib/ -d build/ -i runtime",
     "dev": "babel lib/ -d build/ -i runtime -w",
-    "postinstall": "npm run build"
+    "prepublish": "npm run build"
   },
   "engines": {
     "node": ">=0.10.0"
