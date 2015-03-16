@@ -16,8 +16,6 @@
   "main": "build/yummies.js",
   "dependencies": {
     "react": ">=0.13.0-beta.1",
-    "babel": "4.x.x",
-    "babel-runtime": "4.x.x",
     "lodash.isplainobject": "3.x.x",
     "lodash.isfunction": "3.x.x"
   },
@@ -26,7 +24,9 @@
   },
   "devDependencies": {
     "eslint": "0.x.x",
-    "jscs": "1.x.x"
+    "jscs": "1.x.x",
+    "babel": "4.x.x",
+    "babel-runtime": "4.x.x"
   },
   "scripts": {
     "eslint": "eslint lib/",
