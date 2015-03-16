@@ -23,18 +23,25 @@
     "react": "^0.12.2 || >=0.13.0-beta.1"
   },
   "devDependencies": {
+    "husky": "0.7.x",
+    "mocha": "2.2.x",
+    "should": "5.2.x",
+    "isparta": "2.2.x",
     "eslint": "0.x.x",
-    "jscs": "1.x.x",
+    "babel-eslint": "2.0.x",
     "babel": "4.x.x",
     "babel-runtime": "4.x.x"
   },
   "scripts": {
-    "eslint": "eslint lib/",
-    "jscs": "jscs lib/",
-    "lint": "npm run jscs",
-    "test": "npm run lint",
-    "build": "babel lib/ -d build/ -i runtime",
+    "lint": "eslint lib/",
+    "unit": "mocha --compilers js:babel/register",
+    "coverage": "rm -rf coverage/ && babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha",
+    "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls",
+    "test": "npm run lint && npm run unit",
+    "travis": "npm run test && npm run coveralls",
+    "build": "rm -rf build/ && babel lib/ -d build/ -i runtime",
     "dev": "babel lib/ -d build/ -i runtime -w",
+    "precommit": "npm run test",
     "prepublish": "npm run build"
   },
   "engines": {
