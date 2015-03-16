@@ -36,7 +36,7 @@
   "scripts": {
     "lint": "eslint lib/",
     "unit": "mocha --compilers js:babel/register",
-    "coverage": "rm -rf coverage/ && babel-node node_modules/.bin/isparta cover --report lcovonly node_modules/.bin/_mocha",
+    "coverage": "rm -rf coverage/ && babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha",
     "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls",
     "test": "npm run lint && npm run unit",
     "travis": "npm run test && npm run coveralls",
