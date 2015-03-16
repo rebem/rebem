@@ -1,10 +1,10 @@
 lib/
+coverage/
+tmp/
 .gitignore
 .editorconfig
 .eslintrc
-.jscsrc
 .travis.yml
-tmp/
 *.sublime-*
 *.log
 .DS_Store
