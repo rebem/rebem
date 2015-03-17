@@ -8,11 +8,18 @@
     "type": "git",
     "url": "git://github.com/yummies/yummies.git"
   },
-  "author": {
-    "name": "Kir Belevich",
-    "email": "kir@soulshine.in",
-    "url": "https://github.com/deepsweet"
-  },
+  "contributors": [
+    {
+      "name": "Kir Belevich",
+      "email": "kir@soulshine.in",
+      "url": "https://github.com/deepsweet"
+    },
+    {
+      "name": "Denis Koltsov",
+      "email": "iam@mistadikay.com",
+      "url": "https://github.com/mistadikay"
+    }
+  ],
   "main": "build/yummies.js",
   "dependencies": {
     "react": ">=0.13.0-beta.1",
