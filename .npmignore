@@ -5,6 +5,7 @@ tmp/
 .editorconfig
 .eslintrc
 .travis.yml
+.istanbul.yml
 *.sublime-*
 *.log
 .DS_Store
