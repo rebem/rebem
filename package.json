@@ -22,9 +22,7 @@
   ],
   "main": "build/yummies.js",
   "dependencies": {
-    "react": ">=0.13.0-beta.1",
-    "lodash.isplainobject": "3.x.x",
-    "lodash.isfunction": "3.x.x"
+    "react": ">=0.13.0-beta.1"
   },
   "peerDependencies": {
     "react": "^0.12.2 || >=0.13.0-beta.1"
@@ -46,9 +44,9 @@
     "coverage": "rm -rf coverage/ && babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha",
     "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls",
     "test": "npm run lint && npm run unit",
-    "travis": "npm run test && npm run coveralls",
-    "build": "rm -rf build/ && babel lib/ -d build/ -i runtime",
-    "dev": "babel lib/ -d build/ -i runtime -w",
+    "travis": "npm run test",
+    "build": "rm -rf build/ && babel lib/ -d build/",
+    "dev": "babel lib/ -d build/ -w",
     "precommit": "npm run test",
     "prepublish": "npm run build"
   },
