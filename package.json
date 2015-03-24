@@ -43,7 +43,7 @@
     "unit": "mocha --compilers js:babel/register",
     "coverage": "rm -rf coverage/ && babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha",
     "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls",
-    "test": "npm run lint && npm run unit",
+    "test": "npm run lint",
     "travis": "npm run test",
     "build": "rm -rf build/ && babel lib/ -d build/",
     "dev": "babel lib/ -d build/ -w",
