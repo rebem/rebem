@@ -1,11 +1,13 @@
 lib/
 coverage/
+test/
 tmp/
 .gitignore
 .editorconfig
 .eslintrc
 .travis.yml
 .istanbul.yml
+.babelrc
 *.sublime-*
 *.log
 .DS_Store
