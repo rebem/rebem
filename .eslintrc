@@ -82,7 +82,7 @@
     "wrap-iife": 2,
     "yoda": 2,
 
-    "global-strict": [2, "always"],
+    "global-strict": [0, "always"],
 
     "no-catch-shadow": 2,
     "no-delete-var": 2,
