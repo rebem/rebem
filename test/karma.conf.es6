@@ -45,7 +45,7 @@ export default function(config) {
         coverageReporter: {
             dir: '../coverage',
             reporters: [
-                { type: 'html' },
+                { type: 'text' },
                 { type: 'lcovonly', subdir: '.' }
             ]
         },
