@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Merge BEMJSON-object with tag/mods/mix props
  * delivered from component instance creation.

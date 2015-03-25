@@ -22,33 +22,54 @@
   ],
   "main": "build/yummies.js",
   "dependencies": {
-    "react": ">=0.13.0-beta.1"
+    "react": ">=0.13.0-beta.1",
+    "lodash.isplainobject": "3.0.x"
   },
   "peerDependencies": {
     "react": "^0.12.2 || >=0.13.0-beta.1"
   },
   "devDependencies": {
     "husky": "0.7.x",
+    "webpack": "1.7.x",
     "mocha": "2.2.x",
-    "should": "5.2.x",
+    "chai": "2.1.x",
+    "karma": "0.12.x",
+    "karma-webpack": "1.5.x",
+    "karma-cli": "0.0.x",
+    "karma-mocha": "0.1.x",
+    "karma-coverage": "0.2.x",
+    "karma-mocha-reporter": "1.0.x",
+    "karma-phantomjs-launcher": "0.1.x",
+    "karma-phantomjs-shim": "1.0.x",
     "isparta": "2.2.x",
+    "isparta-loader": "0.1.x",
     "coveralls": "2.11.x",
     "eslint": "0.x.x",
     "babel-eslint": "2.0.x",
     "babel": "4.x.x",
-    "babel-runtime": "4.x.x"
+    "babel-core": "4.7.x",
+    "babel-runtime": "4.x.x",
+    "babel-loader": "4.2.x"
   },
   "scripts": {
-    "lint": "eslint lib/",
-    "unit": "mocha --compilers js:babel/register",
-    "coverage": "rm -rf coverage/ && babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha",
-    "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls",
-    "test": "npm run lint",
-    "travis": "npm run test",
-    "build": "rm -rf build/ && babel lib/ -d build/",
-    "dev": "babel lib/ -d build/ -w",
-    "precommit": "npm run test",
-    "prepublish": "npm run build"
+    "clean-build": "rm -rf /build",
+    "clean-test": "rm -rf /coverage",
+
+    "build": "npm run clean-build && babel lib/ -d build/",
+    "dev": "npm run build -- -w",
+    "lint": "eslint --ext .es6 lib/ test/",
+
+    "karma": "babel-node ./node_modules/.bin/karma",
+    "test-node": "mocha --compilers es6:babel/register test/lib/",
+    "test-browser": "npm run clean-test && npm run karma start test/karma.conf.es6",
+    "test-browser-dev": "npm run test-browser -- -- --no-single-run --auto-watch",
+    "coveralls": "cat coverage/lcov.info | coveralls",
+
+    "precommit": "npm run lint",
+    "prepush": "npm run test-node && npm run test-browser",
+    "prepublish": "npm run build",
+    "test": "npm run lint && npm run test-node && npm run test-browser",
+    "travis": "npm run test && npm run coveralls"
   },
   "engines": {
     "node": ">=0.10.0"

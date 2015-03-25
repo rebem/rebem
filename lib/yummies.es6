@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import ReactElement from 'react/lib/ReactElement';
 import buildClassName from './buildClassName';
