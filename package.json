@@ -39,8 +39,9 @@
     "karma-mocha": "0.1.x",
     "karma-coverage": "0.2.x",
     "karma-mocha-reporter": "1.0.x",
-    "karma-phantomjs-launcher": "0.1.x",
-    "karma-phantomjs-shim": "1.0.x",
+    "karma-clear-screen-reporter": "0.0.x",
+    "karma-chrome-launcher": "0.1.x",
+    "karma-firefox-launcher": "0.1.x",
     "isparta": "2.2.x",
     "isparta-loader": "0.1.x",
     "coveralls": "2.11.x",
@@ -52,24 +53,25 @@
     "babel-loader": "4.2.x"
   },
   "scripts": {
-    "clean-build": "rm -rf /build",
-    "clean-test": "rm -rf /coverage",
+    "clean-build": "rm -rf build/",
+    "clean-test": "rm -rf coverage/",
 
     "build": "npm run clean-build && babel lib/ -d build/",
     "dev": "npm run build -- -w",
     "lint": "eslint --ext .es6 lib/ test/",
 
     "karma": "babel-node ./node_modules/.bin/karma",
-    "test-node": "mocha --compilers es6:babel/register test/lib/",
-    "test-browser": "npm run clean-test && npm run karma start test/karma.conf.es6",
-    "test-browser-dev": "npm run test-browser -- -- --no-single-run --auto-watch",
+    "test-node": "mocha -R dot --compilers es6:babel/register test/lib/",
+    "test-browser-dev": "npm run clean-test && npm run karma start test/karma.dev.es6",
+    "test-browser-build": "npm run clean-test && npm run karma start test/karma.build.es6",
+    "test-browser-travis": "npm run clean-test && npm run karma start test/karma.travis.es6",
     "coveralls": "cat coverage/lcov.info | coveralls",
 
     "precommit": "npm run lint",
-    "prepush": "npm run test-node && npm run test-browser",
+    "prepush": "npm run test-node && npm run test-browser-build",
     "prepublish": "npm run build",
-    "test": "npm run lint && npm run test-node && npm run test-browser",
-    "travis": "npm run test && npm run coveralls"
+    "test": "npm run lint && npm run test-node && npm run test-browser-build",
+    "travis": "npm run lint && npm run test-node && npm run test-browser-travis && npm run coveralls"
   },
   "engines": {
     "node": ">=0.10.0"
