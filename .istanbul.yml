@@ -1,6 +1,0 @@
-instrumentation:
-  root: lib
-
-reporting:
-  reports:
-    - lcovonly
