@@ -140,6 +140,42 @@ describe('mergeWithProps', () => {
         );
     });
 
+    it('mix as object to undefined', () => {
+        expect(mergeWithProps(
+            {
+            }, {
+                mix: {
+                    block: 'block2'
+                }
+            }
+        )).to.deep.equal({
+            mix: [
+                {
+                    block: 'block2'
+                }
+            ]
+        });
+    });
+
+    it('mix as array to undefined', () => {
+        expect(mergeWithProps(
+            {
+            }, {
+                mix: [
+                    {
+                        block: 'block2'
+                    }
+                ]
+            }
+        )).to.deep.equal({
+            mix: [
+                {
+                    block: 'block2'
+                }
+            ]
+        });
+    });
+
     it('mix as object to object', () => {
         expect(mergeWithProps(
             {
