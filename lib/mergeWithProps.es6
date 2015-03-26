@@ -1,22 +1,66 @@
+import isPlainObject from 'lodash.isplainobject';
+
+function throwError(msg, json) {
+    throw new Error('Yummies.mergeWithProps: ' + msg + ' @ ' + JSON.stringify(json));
+}
+
 /**
- * Merge BEMJSON-object with tag/mods/mix props
- * delivered from component instance creation.
+ * Merge BEMJSON template with instance props.
  *
  * @param {Object} json
  * @param {Object} props
  * @return {Object}
  */
-export default function(json, props = {}) {
-    json.block = props.block || json.block;
-    json.elem = props.elem || json.elem;
-    json.tag = props.tag || json.tag;
+export default function(json, props) {
+    if (typeof props === 'undefined') {
+        return json;
+    }
 
-    if (props.mods) {
+    // block
+    if ('block' in props) {
+        if (typeof props.block !== 'string') {
+            throwError('block should be string', props);
+        }
+
+        json.block = props.block;
+    }
+
+    // elem
+    if ('elem' in props) {
+        if (typeof props.elem !== 'string') {
+            throwError('elem should be string', props);
+        }
+
+        json.elem = props.elem;
+    }
+
+    // tag
+    if ('tag' in props) {
+        if (typeof props.tag !== 'string') {
+            throwError('tag should be string', props);
+        }
+
+        json.tag = props.tag;
+    }
+
+    // mods
+    if ('mods' in props) {
+        if (!isPlainObject(props.mods)) {
+            throwError('mods should be a plain object', props);
+        }
+
         json.mods = { ...json.mods, ...props.mods };
     }
 
-    if (props.mix) {
-        json.mix = [].concat(json.mix || [], props.mix);
+    // mix
+    if ('mix' in props) {
+        if (!isPlainObject(props.mix) && !Array.isArray(props.mix)) {
+            throwError('mix should be a plain object or array', props);
+        }
+
+        json.mix = json.mix || [];
+        // concat object or array to array
+        json.mix = [].concat(json.mix, props.mix);
     }
 
     return json;
