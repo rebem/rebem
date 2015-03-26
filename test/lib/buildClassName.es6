@@ -11,13 +11,39 @@ describe('buildClassName', () => {
     });
 
     it('no arguments', () => {
-        expect(buildClassName).to.throw('Yummies.buildClassName accepts only plain objects');
+        expect(
+            buildClassName
+        ).to.throw(
+            'only plain objects accepted'
+        );
     });
 
     it('block', () => {
         expect(buildClassName({
             block: 'block'
-        })).to.equal('block');
+        })).to.equal(
+            'block'
+        );
+    });
+
+
+    it('no block', () => {
+        expect(buildClassName.bind(buildClassName, {
+            elem: 'elem',
+            mods: {
+                mod: 'val'
+            }
+        })).to.throw(
+            'you should specify block'
+        );
+    });
+
+    it('invalid block', () => {
+        expect(buildClassName.bind(buildClassName, {
+            block: 123
+        })).to.throw(
+            'block should be string'
+        );
     });
 
     it('block + 1 mod', () => {
@@ -26,7 +52,9 @@ describe('buildClassName', () => {
             mods: {
                 mod: 'val'
             }
-        })).to.equal('block block_mod_val');
+        })).to.equal(
+            'block block_mod_val'
+        );
     });
 
     it('block + false mod', () => {
@@ -35,7 +63,9 @@ describe('buildClassName', () => {
             mods: {
                 mod: false
             }
-        })).to.equal('block');
+        })).to.equal(
+            'block'
+        );
     });
 
     it('block + true mod', () => {
@@ -44,7 +74,9 @@ describe('buildClassName', () => {
             mods: {
                 mod: true
             }
-        })).to.equal('block block_mod');
+        })).to.equal(
+            'block block_mod'
+        );
     });
 
     it('block + few mods', () => {
@@ -54,35 +86,36 @@ describe('buildClassName', () => {
                 mod1: 'val1',
                 mod2: 'val2'
             }
-        })).to.equal('block block_mod1_val1 block_mod2_val2');
-    });
-
-    it('mods w/o block or block + elem', () => {
-        expect(buildClassName.bind(buildClassName, {
-            mods: {
-                mod: 'val'
-            }
-        })).to.throw('Yummies.buildClassName: you should specify block or block + elem along with mods');
+        })).to.equal(
+            'block block_mod1_val1 block_mod2_val2'
+        );
     });
 
     it('block + invalid mods', () => {
         expect(buildClassName.bind(buildClassName, {
             block: 'block',
             mods: 'mod'
-        })).to.throw('Yummies.buildClassName: mods should be a plain object');
-    });
-
-    it('elem w/o block', () => {
-        expect(buildClassName.bind(buildClassName, {
-            elem: 'elem'
-        })).to.throw('Yummies.buildClassName: you should specify block along with elem');
+        })).to.throw(
+            'mods should be a plain object'
+        );
     });
 
     it('block + elem', () => {
         expect(buildClassName({
             block: 'block',
             elem: 'elem'
-        })).to.equal('block__elem');
+        })).to.equal(
+            'block__elem'
+        );
+    });
+
+    it('block + invalid elem', () => {
+        expect(buildClassName.bind(buildClassName, {
+            block: 'block',
+            elem: 123
+        })).to.throw(
+            'elem should be string'
+        );
     });
 
     it('block + elem + 1 mod', () => {
@@ -92,7 +125,9 @@ describe('buildClassName', () => {
             mods: {
                 mod: 'val'
             }
-        })).to.equal('block__elem block__elem_mod_val');
+        })).to.equal(
+            'block__elem block__elem_mod_val'
+        );
     });
 
     it('block + elem + few mods', () => {
@@ -103,22 +138,18 @@ describe('buildClassName', () => {
                 mod1: 'val1',
                 mod2: 'val2'
             }
-        })).to.equal('block__elem block__elem_mod1_val1 block__elem_mod2_val2');
-    });
-
-    it('mix w/o block or block + elem', () => {
-        expect(buildClassName.bind(buildClassName, {
-            mix: {
-                block: 'block'
-            }
-        })).to.throw('Yummies.buildClassName: you should specify block or block + elem along with mix');
+        })).to.equal(
+            'block__elem block__elem_mod1_val1 block__elem_mod2_val2'
+        );
     });
 
     it('block + invalid mix', () => {
         expect(buildClassName.bind(buildClassName, {
             block: 'block',
             mix: 'mix'
-        })).to.throw('Yummies.buildClassName: mix should be plain object or array');
+        })).to.throw(
+            'mix should be a plain object or array'
+        );
     });
 
     it('block + mix as object', () => {
@@ -127,7 +158,9 @@ describe('buildClassName', () => {
             mix: {
                 block: 'block2'
             }
-        })).to.equal('block block2');
+        })).to.equal(
+            'block block2'
+        );
     });
 
     it('block + mix as array', () => {
@@ -137,7 +170,9 @@ describe('buildClassName', () => {
                 { block: 'block2' },
                 { block: 'block3' }
             ]
-        })).to.equal('block block2 block3');
+        })).to.equal(
+            'block block2 block3'
+        );
     });
 
     it('block + complex mix', () => {
@@ -150,6 +185,8 @@ describe('buildClassName', () => {
                     mod: 'val'
                 }
             }
-        })).to.equal('block block2__elem block2__elem_mod_val');
+        })).to.equal(
+            'block block2__elem block2__elem_mod_val'
+        );
     });
 });

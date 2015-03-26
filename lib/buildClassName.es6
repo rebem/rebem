@@ -3,6 +3,10 @@ import isPlainObject from 'lodash.isplainobject';
 const elemDelim = '__';
 const modDelim = '_';
 
+function throwError(msg, json) {
+    throw new Error('Yummies.buildClassName: ' + msg + ' @ ' + JSON.stringify(json));
+}
+
 /**
  * Build a className string from BEMJSON-object.
  *
@@ -10,39 +14,40 @@ const modDelim = '_';
  * @return {String}
  */
 export default function buildClassName(json) {
-    let out = '';
-    let entity;
+    let out;
+    let entity = '';
 
     if (!isPlainObject(json)) {
-        throw new Error('Yummies.buildClassName accepts only plain objects');
+        throwError('only plain objects accepted', json);
     }
 
     // block
-    if (json.block) {
+    if ('block' in json) {
+        if (typeof json.block !== 'string') {
+            throwError('block should be string', json);
+        }
+
         entity = json.block;
+    } else {
+        throwError('you should specify block', json);
     }
 
     // elem
-    if (json.elem) {
-        if (!json.block) {
-            throw new Error('Yummies.buildClassName: you should specify block along with elem');
+    if ('elem' in json) {
+        if (typeof json.elem !== 'string') {
+            throwError('elem should be string', json);
         }
 
         entity += elemDelim + json.elem;
     }
 
-    if (entity) {
-        out = entity;
-    }
+    // get current "state"
+    out = entity;
 
     // mods
-    if (json.mods) {
-        if (!json.block) {
-            throw new Error('Yummies.buildClassName: you should specify block or block + elem along with mods');
-        }
-
+    if ('mods' in json) {
         if (!isPlainObject(json.mods)) {
-            throw new Error('Yummies.buildClassName: mods should be a plain object');
+            throwError('mods should be a plain object', json);
         }
 
         Object.keys(json.mods).forEach(modName => {
@@ -61,15 +66,12 @@ export default function buildClassName(json) {
     }
 
     // mix
-    if (json.mix) {
-        if (!json.block) {
-            throw new Error('Yummies.buildClassName: you should specify block or block + elem along with mix');
-        }
-
+    if ('mix' in json) {
         if (!isPlainObject(json.mix) && !Array.isArray(json.mix)) {
-            throw new Error('Yummies.buildClassName: mix should be plain object or array');
+            throwError('mix should be a plain object or array', json);
         }
 
+        // convert object or array into array
         json.mix = [].concat(json.mix);
 
         json.mix.forEach(mixed => {
