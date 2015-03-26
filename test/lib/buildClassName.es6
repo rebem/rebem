@@ -18,15 +18,6 @@ describe('buildClassName', () => {
         );
     });
 
-    it('block', () => {
-        expect(buildClassName({
-            block: 'block'
-        })).to.equal(
-            'block'
-        );
-    });
-
-
     it('no block', () => {
         expect(buildClassName.bind(buildClassName, {
             elem: 'elem',
@@ -43,6 +34,23 @@ describe('buildClassName', () => {
             block: 123
         })).to.throw(
             'block should be string'
+        );
+    });
+
+    it('block', () => {
+        expect(buildClassName({
+            block: 'block'
+        })).to.equal(
+            'block'
+        );
+    });
+
+    it('block + invalid mods', () => {
+        expect(buildClassName.bind(buildClassName, {
+            block: 'block',
+            mods: 'mod'
+        })).to.throw(
+            'mods should be a plain object'
         );
     });
 
@@ -91,12 +99,12 @@ describe('buildClassName', () => {
         );
     });
 
-    it('block + invalid mods', () => {
+    it('block + invalid elem', () => {
         expect(buildClassName.bind(buildClassName, {
             block: 'block',
-            mods: 'mod'
+            elem: 123
         })).to.throw(
-            'mods should be a plain object'
+            'elem should be string'
         );
     });
 
@@ -106,15 +114,6 @@ describe('buildClassName', () => {
             elem: 'elem'
         })).to.equal(
             'block__elem'
-        );
-    });
-
-    it('block + invalid elem', () => {
-        expect(buildClassName.bind(buildClassName, {
-            block: 'block',
-            elem: 123
-        })).to.throw(
-            'elem should be string'
         );
     });
 
