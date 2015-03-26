@@ -43,5 +43,8 @@ export default {
         reporters: [
             { type: 'lcovonly', subdir: '.' }
         ]
-    }
+    },
+    browserNoActivityTimeout: 30 * 1000, // default 10 * 1000
+    browserDisconnectTimeout: 10 * 1000, // default 2 * 1000
+    browserDisconnectTolerance: 1 // default 0
 }
