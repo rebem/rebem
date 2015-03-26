@@ -33,7 +33,7 @@
     "webpack": "1.7.x",
     "mocha": "2.2.x",
     "chai": "2.1.x",
-    "karma": "0.12.x",
+    "karma": "0.12.31",
     "karma-webpack": "1.5.x",
     "karma-cli": "0.0.x",
     "karma-mocha": "0.1.x",
