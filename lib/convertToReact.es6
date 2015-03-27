@@ -15,19 +15,22 @@ export default function convertToReact(json, context) {
             return json.map(item => convertToReact(item, context));
         }
 
-        json.tag = json.tag || 'div';
-        json.props = { ...json.props };
+        // TODO improve detection of BEMJSON
+        if (json.block || json.elem || json.tag) {
+            json.tag = json.tag || 'div';
+            json.props = { ...json.props };
 
-        if (json.block || context) {
-            json.block = json.block || context;
-            json.props.className = buildClassName(json);
+            if (json.block || context) {
+                json.block = json.block || context;
+                json.props.className = buildClassName(json);
+            }
+
+            if (json.content) {
+                json.content = convertToReact(json.content, json.block);
+            }
+
+            return React.createElement(json.tag, json.props, json.content);
         }
-
-        if (json.content) {
-            json.content = convertToReact(json.content, json.block);
-        }
-
-        return React.createElement(json.tag, json.props, json.content);
     }
 
     return json;
