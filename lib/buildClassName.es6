@@ -1,7 +1,7 @@
 import isPlainObject from 'lodash.isplainobject';
 
-const elemDelim = '__';
 const modDelim = '_';
+const elemDelim = '__';
 
 function throwError(msg, json) {
     throw new Error('Yummies.buildClassName: ' + msg + ' @ ' + JSON.stringify(json));
