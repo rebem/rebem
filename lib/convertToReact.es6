@@ -9,16 +9,21 @@ import buildClassName from './buildClassName';
  * @return {ReactElement}
  */
 export default function convertToReact(json, context) {
+
     if (json) {
         if (Array.isArray(json)) {
             return json.map(item => convertToReact(item, context));
         }
 
-        if (json.block || json.elem) {
-            json.block = json.block || context;
+        // TODO improve detection of BEMJSON
+        if (json.block || json.elem || json.tag) {
             json.tag = json.tag || 'div';
             json.props = { ...json.props };
-            json.props.className = buildClassName(json);
+
+            if (json.block || context) {
+                json.block = json.block || context;
+                json.props.className = buildClassName(json);
+            }
 
             if (json.content) {
                 json.content = convertToReact(json.content, json.block);
