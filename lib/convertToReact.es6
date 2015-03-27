@@ -82,6 +82,8 @@ export default function convertToReact(json, context) {
         if (!isPlainObject(json.props)) {
             throwError('props should be a plain object', json);
         }
+
+        json.props = { ...json.props };
     } else {
         json.props = {};
     }
