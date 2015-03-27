@@ -19,13 +19,13 @@ describe('buildClassName', () => {
     });
 
     it('no block', () => {
-        expect(buildClassName.bind(buildClassName, {
+        expect(buildClassName({
             elem: 'elem',
             mods: {
                 mod: 'val'
             }
-        })).to.throw(
-            'you should specify block'
+        })).to.equal(
+            ''
         );
     });
 

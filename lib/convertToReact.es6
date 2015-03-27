@@ -9,23 +9,25 @@ import buildClassName from './buildClassName';
  * @return {ReactElement}
  */
 export default function convertToReact(json, context) {
+
     if (json) {
         if (Array.isArray(json)) {
             return json.map(item => convertToReact(item, context));
         }
 
-        if (json.block || json.elem) {
+        json.tag = json.tag || 'div';
+        json.props = { ...json.props };
+
+        if (json.block || context) {
             json.block = json.block || context;
-            json.tag = json.tag || 'div';
-            json.props = { ...json.props };
             json.props.className = buildClassName(json);
-
-            if (json.content) {
-                json.content = convertToReact(json.content, json.block);
-            }
-
-            return React.createElement(json.tag, json.props, json.content);
         }
+
+        if (json.content) {
+            json.content = convertToReact(json.content, json.block);
+        }
+
+        return React.createElement(json.tag, json.props, json.content);
     }
 
     return json;
