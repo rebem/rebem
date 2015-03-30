@@ -1,11 +1,8 @@
 import isPlainObject from 'lodash.isplainobject';
+import throwError from './throwError';
 
 const modDelim = '_';
 const elemDelim = '__';
-
-function throwError(msg, json) {
-    throw new Error('Yummies.buildClassName: ' + msg + ' @ ' + JSON.stringify(json));
-}
 
 /**
  * Build a className string from BEMJSON-object.

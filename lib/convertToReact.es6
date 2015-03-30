@@ -1,12 +1,9 @@
 import React from 'react';
 import isPlainObject from 'lodash.isplainobject';
 import buildClassName from './buildClassName';
+import throwError from './throwError';
 
 const defaultTag = 'div';
-
-function throwError(msg, json) {
-    throw new Error('Yummies.convertToReact: ' + msg + ' @ ' + JSON.stringify(json));
-}
 
 /**
  * Convert BEMJSON into ReactElement.

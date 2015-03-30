@@ -1,8 +1,5 @@
 import isPlainObject from 'lodash.isplainobject';
-
-function throwError(msg, json) {
-    throw new Error('Yummies.mergeWithProps: ' + msg + ' @ ' + JSON.stringify(json));
-}
+import throwError from './throwError';
 
 /**
  * Merge BEMJSON template with instance props.
