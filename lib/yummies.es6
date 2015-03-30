@@ -8,7 +8,7 @@ import autobindExluded from './autobindExcluded';
 /**
  * 'inherit' from React
  */
-let Yummies = Object.create(React);
+const Yummies = Object.create(React);
 
 /**
  * Rewrite original `.render()`, `.renderToString()` and
@@ -16,10 +16,8 @@ let Yummies = Object.create(React);
  * `.convertToReact()`'ed result.
  */
 [ 'render', 'renderToString', 'renderToStaticMarkup' ].forEach(method => {
-    Yummies[method] = function(...args) {
-        args[0] = convertToReact(args[0]);
-
-        return React[method](...args);
+    Yummies[method] = function(json, ...rest) {
+        return React[method](convertToReact(json), ...rest);
     };
 });
 
