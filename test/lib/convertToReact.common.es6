@@ -90,6 +90,15 @@ describe('convertToReact', () => {
         );
     });
 
+    it('block + mods', () => {
+        expect(convertToReact({
+            block: 'block',
+            mods: {
+                mod: 'val'
+            }
+        })).to.have.deep.property('props.className');
+    });
+
     it('no block + mix', () => {
         expect(convertToReact.bind(convertToReact, {
             mix: {
@@ -98,6 +107,15 @@ describe('convertToReact', () => {
         })).to.throw(
             'you should provide block along with mix'
         );
+    });
+
+    it('block + mix', () => {
+        expect(convertToReact({
+            block: 'block',
+            mix: {
+                block: 'block2'
+            }
+        })).to.have.deep.property('props.className');
     });
 
     it('block + invalid mix', () => {
