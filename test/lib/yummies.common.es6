@@ -66,4 +66,132 @@ describe('yummies', () => {
             ).to.be.a('string');
         });
     });
+
+    it('_autoBind()', done => {
+        let self;
+
+        class DummyClass extends Yummies.Component {
+            constructor() {
+                super();
+
+                self = this;
+                Yummies._autoBind(this);
+                setTimeout(this.test, 0);
+            }
+
+            test() {
+                expect(this).to.deep.equal(self);
+                done();
+            }
+        }
+
+        new DummyClass();
+    });
+
+    describe('_prepareClass()', () => {
+        it('json', () => {
+            class DummyClass extends Yummies.Component {
+                constructor(props) {
+                    super(props);
+                }
+
+                render() {
+                    return dummyBlock;
+                }
+            }
+
+            const PreparedClass = Yummies._prepareClass(DummyClass);
+            const preparedInstance = new PreparedClass();
+
+            expect(
+                Yummies.renderToString(
+                    Yummies.createFactory(PreparedClass)()
+                )
+            ).to.be.a('string');
+
+            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
+        });
+
+        it('null', () => {
+            class DummyClass extends Yummies.Component {
+                constructor(props) {
+                    super(props);
+                }
+
+                render() {
+                    return null;
+                }
+            }
+
+            const PreparedClass = Yummies._prepareClass(DummyClass);
+            const preparedInstance = new PreparedClass();
+
+            expect(
+                Yummies.renderToString(
+                    Yummies.createFactory(PreparedClass)()
+                )
+            ).to.be.a('string');
+
+            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
+        });
+
+        it('ReactElement', () => {
+            class DummyClass extends Yummies.Component {
+                constructor(props) {
+                    super(props);
+                }
+
+                render() {
+                    return Yummies.createElement(dummyBlock);
+                }
+            }
+
+            const PreparedClass = Yummies._prepareClass(DummyClass);
+            const preparedInstance = new PreparedClass();
+
+            expect(
+                Yummies.renderToString(
+                    Yummies.createFactory(PreparedClass)()
+                )
+            ).to.be.a('string');
+
+            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
+        });
+    });
+
+    it('_mixins()', () => {
+        let MixinClass1;
+        let MixinClass2;
+
+        function Mixin1(Base) {
+            MixinClass1 = class extends Base {
+                test1() {}
+            };
+
+            return MixinClass1;
+        }
+
+        function Mixin2(Base) {
+            MixinClass2 = class extends Base {
+                test2() {}
+            };
+
+            return MixinClass2;
+        }
+
+        class DummyClass {
+            static get mixins() {
+                return [ Mixin1, Mixin2 ];
+            }
+        }
+
+        const MixedClass = Yummies._mixins(DummyClass);
+        const mixedInstance = new MixedClass();
+
+        expect(mixedInstance).to.be.an.instanceOf(DummyClass);
+        expect(mixedInstance).to.be.an.instanceOf(MixinClass1);
+        expect(mixedInstance).to.be.an.instanceOf(MixinClass2);
+        expect(mixedInstance).to.have.property('test1');
+        expect(mixedInstance).to.have.property('test2');
+    });
 });
