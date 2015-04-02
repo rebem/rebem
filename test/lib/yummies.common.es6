@@ -194,4 +194,84 @@ describe('yummies', () => {
         expect(mixedInstance).to.have.property('test1');
         expect(mixedInstance).to.have.property('test2');
     });
+
+    it('yummify()', () => {
+        let DummyClass1;
+        let DummyClass2;
+
+        const ResultFactory = Yummies.yummify([
+            {
+                type: 'main',
+                module: function(Base) {
+                    DummyClass1 = class extends Base {
+                        test1() {}
+                    };
+
+                    return DummyClass1;
+                }
+            },
+            {
+                type: 'main',
+                module: function(Base) {
+                    DummyClass2 = class extends Base {
+                        test2() {}
+                    };
+
+                    return DummyClass2;
+                }
+            },
+            {
+                type: 'styles',
+                module: true
+            }
+        ]);
+        const ResultClass = ResultFactory().type;
+        const ResultInstance = new ResultClass();
+
+        expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
+        expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
+        expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
+        expect(ResultInstance).to.have.property('test1');
+        expect(ResultInstance).to.have.property('test2');
+    });
+
+    it('yummifyRaw()', () => {
+        let DummyClass1;
+        let DummyClass2;
+
+        const ResultClassFactory = Yummies.yummifyRaw([
+            {
+                type: 'main',
+                module: function(Base) {
+                    DummyClass1 = class extends Base {
+                        test1() {}
+                    };
+
+                    return DummyClass1;
+                }
+            },
+            {
+                type: 'main',
+                module: function(Base) {
+                    DummyClass2 = class extends Base {
+                        test2() {}
+                    };
+
+                    return DummyClass2;
+                }
+            },
+            {
+                type: 'styles',
+                module: true
+            }
+        ]);
+        const ResultClass = ResultClassFactory(Yummies.Component);
+        const ResultInstance = new ResultClass();
+
+        expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
+        expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
+        expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
+        expect(ResultInstance).to.have.property('test1');
+        expect(ResultInstance).to.have.property('test2');
+    });
 });
