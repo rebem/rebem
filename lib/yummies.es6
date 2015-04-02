@@ -14,12 +14,12 @@ Yummies.render = function(json, ...rest) {
     return React.render(convertToReact(json), ...rest);
 };
 
-Yummies.renderToString = function(json, ...rest) {
-    return React.renderToString(convertToReact(json), ...rest);
+Yummies.renderToString = function(json) {
+    return React.renderToString(convertToReact(json));
 };
 
-Yummies.renderToStaticMarkup = function(json, ...rest) {
-    return React.renderToStaticMarkup(convertToReact(json), ...rest);
+Yummies.renderToStaticMarkup = function(json) {
+    return React.renderToStaticMarkup(convertToReact(json));
 };
 
 /**
