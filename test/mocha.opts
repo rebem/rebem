@@ -1,0 +1,3 @@
+-R dot
+--compilers es6:babel/register
+test/lib/*.common.es6

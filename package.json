@@ -61,17 +61,17 @@
     "lint": "eslint --ext .es6 lib/ test/",
 
     "karma": "babel-node ./node_modules/.bin/karma",
-    "test-node": "mocha -R dot --compilers es6:babel/register test/lib/",
+    "test-server": "mocha",
     "test-browser-dev": "npm run clean-test && npm run karma start test/karma.dev.es6",
     "test-browser-build": "npm run clean-test && npm run karma start test/karma.build.es6",
     "test-browser-travis": "npm run clean-test && npm run karma start test/karma.travis.es6",
     "coveralls": "cat coverage/lcov.info | coveralls",
 
     "precommit": "npm run lint",
-    "prepush": "npm run test-node && npm run test-browser-build",
+    "prepush": "npm run test-server && npm run test-browser-build",
     "prepublish": "npm run build",
-    "test": "npm run lint && npm run test-node && npm run test-browser-build",
-    "travis": "npm run lint && npm run test-node && npm run test-browser-travis && npm run coveralls"
+    "test": "npm run lint && npm run test-server && npm run test-browser-build",
+    "travis": "npm run lint && npm run test-server && npm run test-browser-travis && npm run coveralls"
   },
   "engines": {
     "node": ">=0.10.0"

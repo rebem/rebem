@@ -10,16 +10,17 @@ import autobindExluded from './autobindExcluded';
  */
 const Yummies = Object.create(React);
 
-/**
- * Rewrite original `.render()`, `.renderToString()` and
- * `.renderToStaticMarkup()` methods to return
- * `.convertToReact()`'ed result.
- */
-[ 'render', 'renderToString', 'renderToStaticMarkup' ].forEach(method => {
-    Yummies[method] = function(json, ...rest) {
-        return React[method](convertToReact(json), ...rest);
-    };
-});
+Yummies.render = function(json, ...rest) {
+    return React.render(convertToReact(json), ...rest);
+};
+
+Yummies.renderToString = function(json, ...rest) {
+    return React.renderToString(convertToReact(json), ...rest);
+};
+
+Yummies.renderToStaticMarkup = function(json, ...rest) {
+    return React.renderToStaticMarkup(convertToReact(json), ...rest);
+};
 
 /**
  * Rewrite an original `.createElement()` method

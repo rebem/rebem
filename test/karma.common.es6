@@ -8,10 +8,12 @@ const babelConfig = JSON.stringify({
 export default {
     colors: true,
     files: [
-        'lib/*.es6'
+        'lib/*.common.es6',
+        'lib/*.browser.es6'
     ],
     preprocessors: {
-        'lib/*.es6': [ 'webpack' ]
+        'lib/*.common.es6': 'webpack',
+        'lib/*.browser.es6': 'webpack'
     },
     frameworks: [ 'mocha' ],
     webpack: {
