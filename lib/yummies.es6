@@ -71,20 +71,18 @@ Yummies._autoBind = function(ctx) {
     let proto = Object.getPrototypeOf(ctx);
 
     do {
-        proto = Object.getPrototypeOf(proto);
+        Object.getOwnPropertyNames(proto).forEach(k => {
+            if (
+                collectedMethods.indexOf(k) === -1 &&
+                autobindExluded.indexOf(k) === -1 &&
+                !proto[k].__reactDontBind &&
+                typeof proto[k] === 'function'
+            ) {
+                collectedMethods.push(k);
+            }
+        });
 
-        if (proto.constructor !== Yummies.Component) {
-            Object.getOwnPropertyNames(proto).forEach(k => {
-                if (
-                    collectedMethods.indexOf(k) === -1 &&
-                    autobindExluded.indexOf(k) === -1 &&
-                    !proto[k].__reactDontBind &&
-                    typeof proto[k] === 'function'
-                ) {
-                    collectedMethods.push(k);
-                }
-            });
-        }
+        proto = Object.getPrototypeOf(proto);
     } while (proto instanceof Yummies.Component);
 
     collectedMethods.forEach(k => ctx[k] = ctx[k].bind(ctx));
