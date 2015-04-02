@@ -6,13 +6,6 @@ export default function(config) {
         singleRun: true,
         logLevel: config.LOG_INFO,
         reporters: [ 'dots', 'coverage' ],
-        coverageReporter: {
-            ...karmaCommon.coverageReporter,
-            reporters: [
-                ...karmaCommon.coverageReporter.reporters,
-                { type: 'text-summary' }
-            ]
-        },
         customLaunchers: {
             ChromeTravis: {
                 base: 'Chrome',
