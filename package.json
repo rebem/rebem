@@ -47,10 +47,10 @@
     "coveralls": "2.11.x",
     "eslint": "0.18.x",
     "babel-eslint": "2.0.x",
-    "babel": "4.7.x",
-    "babel-core": "4.7.x",
-    "babel-runtime": "4.7.x",
-    "babel-loader": "4.3.x"
+    "babel": "5.x.x",
+    "babel-core": "5.x.x",
+    "babel-runtime": "5.x.x",
+    "babel-loader": "5.x.x"
   },
   "scripts": {
     "clean-build": "rm -rf build/",
@@ -67,11 +67,10 @@
     "test-browser-travis": "npm run clean-test && npm run karma start test/karma.travis.es6",
     "coveralls": "cat coverage/lcov.info | coveralls",
 
-    "precommit": "npm run lint",
     "prepush": "npm run test-server && npm run test-browser-build",
     "prepublish": "npm run build",
-    "test": "npm run lint && npm run test-server && npm run test-browser-build",
-    "travis": "npm run lint && npm run test-server && npm run test-browser-travis && npm run coveralls"
+    "test": "npm run test-server && npm run test-browser-build",
+    "travis": "npm run test-server && npm run test-browser-travis && npm run coveralls"
   },
   "engines": {
     "node": ">=0.10.0"

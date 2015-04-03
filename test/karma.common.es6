@@ -2,7 +2,7 @@ import path from 'path';
 
 const babelConfig = JSON.stringify({
     optional: 'runtime',
-    experimental: true
+    stage: 1
 });
 
 export default {
