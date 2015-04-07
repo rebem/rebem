@@ -9,6 +9,17 @@ describe('yummies', () => {
         expect(Yummies).to.exist;
     });
 
+    it('render()', () => {
+        expect(
+            TestUtils.isCompositeComponent(
+                Yummies.render(
+                    { block: 'block' },
+                    document.createElement('div')
+                )
+            )
+        ).to.be.true;
+    });
+
     it('renderToString()', () => {
         expect(
             Yummies.renderToString(dummyBlock)
