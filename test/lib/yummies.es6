@@ -206,6 +206,27 @@ describe('yummies', () => {
         expect(mixedInstance).to.have.property('test2');
     });
 
+    it('_propTypes', () => {
+        expect(Yummies._propTypes([
+            {
+                type: 'propTypes',
+                module: {
+                    a: 1,
+                    b: 2
+                }
+            },
+            {
+                type: 'propTypes',
+                module: {
+                    b: 3
+                }
+            }
+        ])).to.be.deep.equal({
+            a: 1,
+            b: 3
+        });
+    });
+
     it('yummify()', () => {
         let DummyClass1;
         let DummyClass2;
@@ -234,11 +255,19 @@ describe('yummies', () => {
             {
                 type: 'styles',
                 module: true
+            },
+            {
+                type: 'propTypes',
+                module: {
+                    a: Yummies.PropTypes.number,
+                    b: Yummies.PropTypes.number
+                }
             }
         ]);
         const ResultClass = ResultFactory().type;
         const ResultInstance = new ResultClass();
 
+        expect(ResultClass).to.have.property('propTypes');
         expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
         expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
         expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
@@ -279,6 +308,7 @@ describe('yummies', () => {
         const ResultClass = ResultClassFactory(Yummies.Component);
         const ResultInstance = new ResultClass();
 
+        expect(ResultClass).to.not.have.property('propTypes');
         expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
         expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
         expect(ResultInstance).to.be.an.instanceOf(DummyClass2);

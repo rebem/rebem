@@ -135,6 +135,24 @@ Yummies._mixins = function(Base) {
 };
 
 /**
+ * Merge collected propTypes.
+ *
+ * @param {chain} array
+ * @return {Object|undefined}
+ */
+Yummies._propTypes = function(chain) {
+    let out;
+
+    chain.forEach(item => {
+        if (item.type === 'propTypes') {
+            out  = {  ...out, ...item.module };
+        }
+    });
+
+    return out;
+};
+
+/**
  * Yummify! Collect all the inherited classes chain
  * and return a react element factory.
  *
@@ -150,13 +168,7 @@ Yummies._mixins = function(Base) {
  * @return {ReactElement}
  */
 Yummies.yummify = function(chain) {
-    let out = React.Component;
-
-    chain.forEach(item => {
-        if (item.type === 'main') {
-            out = Yummies._mixins(item.module(out));
-        }
-    });
+    let out = Yummies.yummifyRaw(chain)(React.Component);
 
     out = Yummies._prepareClass(out);
 
@@ -165,7 +177,7 @@ Yummies.yummify = function(chain) {
 
 /**
  * Yummify Raw! Collect all the inherited classes
- * chain and return a resulted class constructor.
+ * chain and return a resulted class factory.
  *
  * @param {Array} chain
  * @return {Function}
@@ -179,6 +191,12 @@ Yummies.yummifyRaw = function(chain) {
                 out = Yummies._mixins(item.module(out));
             }
         });
+
+        const propTypes = Yummies._propTypes(chain);
+
+        if (propTypes) {
+            out.propTypes = propTypes;
+        }
 
         return out;
     };
