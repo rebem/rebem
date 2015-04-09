@@ -23,7 +23,8 @@
   "main": "build/yummies.js",
   "dependencies": {
     "react": "0.13.x",
-    "lodash.isplainobject": "3.0.x"
+    "lodash.isplainobject": "3.0.x",
+    "babel-runtime": "5.0.x"
   },
   "peerDependencies": {
     "react": ">=0.12.0"
@@ -37,10 +38,9 @@
     "coveralls": "2.11.x",
     "eslint": "0.18.x",
     "babel-eslint": "2.0.x",
-    "babel": "5.x.x",
-    "babel-core": "5.x.x",
-    "babel-runtime": "5.x.x",
-    "babel-loader": "5.x.x",
+    "babel": "5.0.x",
+    "babel-core": "5.0.x",
+    "babel-loader": "5.0.x",
     "jsdom": "4.2.x",
     "mocha-jsdom": "0.3.x"
   },
