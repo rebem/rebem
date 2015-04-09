@@ -41,7 +41,7 @@
     "babel-core": "5.x.x",
     "babel-runtime": "5.x.x",
     "babel-loader": "5.x.x",
-    "jsdom": "4.1.x",
+    "jsdom": "4.2.x",
     "mocha-jsdom": "0.3.x"
   },
   "scripts": {
