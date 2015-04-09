@@ -145,7 +145,7 @@ Yummies._propTypes = function(chain) {
 
     chain.forEach(item => {
         if (item.type === 'propTypes') {
-            out  = {  ...out, ...item.module };
+            out = { ...out, ...item.module };
         }
     });
 
