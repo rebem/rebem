@@ -12,5 +12,5 @@ insert_final_newline = true
 [*.{json,yml,md}]
 indent_size = 2
 
-[{.eslintrc,.jscsrc}]
+[.eslintrc]
 indent_size = 2
