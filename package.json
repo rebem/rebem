@@ -4,21 +4,10 @@
   "description": "React <3 BEMJSON",
   "keywords": [ "yummies", "react", "bem", "bemjson" ],
   "homepage": "https://github.com/yummies/yummies",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/yummies/yummies.git"
-  },
+  "repository": "yummies/yummies",
   "contributors": [
-    {
-      "name": "Kir Belevich",
-      "email": "kir@soulshine.in",
-      "url": "https://github.com/deepsweet"
-    },
-    {
-      "name": "Denis Koltsov",
-      "email": "iam@mistadikay.com",
-      "url": "https://github.com/mistadikay"
-    }
+    "Kir Belevich <kir@soulshine.in> (https://github.com/deepsweet)",
+    "Denis Koltsov <iam@mistadikay.com> 9https://github.com/mistadikay)"
   ],
   "main": "build/yummies.js",
   "files": [
