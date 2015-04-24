@@ -21,6 +21,10 @@
     }
   ],
   "main": "build/yummies.js",
+  "files": [
+    "build/",
+    "LICENSE"
+  ],
   "dependencies": {
     "react": "0.13.x",
     "lodash.isplainobject": "3.0.x",
