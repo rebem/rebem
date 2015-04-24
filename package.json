@@ -7,7 +7,7 @@
   "repository": "yummies/yummies",
   "contributors": [
     "Kir Belevich <kir@soulshine.in> (https://github.com/deepsweet)",
-    "Denis Koltsov <iam@mistadikay.com> 9https://github.com/mistadikay)"
+    "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
   "main": "build/yummies.js",
   "files": [
