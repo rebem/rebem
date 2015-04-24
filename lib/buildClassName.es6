@@ -77,4 +77,4 @@ export default function buildClassName(json) {
     }
 
     return out;
-};
+}

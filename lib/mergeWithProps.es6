@@ -61,4 +61,4 @@ export default function(json, props) {
     }
 
     return json;
-};
+}
