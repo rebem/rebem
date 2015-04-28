@@ -1,17 +1,14 @@
 import React from 'react';
 import isPlainObject from 'lodash.isplainobject';
+import isBEMJSON from './isBEMJSON';
 import buildClassName from './buildClassName';
 import throwError from './throwError';
 
 const defaultTag = 'div';
 
-/**
- * Convert BEMJSON into ReactElement.
- *
- * @param {Object} json
- * @param {String} context
- * @return {ReactElement}
- */
+/*
+    Convert BEMJSON-object into ReactElement.
+*/
 export default function convertToReact(json, context) {
     // array
     if (Array.isArray(json)) {
@@ -19,7 +16,7 @@ export default function convertToReact(json, context) {
     }
 
     // not BEMJSON
-    if (!isPlainObject(json)) {
+    if (!isBEMJSON(json)) {
         return json;
     }
 
