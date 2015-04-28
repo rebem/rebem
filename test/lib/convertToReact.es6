@@ -29,8 +29,8 @@ describe('convertToReact', () => {
     it('no block + default tag', () => {
         expect(convertToReact(
             {}
-        )).to.be.an('object')
-          .and.to.be.empty;
+        )).to.have.property('type', 'div').and
+          .to.not.have.deep.property('props.className');
     });
 
     it('no block + custom tag', () => {
