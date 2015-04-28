@@ -135,13 +135,6 @@ describe('convertToReact', () => {
         );
     });
 
-    it('no block + default props', () => {
-        expect(convertToReact(
-            {}
-        )).to.have.deep.property('props.children')
-          .that.is.an('undefined');
-    });
-
     it('block + simple content', () => {
         expect(convertToReact({
             block: 'block',
