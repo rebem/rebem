@@ -1,71 +1,70 @@
 import React from 'react';
-import ReactElement from 'react/lib/ReactElement';
 import buildClassName from './buildClassName';
+import isReactClass from './isReactClass';
+import isBEMJSON from './isBEMJSON';
 import convertToReact from './convertToReact';
 import mergeWithProps from './mergeWithProps';
 import autobindExluded from './autobindExcluded';
 
-/**
- * 'inherit' from React
- */
+/*
+    'inherit' from React
+*/
 const Yummies = Object.create(React);
 
+/*
+    .render({ block: 'test' }, document.body, function() {})
+*/
 Yummies.render = function(json, ...rest) {
     return React.render(convertToReact(json), ...rest);
 };
 
+/*
+    .renderToString({ block: 'test' })
+*/
 Yummies.renderToString = function(json) {
     return React.renderToString(convertToReact(json));
 };
 
+/*
+    .renderToStaticMarkup({ block: 'test' })
+*/
 Yummies.renderToStaticMarkup = function(json) {
     return React.renderToStaticMarkup(convertToReact(json));
 };
 
-/**
- * Rewrite an original `.createElement()` method
- * to return `.convertToReact()`'ed result.
- *
- * @param {Object} json
- * @return {ReactElement}
- */
-Yummies.createElement = function(json) {
-    return convertToReact(json);
+/*
+    .createElement({ block: 'test' })
+    .createElement(class extends Yummies.Component {})
+    .createElement('div', { foo: 'bar' }, [ … ])
+*/
+Yummies.createElement = function(arg, ...rest) {
+    if (isBEMJSON(arg)) {
+        return convertToReact(arg);
+    }
+
+    if (isReactClass(arg)) {
+        return React.createElement(Yummies._prepareClass(arg));
+    }
+
+    return React.createElement(arg, ...rest);
 };
 
-/**
- * Rewrite an original `.createClass()` method
- * to return `.convertToReact()`'ed result.
- *
- * @param {Object} spec
- * @return {ReactClass}
- */
-Yummies.createClass = function(spec) {
-    const origRender = spec.render;
-    const newSpec = {
-        ...spec,
-        render() {
-            let result = origRender.call(this);
+/*
+    .createFactory(class extends Yummies.Component {})
+    .createFactory('div')
+*/
+Yummies.createFactory = function(arg) {
+    if (isReactClass(arg)) {
+        arg = Yummies._prepareClass(arg);
+    }
 
-            if (!result || result instanceof ReactElement) {
-                return result;
-            }
-
-            mergeWithProps(result, this.props);
-
-            return convertToReact(result);
-        }
-    };
-
-    return React.createClass(newSpec);
+    return React.createFactory(arg);
 };
 
-/**
- * Autobind all the nested proto's methods
- * (excluding React internals) to the context.
- *
- * @param {Object} ctx
- */
+/*
+    Autobind all the nested proto's methods
+    (excluding React internals) to the context.
+*/
 Yummies._autoBind = function(ctx) {
     let collectedMethods = [];
     let proto = Object.getPrototypeOf(ctx);
@@ -88,12 +87,9 @@ Yummies._autoBind = function(ctx) {
     collectedMethods.forEach(k => ctx[k] = ctx[k].bind(ctx));
 };
 
-/**
- * Prepare class before the factory.
- *
- * @param {Class} Base
- * @return {Class}
- */
+/*
+    Prepare class before the factory.
+*/
 Yummies._prepareClass = function(Base) {
     return class extends Base {
         constructor(props) {
@@ -105,7 +101,7 @@ Yummies._prepareClass = function(Base) {
         render() {
             let result = super.render();
 
-            if (!result || result instanceof ReactElement) {
+            if (!isBEMJSON) {
                 return result;
             }
 
@@ -116,12 +112,9 @@ Yummies._prepareClass = function(Base) {
     };
 };
 
-/**
- * Extends the Base class within `mixins` static property.
- *
- * @param {Class} Base
- * return {Class}
- */
+/*
+    Extends the Base class within `mixins` static property.
+*/
 Yummies._mixins = function(Base) {
     let Result = Base;
 
@@ -134,12 +127,9 @@ Yummies._mixins = function(Base) {
     return Result;
 };
 
-/**
- * Merge collected propTypes.
- *
- * @param {chain} array
- * @return {Object|undefined}
- */
+/*
+    Merge collected propTypes.
+*/
 Yummies._propTypes = function(chain) {
     let out;
 
@@ -152,21 +142,16 @@ Yummies._propTypes = function(chain) {
     return out;
 };
 
-/**
- * Yummify! Collect all the inherited classes chain
- * and return a react element factory.
- *
- * ```
- * Yummies.yummify([
- *     { type: 'main', module: require('...') },
- *     { type: 'styles', module: require('...') },
- *     { type: 'main', module: require('...') }
- * ]);
- * ```
- *
- * @param {Array} chain
- * @return {ReactElement}
- */
+/*
+    Yummify! Collect all the inherited classes chain
+    and return a ReactElement Factory.
+
+    Yummies.yummify([
+        { type: 'main', module: require('...') },
+        { type: 'styles', module: require('...') },
+        { type: 'main', module: require('...') }
+    ]);
+*/
 Yummies.yummify = function(chain) {
     let out = Yummies.yummifyRaw(chain)(React.Component);
 
@@ -175,13 +160,11 @@ Yummies.yummify = function(chain) {
     return React.createFactory(out);
 };
 
-/**
- * Yummify Raw! Collect all the inherited classes
- * chain and return a resulted class factory.
- *
- * @param {Array} chain
- * @return {Function}
- */
+
+/*
+    Yummify Raw! Collect all the inherited classes
+    chain and return a resulted class factory.
+*/
 Yummies.yummifyRaw = function(chain) {
     return function(Base) {
         let out = Base;
@@ -202,6 +185,9 @@ Yummies.yummifyRaw = function(chain) {
     };
 };
 
+/*
+    Helper to build a className string from BEMJSON-object.
+*/
 Yummies.buildClassName = buildClassName;
 
 export default Yummies;
