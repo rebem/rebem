@@ -29,8 +29,8 @@ describe('convertToReact', () => {
     it('no block + default tag', () => {
         expect(convertToReact(
             {}
-        )).to.have.property('type', 'div').and
-          .to.not.have.deep.property('props.className');
+        )).to.be.an('object')
+          .and.to.be.empty;
     });
 
     it('no block + custom tag', () => {
@@ -133,13 +133,6 @@ describe('convertToReact', () => {
         })).to.throw(
             'props should be a plain object'
         );
-    });
-
-    it('no block + default props', () => {
-        expect(convertToReact(
-            {}
-        )).to.have.deep.property('props.children')
-          .that.is.an('undefined');
     });
 
     it('block + simple content', () => {
