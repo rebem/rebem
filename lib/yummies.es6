@@ -1,7 +1,7 @@
 import React from 'react';
+import isPlainObject from 'lodash.isplainobject';
 import buildClassName from './buildClassName';
 import isReactClass from './isReactClass';
-import isBEMJSON from './isBEMJSON';
 import convertToReact from './convertToReact';
 import mergeWithProps from './mergeWithProps';
 import autobindExluded from './autobindExcluded';
@@ -38,7 +38,7 @@ Yummies.renderToStaticMarkup = function(json) {
     .createElement('div', { foo: 'bar' }, [ … ])
 */
 Yummies.createElement = function(arg, ...rest) {
-    if (isBEMJSON(arg)) {
+    if (isPlainObject(arg)) {
         return convertToReact(arg);
     }
 
@@ -101,7 +101,7 @@ Yummies._prepareClass = function(Base) {
         render() {
             let result = super.render();
 
-            if (!isBEMJSON) {
+            if (!isPlainObject(result)) {
                 return result;
             }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import isPlainObject from 'lodash.isplainobject';
-import isBEMJSON from './isBEMJSON';
 import buildClassName from './buildClassName';
 import throwError from './throwError';
 
@@ -16,7 +15,7 @@ export default function convertToReact(json, context) {
     }
 
     // not BEMJSON
-    if (!isBEMJSON(json)) {
+    if (!isPlainObject(json)) {
         return json;
     }
 
