@@ -32,49 +32,59 @@ describe('yummies', () => {
         ).to.be.a('string');
     });
 
-    it('createElement()', () => {
-        expect(
-            TestUtils.isElement(
-                Yummies.createElement(dummyBlock)
-            )
-        ).to.be.true;
+    describe('createElement()', () => {
+        it('class', () => {
+            expect(
+                TestUtils.isElement(
+                    Yummies.createElement(
+                        class extends Yummies.Component {
+                            render() {
+                                return dummyBlock;
+                            }
+                        }
+                    )
+                )
+            ).to.be.true;
+        });
+
+        it('BEMJSON', () => {
+            expect(
+                TestUtils.isElement(
+                    Yummies.createElement(dummyBlock)
+                )
+            ).to.be.true;
+        });
+
+        it('type + props', () => {
+            expect(
+                TestUtils.isElement(
+                    Yummies.createElement('span', {})
+                )
+            ).to.be.true;
+        });
     });
 
-    describe('createClass()', () => {
-        it('json', () => {
+    describe('createFactory()', () => {
+        it('tag', () => {
             expect(
-                Yummies.renderToString(
-                    Yummies.createFactory(Yummies.createClass({
-                        render() {
-                            return dummyBlock;
-                        }
-                    }))()
+                TestUtils.isElement(
+                    Yummies.createFactory('div')()
                 )
-            ).to.be.a('string');
+            ).to.be.true;
         });
 
-        it('null', () => {
+        it('class', () => {
             expect(
-                Yummies.renderToString(
-                    Yummies.createFactory(Yummies.createClass({
-                        render() {
-                            return null;
+                TestUtils.isElement(
+                    Yummies.createFactory(
+                        class extends Yummies.Component {
+                            render() {
+                                return dummyBlock;
+                            }
                         }
-                    }))()
+                    )()
                 )
-            ).to.be.a('string');
-        });
-
-        it('ReactElement', () => {
-            expect(
-                Yummies.renderToString(
-                    Yummies.createFactory(Yummies.createClass({
-                        render() {
-                            return Yummies.createElement(dummyBlock);
-                        }
-                    }))()
-                )
-            ).to.be.a('string');
+            ).to.be.true;
         });
     });
 
