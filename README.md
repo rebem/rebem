@@ -7,7 +7,7 @@
 ## Install
 
 ```
-npm i @yummies/yummies
+npm i -S @yummies/yummies
 ```
 
 ## Overview
