@@ -52,6 +52,7 @@
     curly: 2
     default-case: 0
     dot-notation: 2
+    dot-location: 0
     eqeqeq: 2
     guard-for-in: 2
     no-alert: 2
@@ -69,11 +70,14 @@
     no-iterator: 2
     no-labels: 2
     no-lone-blocks: 2
+
+    # temporarly set to 1
     no-loop-func: 1
+
     no-multi-spaces: 2
     no-multi-str: 2
     no-native-reassign: 2
-    no-new: 1
+    no-new: 2
     no-new-func: 2
     no-new-wrappers: 2
     no-octal: 2
@@ -152,6 +156,9 @@
       - 2
       - beforeColon: false
         afterColon: true
+    linebreak-style:
+      - 2
+      - unix
     max-nested-callbacks: # ?
       - 1
       - 3
@@ -172,6 +179,7 @@
     no-ternary: 0
     no-trailing-spaces: 2
     no-underscore-dangle: 0
+    no-unneeded-ternary: 2
     no-wrap-func: 2
     one-var: 0
     operator-assignment:
@@ -240,7 +248,9 @@
       - 1
       - 100
       - 4
-    max-params: 4
+    max-params:
+      - 1
+      - 4
     max-statements: 0 # ?
     no-bitwise: 2
     no-plusplus: 0
