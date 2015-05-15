@@ -4,7 +4,6 @@ import buildClassName from './buildClassName';
 import isReactClass from './isReactClass';
 import convertToReact from './convertToReact';
 import mergeWithProps from './mergeWithProps';
-import autobindExluded from './autobindExcluded';
 
 /*
     'inherit' from React
@@ -62,40 +61,12 @@ Yummies.createFactory = function(arg) {
 };
 
 /*
-    Autobind all the nested proto's methods
-    (excluding React internals) to the context.
-*/
-Yummies._autoBind = function(ctx) {
-    let collectedMethods = [];
-    let proto = Object.getPrototypeOf(ctx);
-
-    do {
-        Object.getOwnPropertyNames(proto).forEach(k => {
-            if (
-                collectedMethods.indexOf(k) === -1 &&
-                autobindExluded.indexOf(k) === -1 &&
-                !proto[k].__reactDontBind &&
-                typeof proto[k] === 'function'
-            ) {
-                collectedMethods.push(k);
-            }
-        });
-
-        proto = Object.getPrototypeOf(proto);
-    } while (proto instanceof Yummies.Component);
-
-    collectedMethods.forEach(k => ctx[k] = ctx[k].bind(ctx));
-};
-
-/*
     Prepare class before the factory.
 */
 Yummies._prepareClass = function(Base) {
     return class extends Base {
         constructor(props) {
             super(props);
-
-            Yummies._autoBind(this);
         }
 
         render() {

@@ -88,27 +88,6 @@ describe('yummies', () => {
         });
     });
 
-    it('_autoBind()', done => {
-        let self;
-
-        class DummyClass extends Yummies.Component {
-            constructor() {
-                super();
-
-                self = this;
-                Yummies._autoBind(this);
-                setTimeout(this.test, 0);
-            }
-
-            test() {
-                expect(this).to.deep.equal(self);
-                done();
-            }
-        }
-
-        new DummyClass();
-    });
-
     describe('_prepareClass()', () => {
         it('json', () => {
             class DummyClass extends Yummies.Component {
