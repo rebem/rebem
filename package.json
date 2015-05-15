@@ -17,7 +17,7 @@
   "dependencies": {
     "react": "0.13.x",
     "lodash.isplainobject": "3.0.x",
-    "babel-runtime": "5.2.x"
+    "babel-runtime": "5.4.x"
   },
   "peerDependencies": {
     "react": ">=0.12.0"
@@ -31,8 +31,8 @@
     "coveralls": "2.11.x",
     "eslint": "0.21.x",
     "babel-eslint": "3.1.x",
-    "babel": "5.2.x",
-    "babel-core": "5.2.x",
+    "babel": "5.4.x",
+    "babel-core": "5.4.x",
     "babel-loader": "5.0.x",
     "jsdom": "5.4.x",
     "mocha-jsdom": "0.3.x"
