@@ -23,17 +23,16 @@
     "react": ">=0.12.0"
   },
   "devDependencies": {
-    "husky": "0.7.x",
+    "husky": "0.8.x",
     "mocha": "2.2.x",
     "chai": "2.3.x",
     "isparta": "3.0.x",
     "isparta-loader": "0.2.x",
     "coveralls": "2.11.x",
-    "eslint": "0.21.x",
+    "eslint": "0.21.0",
     "babel-eslint": "3.1.x",
     "babel": "5.4.x",
     "babel-core": "5.4.x",
-    "babel-loader": "5.0.x",
     "jsdom": "5.4.x",
     "mocha-jsdom": "0.3.x"
   },
