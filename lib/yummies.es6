@@ -42,7 +42,7 @@ Yummies.createElement = function(arg, ...rest) {
     }
 
     if (isReactClass(arg)) {
-        return React.createElement(Yummies._prepareClass(arg));
+        return React.createElement(Yummies._prepareClass(arg), ...rest);
     }
 
     return React.createElement(arg, ...rest);
