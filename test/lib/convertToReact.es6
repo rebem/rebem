@@ -77,7 +77,7 @@ describe('convertToReact', () => {
                 mod: 'val'
             }
         })).to.throw(
-            'you should provide block along with mods'
+            'you should provide block/elem along with mods'
         );
     });
 
@@ -151,6 +151,21 @@ describe('convertToReact', () => {
                 elem: 'elem'
             }
         })).to.have.deep.property('props.children.props.className', 'block__elem');
+    });
+
+    it('block + raw content + elem with context', () => {
+        const children = convertToReact({
+            block: 'block',
+            content: {
+                tag: 'span',
+                content: {
+                    elem: 'elem'
+                }
+            }
+        }).props.children;
+
+        expect(children).to.have.property('type', 'span');
+        expect(children.props.children.props).to.have.property('className', 'block__elem');
     });
 
     it('block + complex content', () => {

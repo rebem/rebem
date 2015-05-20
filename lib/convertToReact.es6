@@ -24,14 +24,16 @@ export default function convertToReact(json, context) {
         if (typeof json.block !== 'string') {
             throwError('block should be string', json);
         }
-    } else if (typeof context === 'string') {
-        json.block = context;
     }
 
     // elem
     if ('elem' in json) {
         if (!('block' in json)) {
-            throwError('you should provide block along with elem', json);
+            if (typeof context === 'string') {
+                json.block = context;
+            } else {
+                throwError('you should provide block along with elem', json);
+            }
         }
 
         if (typeof json.elem !== 'string') {
@@ -42,7 +44,7 @@ export default function convertToReact(json, context) {
     // mods
     if ('mods' in json) {
         if (!('block' in json)) {
-            throwError('you should provide block along with mods', json);
+            throwError('you should provide block/elem along with mods', json);
         }
 
         if (!isPlainObject(json.mods)) {
@@ -84,7 +86,7 @@ export default function convertToReact(json, context) {
 
     // content
     if ('content' in json) {
-        json.content = convertToReact(json.content, json.block);
+        json.content = convertToReact(json.content, json.block || context);
     }
 
     return React.createElement(json.tag, json.props, json.content);
