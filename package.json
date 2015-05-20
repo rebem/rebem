@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "react": "0.13.x",
-    "lodash.isplainobject": "3.0.x",
+    "lodash.isplainobject": "3.1.x",
     "babel-runtime": "5.4.x"
   },
   "peerDependencies": {
@@ -29,7 +29,7 @@
     "isparta": "3.0.x",
     "isparta-loader": "0.2.x",
     "coveralls": "2.11.x",
-    "eslint": "0.21.0",
+    "eslint": "0.21.x",
     "babel-eslint": "3.1.x",
     "babel": "5.4.x",
     "babel-core": "5.4.x",
