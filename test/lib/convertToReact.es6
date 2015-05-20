@@ -99,16 +99,6 @@ describe('convertToReact', () => {
         })).to.have.deep.property('props.className');
     });
 
-    it('no block + mix', () => {
-        expect(convertToReact.bind(convertToReact, {
-            mix: {
-                block: 'block'
-            }
-        })).to.throw(
-            'you should provide block along with mix'
-        );
-    });
-
     it('block + mix', () => {
         expect(convertToReact({
             block: 'block',

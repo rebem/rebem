@@ -52,10 +52,6 @@ export default function convertToReact(json, context) {
 
     // mix
     if ('mix' in json) {
-        if (!('block' in json)) {
-            throwError('you should provide block along with mix', json);
-        }
-
         if (!isPlainObject(json.mix) && !Array.isArray(json.mix)) {
             throwError('mix should be a plain object or array', json);
         }
