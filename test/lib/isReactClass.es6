@@ -36,4 +36,10 @@ describe('isReactClass', () => {
             class extends Foo {}
         )).to.be.true;
     });
+
+    it('react@<=0.12 class', () => {
+        expect(isReactClass(
+            React.createClass({ render() {} })
+        )).to.be.false;
+    });
 });
