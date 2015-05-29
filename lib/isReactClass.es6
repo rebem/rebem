@@ -24,16 +24,12 @@ export default function(arg) {
         return false;
     }
 
-    // react@<=0.12 class
-    if (
-        'type' in arg &&
-        'prototype' in arg.type &&
-        typeof arg.prototype.render === 'function'
-    ) {
-        return false;
-    }
-
     if (typeof arg.prototype.render === 'function') {
+        // react@<=0.12 class
+        if ('type' in arg) {
+            return false;
+        }
+
         return true;
     }
 
