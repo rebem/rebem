@@ -1,7 +1,7 @@
 import React from 'react';
 import isPlainObject from 'lodash.isplainobject';
 import buildClassName from './buildClassName';
-import isReactClass from './isReactClass';
+import isYummiesClass from './isYummiesClass';
 import convertToReact from './convertToReact';
 import mergeWithProps from './mergeWithProps';
 
@@ -41,7 +41,7 @@ Yummies.createElement = function(arg, ...rest) {
         return convertToReact(arg);
     }
 
-    if (isReactClass(arg)) {
+    if (isYummiesClass(arg)) {
         return React.createElement(Yummies._prepareClass(arg), ...rest);
     }
 
@@ -53,12 +53,14 @@ Yummies.createElement = function(arg, ...rest) {
     .createFactory('div')
 */
 Yummies.createFactory = function(arg) {
-    if (isReactClass(arg)) {
+    if (isYummiesClass(arg)) {
         arg = Yummies._prepareClass(arg);
     }
 
     return React.createFactory(arg);
 };
+
+Yummies.Component = class extends React.Component {};
 
 /*
     Prepare class before the factory.
@@ -124,7 +126,7 @@ Yummies._propTypes = function(chain) {
     ]);
 */
 Yummies.yummify = function(chain) {
-    let out = Yummies.yummifyRaw(chain)(React.Component);
+    let out = Yummies.yummifyRaw(chain)(Yummies.Component);
 
     out = Yummies._prepareClass(out);
 

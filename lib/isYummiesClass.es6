@@ -1,12 +1,13 @@
-import React from 'react';
+// import React from 'react';
+import Yummies from './yummies';
 
 // https://github.com/gaearon/react-hot-loader/blob/master/isReactClassish.js
 
-function descendsFromReactComponent(arg) {
+function descendsFromYummiesComponent(arg) {
     let Base = Object.getPrototypeOf(arg);
 
     while (Base) {
-        if (Base === React.Component) {
+        if (Base === Yummies.Component) {
             return true;
         }
 
@@ -30,11 +31,7 @@ export default function(arg) {
             return false;
         }
 
-        return true;
-    }
-
-    if (descendsFromReactComponent(arg)) {
-        return true;
+        return descendsFromYummiesComponent(arg);
     }
 
     return false;

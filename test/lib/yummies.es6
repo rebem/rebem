@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import React from 'react';
 import TestUtils from 'react/lib/ReactTestUtils';
 import Yummies from '../../lib/yummies';
 
@@ -86,6 +87,12 @@ describe('yummies', () => {
                 )
             ).to.be.true;
         });
+    });
+
+    describe('Component', () => {
+        expect(
+            Object.getPrototypeOf(Yummies.Component)
+        ).to.be.equal(React.Component);
     });
 
     describe('_prepareClass()', () => {
