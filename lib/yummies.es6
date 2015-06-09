@@ -128,9 +128,7 @@ Yummies._propTypes = function(chain) {
 Yummies.yummify = function(chain) {
     let out = Yummies.yummifyRaw(chain)(Yummies.Component);
 
-    out = Yummies._prepareClass(out);
-
-    return React.createFactory(out);
+    return Yummies.createFactory(out);
 };
 
 
