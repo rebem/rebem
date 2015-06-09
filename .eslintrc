@@ -2,14 +2,12 @@
   parser: babel-eslint
 
   env:
-    browser: true
     es6: true
+    node: true
+    browser: true
 
   ecmaFeatures:
     modules: true
-
-  globals:
-    process: true
 
   rules:
 
@@ -46,6 +44,9 @@
     valid-typeof: 2
 
     # Best Practices
+    accessor-pairs:
+      - 1
+      - setWithoutGet: true
     block-scoped-var: 0
     complexity: 0  # todo
     consistent-return: 0
@@ -70,10 +71,7 @@
     no-iterator: 2
     no-labels: 2
     no-lone-blocks: 2
-
-    # temporarly set to 1
-    no-loop-func: 1
-
+    no-loop-func: 2
     no-multi-spaces: 2
     no-multi-str: 2
     no-native-reassign: 2
@@ -152,6 +150,7 @@
     eol-last: 2
     func-names: 0
     func-style: 0 # ?
+    lines-around-comment: 0
     key-spacing:
       - 2
       - beforeColon: false
@@ -181,6 +180,9 @@
     no-underscore-dangle: 0
     no-unneeded-ternary: 2
     no-wrap-func: 2
+    object-curly-spacing:
+      - 2
+      - always
     one-var: 0
     operator-assignment:
       - 2
