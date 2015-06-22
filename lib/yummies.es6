@@ -72,7 +72,7 @@ Yummies._prepareClass = function(Base) {
         }
 
         render() {
-            let result = super.render();
+            const result = super.render();
 
             if (!isPlainObject(result)) {
                 return result;
@@ -126,7 +126,7 @@ Yummies._propTypes = function(chain) {
     ]);
 */
 Yummies.yummify = function(chain) {
-    let out = Yummies.yummifyRaw(chain)(Yummies.Component);
+    const out = Yummies.yummifyRaw(chain)(Yummies.Component);
 
     return Yummies.createFactory(out);
 };

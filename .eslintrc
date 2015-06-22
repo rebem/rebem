@@ -27,7 +27,9 @@
     no-empty-class: 2
     no-ex-assign: 2
     no-extra-boolean-cast: 2
-    no-extra-parens: 0
+    no-extra-parens:
+      - 2
+      - functions
     no-extra-semi: 2
     no-func-assign: 2
     no-inner-declarations: 2
@@ -144,6 +146,7 @@
     comma-style:
       - 2
       - last
+    computed-property-spacing: 0 # ?
     consistent-this:
       - 2
       - self
@@ -230,6 +233,11 @@
       - 2
       - words: true
         nonwords: false
+    spaced-comment:
+      - 1
+      - always
+      - exceptions:
+        - "*"
     spaced-line-comment:
       - 2
       - always
@@ -241,8 +249,10 @@
       - 2
       - after
     object-shorthand:
-      -1
+      - 1
       - always
+    prefer-const:
+      - 2
 
     # Legacy
     max-depth: 0 # ?
