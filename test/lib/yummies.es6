@@ -48,6 +48,43 @@ describe('yummies', () => {
             ).to.be.true;
         });
 
+        it('class + mixins', () => {
+            let MixinClass1;
+            let MixinClass2;
+
+            function Mixin1(Base) {
+                MixinClass1 = class extends Base {
+                    test1() {}
+                };
+
+                return MixinClass1;
+            }
+
+            function Mixin2(Base) {
+                MixinClass2 = class extends Base {
+                    test2() {}
+                };
+
+                return MixinClass2;
+            }
+
+            class DummyClass extends Yummies.Component {
+                static get mixins() {
+                    return [ Mixin1, Mixin2 ];
+                }
+
+                render() {
+                    return null;
+                }
+            }
+
+            const ComponentElement = Yummies.createElement(DummyClass);
+            const renderedComponent = TestUtils.renderIntoDocument(ComponentElement);
+
+            expect(renderedComponent).to.have.property('test1');
+            expect(renderedComponent).to.have.property('test2');
+        });
+
         it('BEMJSON', () => {
             expect(
                 TestUtils.isElement(
@@ -86,6 +123,43 @@ describe('yummies', () => {
                     )()
                 )
             ).to.be.true;
+        });
+
+        it('class + mixins', () => {
+            let MixinClass1;
+            let MixinClass2;
+
+            function Mixin1(Base) {
+                MixinClass1 = class extends Base {
+                    test1() {}
+                };
+
+                return MixinClass1;
+            }
+
+            function Mixin2(Base) {
+                MixinClass2 = class extends Base {
+                    test2() {}
+                };
+
+                return MixinClass2;
+            }
+
+            class DummyClass extends Yummies.Component {
+                static get mixins() {
+                    return [ Mixin1, Mixin2 ];
+                }
+
+                render() {
+                    return null;
+                }
+            }
+
+            const ComponentFactory = Yummies.createFactory(DummyClass);
+            const renderedComponent = TestUtils.renderIntoDocument(ComponentFactory());
+
+            expect(renderedComponent).to.have.property('test1');
+            expect(renderedComponent).to.have.property('test2');
         });
     });
 
@@ -166,7 +240,7 @@ describe('yummies', () => {
         });
     });
 
-    it('_mixins()', () => {
+    it('_processMixins()', () => {
         let MixinClass1;
         let MixinClass2;
 
@@ -192,7 +266,7 @@ describe('yummies', () => {
             }
         }
 
-        const MixedClass = Yummies._mixins(DummyClass);
+        const MixedClass = Yummies._processMixins(DummyClass);
         const mixedInstance = new MixedClass();
 
         expect(mixedInstance).to.be.an.instanceOf(DummyClass);

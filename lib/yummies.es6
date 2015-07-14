@@ -42,7 +42,12 @@ Yummies.createElement = function(arg, ...rest) {
     }
 
     if (isYummiesClass(arg)) {
-        return React.createElement(Yummies._prepareClass(arg), ...rest);
+        return React.createElement(
+            Yummies._prepareClass(
+                Yummies._processMixins(arg)
+            ),
+            ...rest
+        );
     }
 
     return React.createElement(arg, ...rest);
@@ -54,7 +59,11 @@ Yummies.createElement = function(arg, ...rest) {
 */
 Yummies.createFactory = function(arg) {
     if (isYummiesClass(arg)) {
-        arg = Yummies._prepareClass(arg);
+        return React.createFactory(
+            Yummies._prepareClass(
+                Yummies._processMixins(arg)
+            )
+        );
     }
 
     return React.createFactory(arg);
@@ -88,7 +97,7 @@ Yummies._prepareClass = function(Base) {
 /*
     Extends the Base class within `mixins` static property.
 */
-Yummies._mixins = function(Base) {
+Yummies._processMixins = function(Base) {
     let Result = Base;
 
     if (Result.hasOwnProperty('mixins')) {
@@ -126,11 +135,12 @@ Yummies._propTypes = function(chain) {
     ]);
 */
 Yummies.yummify = function(chain) {
-    const out = Yummies.yummifyRaw(chain)(Yummies.Component);
-
-    return Yummies.createFactory(out);
+    return React.createFactory(
+        Yummies._prepareClass(
+            Yummies.yummifyRaw(chain)(Yummies.Component)
+        )
+    );
 };
-
 
 /*
     Yummify Raw! Collect all the inherited classes
@@ -142,7 +152,7 @@ Yummies.yummifyRaw = function(chain) {
 
         chain.forEach(item => {
             if (item.type === 'main') {
-                out = Yummies._mixins(item.module(out));
+                out = Yummies._processMixins(item.module(out));
             }
         });
 
