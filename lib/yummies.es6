@@ -135,11 +135,13 @@ Yummies._propTypes = function(chain) {
     ]);
 */
 Yummies.yummify = function(chain) {
-    return React.createFactory(
-        Yummies._prepareClass(
-            Yummies.yummifyRaw(chain)(Yummies.Component)
-        )
-    );
+    let out = Yummies.yummifyRaw(chain)(Yummies.Component);
+
+    if (isYummiesClass(out)) {
+        out = Yummies._prepareClass(out);
+    }
+
+    return Yummies.createFactory(out);
 };
 
 /*
