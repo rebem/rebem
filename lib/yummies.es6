@@ -135,13 +135,11 @@ Yummies._propTypes = function(chain) {
     ]);
 */
 Yummies.yummify = function(chain) {
-    let out = Yummies.yummifyRaw(chain)(Yummies.Component);
-
-    if (isYummiesClass(out)) {
-        out = Yummies._prepareClass(out);
-    }
-
-    return Yummies.createFactory(out);
+    return Yummies.createFactory(
+        Yummies._prepareClass(
+            Yummies.yummifyRaw(chain)(Yummies.Component)
+        )
+    );
 };
 
 /*
