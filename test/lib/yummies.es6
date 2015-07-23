@@ -304,7 +304,7 @@ describe('yummies', () => {
         const ResultFactory = Yummies.yummify([
             {
                 type: 'main',
-                module: function(Base) {
+                module(Base) {
                     DummyClass1 = class extends Base {
                         test1() {}
                     };
@@ -314,7 +314,7 @@ describe('yummies', () => {
             },
             {
                 type: 'main',
-                module: function(Base) {
+                module(Base) {
                     DummyClass2 = class extends Base {
                         test2() {}
                     };
@@ -352,7 +352,7 @@ describe('yummies', () => {
         const ResultClassFactory = Yummies.yummifyRaw([
             {
                 type: 'main',
-                module: function(Base) {
+                module(Base) {
                     DummyClass1 = class extends Base {
                         test1() {}
                     };
@@ -362,7 +362,7 @@ describe('yummies', () => {
             },
             {
                 type: 'main',
-                module: function(Base) {
+                module(Base) {
                     DummyClass2 = class extends Base {
                         test2() {}
                     };
