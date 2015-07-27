@@ -169,7 +169,7 @@ describe('yummies', () => {
         ).to.be.equal(React.Component);
     });
 
-    describe('_prepareClass()', () => {
+    describe('yummify()', () => {
         it('json', () => {
             class DummyClass extends Yummies.Component {
                 constructor(props) {
@@ -181,7 +181,7 @@ describe('yummies', () => {
                 }
             }
 
-            const PreparedClass = Yummies._prepareClass(DummyClass);
+            const PreparedClass = Yummies.yummify(DummyClass);
             const preparedInstance = new PreparedClass();
 
             expect(
@@ -204,7 +204,7 @@ describe('yummies', () => {
                 }
             }
 
-            const PreparedClass = Yummies._prepareClass(DummyClass);
+            const PreparedClass = Yummies.yummify(DummyClass);
             const preparedInstance = new PreparedClass();
 
             expect(
@@ -227,7 +227,7 @@ describe('yummies', () => {
                 }
             }
 
-            const PreparedClass = Yummies._prepareClass(DummyClass);
+            const PreparedClass = Yummies.yummify(DummyClass);
             const preparedInstance = new PreparedClass();
 
             expect(
@@ -297,16 +297,17 @@ describe('yummies', () => {
         });
     });
 
-    it('yummify()', () => {
+    it('_yummifyChain()', () => {
         let DummyClass1;
         let DummyClass2;
 
-        const ResultFactory = Yummies.yummify([
+        const ResultFactory = Yummies._yummifyChain([
             {
                 type: 'main',
                 module(Base) {
                     DummyClass1 = class extends Base {
                         test1() {}
+                        render() {}
                     };
 
                     return DummyClass1;
@@ -317,6 +318,7 @@ describe('yummies', () => {
                 module(Base) {
                     DummyClass2 = class extends Base {
                         test2() {}
+                        render() {}
                     };
 
                     return DummyClass2;
@@ -345,11 +347,11 @@ describe('yummies', () => {
         expect(ResultInstance).to.have.property('test2');
     });
 
-    it('yummifyRaw()', () => {
+    it('_yummifyChainRaw()', () => {
         let DummyClass1;
         let DummyClass2;
 
-        const ResultClassFactory = Yummies.yummifyRaw([
+        const ResultClassFactory = Yummies._yummifyChainRaw([
             {
                 type: 'main',
                 module(Base) {

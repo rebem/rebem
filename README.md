@@ -130,6 +130,9 @@ Yummies.createFactory(class extends Yummies.Component { … });
 
 ### Additional helpers
 
+#### `yummify(<class>)`
+Patch class (extended from `Yummies.Component`) `render()` method to support BEMJSON.
+
 ##### `buildClassName(<object>)`
 
 Build className string from BEMJSON object.
@@ -138,7 +141,7 @@ Build className string from BEMJSON object.
 Yummies.buildClassName({ block: 'my-component', elem: 'title' });
 ```
 
-##### `yummify(<array>)`
+##### `yummifyChain(<array>)`
 
 Collect all the inherited classes chain and return a ReactElement Factory.
 See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for more details.
@@ -147,7 +150,7 @@ See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for 
 Yummies.yummify([ … ]);
 ```
 
-##### `yummifyRaw(<array>)`
+##### `yummifyChainRaw(<array>)`
 
 Collect all the inherited classes chain and return a resulted Class Factory.
 See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for more details.

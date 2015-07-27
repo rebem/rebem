@@ -43,7 +43,7 @@ Yummies.createElement = function(arg, ...rest) {
 
     if (isYummiesClass(arg)) {
         return React.createElement(
-            Yummies._prepareClass(
+            Yummies.yummify(
                 Yummies._processMixins(arg)
             ),
             ...rest
@@ -60,7 +60,7 @@ Yummies.createElement = function(arg, ...rest) {
 Yummies.createFactory = function(arg) {
     if (isYummiesClass(arg)) {
         return React.createFactory(
-            Yummies._prepareClass(
+            Yummies.yummify(
                 Yummies._processMixins(arg)
             )
         );
@@ -70,25 +70,6 @@ Yummies.createFactory = function(arg) {
 };
 
 Yummies.Component = class extends React.Component {};
-
-/*
-    Prepare class before the factory.
-*/
-Yummies._prepareClass = function(Base) {
-    return class extends Base {
-        render() {
-            const result = super.render();
-
-            if (!isPlainObject(result)) {
-                return result;
-            }
-
-            mergeWithProps(result, this.props);
-
-            return convertToReact(result);
-        }
-    };
-};
 
 /*
     Extends the Base class within `mixins` static property.
@@ -121,20 +102,39 @@ Yummies._propTypes = function(chain) {
 };
 
 /*
+    Prepare class before the factory.
+*/
+Yummies.yummify = function(Base) {
+    return class extends Base {
+        render() {
+            const result = super.render();
+
+            if (!isPlainObject(result)) {
+                return result;
+            }
+
+            mergeWithProps(result, this.props);
+
+            return convertToReact(result);
+        }
+    };
+};
+
+/*
     Yummify! Collect all the inherited classes chain
     and return a ReactElement Factory.
 
-    Yummies.yummify([
+    Yummies._yummifyChain([
         { type: 'main', module: require('...') },
         { type: 'styles', module: require('...') },
         { type: 'main', module: require('...') }
     ]);
 */
-Yummies.yummify = function(chain) {
-    let out = Yummies.yummifyRaw(chain)(Yummies.Component);
+Yummies._yummifyChain = function(chain) {
+    let out = Yummies._yummifyChainRaw(chain)(Yummies.Component);
 
     if (isYummiesClass(out)) {
-        out = Yummies._prepareClass(out);
+        out = Yummies.yummify(out);
     }
 
     return Yummies.createFactory(out);
@@ -144,7 +144,7 @@ Yummies.yummify = function(chain) {
     Yummify Raw! Collect all the inherited classes
     chain and return a resulted class factory.
 */
-Yummies.yummifyRaw = function(chain) {
+Yummies._yummifyChainRaw = function(chain) {
     return function(Base) {
         let out = Base;
 
