@@ -5,9 +5,9 @@ import throwError from './throwError';
 
 const defaultTag = 'div';
 
-/*
-    Convert BEMJSON-object into ReactElement.
-*/
+/**
+ * Convert BEMJSON-object into ReactElement.
+ */
 export default function convertToReact(json, context) {
     // array
     if (Array.isArray(json)) {

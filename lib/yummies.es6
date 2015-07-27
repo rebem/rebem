@@ -1,41 +1,42 @@
 import React from 'react';
 import isPlainObject from 'lodash.isplainobject';
+
 import buildClassName from './buildClassName';
 import isYummiesClass from './isYummiesClass';
 import convertToReact from './convertToReact';
 import mergeWithProps from './mergeWithProps';
 
-/*
-    'inherit' from React
-*/
+/**
+ * 'inherit' from React
+ */
 const Yummies = Object.create(React);
 
-/*
-    .render({ block: 'test' }, document.body, function() {})
-*/
+/**
+ * .render({ block: 'test' }, document.body, function() {})
+ */
 Yummies.render = function(json, ...rest) {
     return React.render(convertToReact(json), ...rest);
 };
 
-/*
-    .renderToString({ block: 'test' })
-*/
+/**
+ * .renderToString({ block: 'test' })
+ */
 Yummies.renderToString = function(json) {
     return React.renderToString(convertToReact(json));
 };
 
-/*
-    .renderToStaticMarkup({ block: 'test' })
-*/
+/**
+ * .renderToStaticMarkup({ block: 'test' })
+ */
 Yummies.renderToStaticMarkup = function(json) {
     return React.renderToStaticMarkup(convertToReact(json));
 };
 
-/*
-    .createElement({ block: 'test' })
-    .createElement(class extends Yummies.Component {})
-    .createElement('div', { foo: 'bar' }, [ … ])
-*/
+/**
+ * .createElement({ block: 'test' })
+ * .createElement(class extends Yummies.Component {})
+ * .createElement('div', { foo: 'bar' }, [ … ])
+ */
 Yummies.createElement = function(arg, ...rest) {
     if (isPlainObject(arg)) {
         return convertToReact(arg);
@@ -53,10 +54,10 @@ Yummies.createElement = function(arg, ...rest) {
     return React.createElement(arg, ...rest);
 };
 
-/*
-    .createFactory(class extends Yummies.Component {})
-    .createFactory('div')
-*/
+/**
+ * .createFactory(class extends Yummies.Component {})
+ * .createFactory('div')
+ */
 Yummies.createFactory = function(arg) {
     if (isYummiesClass(arg)) {
         return React.createFactory(
@@ -71,9 +72,9 @@ Yummies.createFactory = function(arg) {
 
 Yummies.Component = class extends React.Component {};
 
-/*
-    Extends the Base class within `extendWith` static property.
-*/
+/**
+ * Extends the Base class within `extendWith` static property.
+ */
 Yummies._extendWith = function(Base) {
     let Result = Base;
 
@@ -86,9 +87,9 @@ Yummies._extendWith = function(Base) {
     return Result;
 };
 
-/*
-    Merge collected propTypes.
-*/
+/**
+ * Merge collected propTypes.
+ */
 Yummies._propTypes = function(chain) {
     let out;
 
@@ -101,9 +102,9 @@ Yummies._propTypes = function(chain) {
     return out;
 };
 
-/*
-    Prepare class before the factory.
-*/
+/**
+ * Prepare class before the factory.
+ */
 Yummies.yummify = function(Base) {
     return class extends Base {
         render() {
@@ -120,16 +121,16 @@ Yummies.yummify = function(Base) {
     };
 };
 
-/*
-    Yummify! Collect all the inherited classes chain
-    and return a ReactElement Factory.
-
-    Yummies._yummifyChain([
-        { type: 'main', module: require('...') },
-        { type: 'styles', module: require('...') },
-        { type: 'main', module: require('...') }
-    ]);
-*/
+/**
+ * Yummify! Collect all the inherited classes chain
+ * and return a ReactElement Factory.
+ *
+ * Yummies._yummifyChain([
+ *     { type: 'main', module: require('...') },
+ *     { type: 'styles', module: require('...') },
+ *     { type: 'main', module: require('...') }
+ * ]);
+ */
 Yummies._yummifyChain = function(chain) {
     let out = Yummies._yummifyChainRaw(chain)(Yummies.Component);
 
@@ -140,10 +141,10 @@ Yummies._yummifyChain = function(chain) {
     return Yummies.createFactory(out);
 };
 
-/*
-    Yummify Raw! Collect all the inherited classes
-    chain and return a resulted class factory.
-*/
+/**
+ * Yummify Raw! Collect all the inherited classes
+ * chain and return a resulted class factory.
+ */
 Yummies._yummifyChainRaw = function(chain) {
     return function(Base) {
         let out = Base;
@@ -164,9 +165,9 @@ Yummies._yummifyChainRaw = function(chain) {
     };
 };
 
-/*
-    Helper to build a className string from BEMJSON-object.
-*/
+/**
+ * Helper to build a className string from BEMJSON-object.
+ */
 Yummies.buildClassName = buildClassName;
 
 export default Yummies;

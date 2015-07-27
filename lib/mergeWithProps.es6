@@ -1,9 +1,9 @@
 import isPlainObject from 'lodash.isplainobject';
 import throwError from './throwError';
 
-/*
-    Merge BEMJSON template with instance props.
-*/
+/**
+ * Merge BEMJSON template with instance props.
+ */
 export default function(json, props) {
     if (typeof props === 'undefined') {
         return json;

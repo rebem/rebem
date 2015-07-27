@@ -4,9 +4,9 @@ import throwError from './throwError';
 const modDelim = '_';
 const elemDelim = '__';
 
-/*
-    Build a className string from BEMJSON-object.
-*/
+/**
+ * Build a className string from BEMJSON-object.
+ */
 export default function buildClassName(json) {
     let out;
     let entity = '';

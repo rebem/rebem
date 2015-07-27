@@ -1,8 +1,6 @@
-// import React from 'react';
 import Yummies from './yummies';
 
 // https://github.com/gaearon/react-hot-loader/blob/master/isReactClassish.js
-
 function descendsFromYummiesComponent(arg) {
     let Base = Object.getPrototypeOf(arg);
 
@@ -17,9 +15,9 @@ function descendsFromYummiesComponent(arg) {
     return false;
 }
 
-/*
-    Check if argument is ES6 ReactClass.
-*/
+/**
+ * Check if argument is ES6 ReactClass.
+ */
 export default function(arg) {
     if (typeof arg !== 'function') {
         return false;
