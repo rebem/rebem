@@ -44,7 +44,7 @@ Yummies.createElement = function(arg, ...rest) {
     if (isYummiesClass(arg)) {
         return React.createElement(
             Yummies.yummify(
-                Yummies._processMixins(arg)
+                Yummies._extendWith(arg)
             ),
             ...rest
         );
@@ -61,7 +61,7 @@ Yummies.createFactory = function(arg) {
     if (isYummiesClass(arg)) {
         return React.createFactory(
             Yummies.yummify(
-                Yummies._processMixins(arg)
+                Yummies._extendWith(arg)
             )
         );
     }
@@ -72,14 +72,14 @@ Yummies.createFactory = function(arg) {
 Yummies.Component = class extends React.Component {};
 
 /*
-    Extends the Base class within `mixins` static property.
+    Extends the Base class within `extendWith` static property.
 */
-Yummies._processMixins = function(Base) {
+Yummies._extendWith = function(Base) {
     let Result = Base;
 
-    if (Result.hasOwnProperty('mixins')) {
-        Result.mixins.forEach(mixinClassFabric => {
-            Result = mixinClassFabric(Result);
+    if (Result.hasOwnProperty('extendWith')) {
+        Result.extendWith.forEach(extendClassFabric => {
+            Result = extendClassFabric(Result);
         });
     }
 
@@ -150,7 +150,7 @@ Yummies._yummifyChainRaw = function(chain) {
 
         chain.forEach(item => {
             if (item.type === 'main') {
-                out = Yummies._processMixins(item.module(out));
+                out = Yummies._extendWith(item.module(out));
             }
         });
 

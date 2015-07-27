@@ -48,30 +48,28 @@ describe('yummies', () => {
             ).to.be.true;
         });
 
-        it('class + mixins', () => {
-            let MixinClass1;
-            let MixinClass2;
+        it('class + extendWith', () => {
+            let ExtendClass1;
+            let ExtendClass2;
 
-            function Mixin1(Base) {
-                MixinClass1 = class extends Base {
+            function Extend1(Base) {
+                ExtendClass1 = class extends Base {
                     test1() {}
                 };
 
-                return MixinClass1;
+                return ExtendClass1;
             }
 
-            function Mixin2(Base) {
-                MixinClass2 = class extends Base {
+            function Extend2(Base) {
+                ExtendClass2 = class extends Base {
                     test2() {}
                 };
 
-                return MixinClass2;
+                return ExtendClass2;
             }
 
             class DummyClass extends Yummies.Component {
-                static get mixins() {
-                    return [ Mixin1, Mixin2 ];
-                }
+                static extendWith = [ Extend1, Extend2 ];
 
                 render() {
                     return null;
@@ -125,30 +123,28 @@ describe('yummies', () => {
             ).to.be.true;
         });
 
-        it('class + mixins', () => {
-            let MixinClass1;
-            let MixinClass2;
+        it('class + extendWith', () => {
+            let ExtendClass1;
+            let ExtendClass2;
 
-            function Mixin1(Base) {
-                MixinClass1 = class extends Base {
+            function Extend1(Base) {
+                ExtendClass1 = class extends Base {
                     test1() {}
                 };
 
-                return MixinClass1;
+                return ExtendClass1;
             }
 
-            function Mixin2(Base) {
-                MixinClass2 = class extends Base {
+            function Extend2(Base) {
+                ExtendClass2 = class extends Base {
                     test2() {}
                 };
 
-                return MixinClass2;
+                return ExtendClass2;
             }
 
             class DummyClass extends Yummies.Component {
-                static get mixins() {
-                    return [ Mixin1, Mixin2 ];
-                }
+                static extendWith = [ Extend1, Extend2 ];
 
                 render() {
                     return null;
@@ -240,38 +236,36 @@ describe('yummies', () => {
         });
     });
 
-    it('_processMixins()', () => {
-        let MixinClass1;
-        let MixinClass2;
+    it('_extendWith()', () => {
+        let ExtendClass1;
+        let ExtendClass2;
 
-        function Mixin1(Base) {
-            MixinClass1 = class extends Base {
+        function Extend1(Base) {
+            ExtendClass1 = class extends Base {
                 test1() {}
             };
 
-            return MixinClass1;
+            return ExtendClass1;
         }
 
-        function Mixin2(Base) {
-            MixinClass2 = class extends Base {
+        function Extend2(Base) {
+            ExtendClass2 = class extends Base {
                 test2() {}
             };
 
-            return MixinClass2;
+            return ExtendClass2;
         }
 
         class DummyClass {
-            static get mixins() {
-                return [ Mixin1, Mixin2 ];
-            }
+            static extendWith = [ Extend1, Extend2 ];
         }
 
-        const MixedClass = Yummies._processMixins(DummyClass);
+        const MixedClass = Yummies._extendWith(DummyClass);
         const mixedInstance = new MixedClass();
 
         expect(mixedInstance).to.be.an.instanceOf(DummyClass);
-        expect(mixedInstance).to.be.an.instanceOf(MixinClass1);
-        expect(mixedInstance).to.be.an.instanceOf(MixinClass2);
+        expect(mixedInstance).to.be.an.instanceOf(ExtendClass1);
+        expect(mixedInstance).to.be.an.instanceOf(ExtendClass2);
         expect(mixedInstance).to.have.property('test1');
         expect(mixedInstance).to.have.property('test2');
     });
