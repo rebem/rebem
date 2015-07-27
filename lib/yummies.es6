@@ -76,10 +76,6 @@ Yummies.Component = class extends React.Component {};
 */
 Yummies._prepareClass = function(Base) {
     return class extends Base {
-        constructor(props) {
-            super(props);
-        }
-
         render() {
             const result = super.render();
 
