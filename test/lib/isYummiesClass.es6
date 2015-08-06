@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import React from 'react';
-import Yummies from '../../lib/yummies';
+
+import Yummies from '../../lib/';
 import isYummiesClass from '../../lib/isYummiesClass';
 
 describe('isYummiesClass', () => {

@@ -9,18 +9,15 @@
     "Kir Belevich <kir@soulshine.in> (https://github.com/deepsweet)",
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
-  "main": "build/yummies.js",
+  "main": "build/index.js",
   "files": [
     "build/",
     "LICENSE"
   ],
   "dependencies": {
-    "react": "0.13.x",
+    "react": ">=0.14.0-beta1",
     "lodash.isplainobject": "3.2.x",
     "babel-runtime": "5.8.x"
-  },
-  "peerDependencies": {
-    "react": ">=0.12.0"
   },
   "devDependencies": {
     "husky": "0.9.x",
@@ -29,20 +26,22 @@
     "isparta": "3.0.x",
     "isparta-loader": "0.2.x",
     "coveralls": "2.11.x",
-    "eslint": "0.24.x",
+    "eslint": "1.0.x",
     "babel-eslint": "4.0.x",
-    "eslint-plugin-babel": "1.2.x",
+    "eslint-plugin-babel": "2.0.x",
     "babel": "5.8.x",
     "babel-core": "5.8.x",
-    "jsdom": "5.6.x",
-    "mocha-jsdom": "1.0.x"
+    "jsdom": "6.0.x",
+    "mocha-jsdom": "1.0.x",
+    "chokidar-cli": "1.0.x"
   },
   "scripts": {
     "build": "rm -rf build/ && babel lib/ -d build/",
     "dev": "npm run build -- -w",
     "lint": "eslint --ext .es6 lib/ test/",
 
-    "coverage": "rm -rf coverage/ && isparta cover _mocha -i lib/*.es6 --report lcovonly -- -r babel/register test/setup.es6 test/lib/*.es6",
+    "coverage": "rm -rf coverage/ && isparta cover _mocha -i lib/*.es6 -- -r babel/register test/setup.es6 test/lib/*.es6",
+    "coverage-dev": "chokidar 'test/lib/*.es6' -c 'npm run coverage' --initial",
     "test": "npm run lint && npm run coverage",
     "travis": "npm run test && cat coverage/lcov.info | coveralls",
 

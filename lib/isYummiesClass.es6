@@ -1,4 +1,4 @@
-import Yummies from './yummies';
+import Yummies from './';
 
 // https://github.com/gaearon/react-hot-loader/blob/master/isReactClassish.js
 function descendsFromYummiesComponent(arg) {
