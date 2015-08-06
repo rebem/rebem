@@ -30,8 +30,8 @@ describe('chain', () => {
                 }
             }
         ])).to.be.deep.equal({
-            prop1: 1,
-            prop2: 3
+            prop1: 3,
+            prop2: 2
         });
     });
 

@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "react": ">=0.14.0-beta1",
+    "@yummies/core": "0.1.x",
     "lodash.isplainobject": "3.2.x",
     "babel-runtime": "5.8.x"
   },

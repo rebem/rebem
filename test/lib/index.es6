@@ -88,12 +88,6 @@ describe('yummies', () => {
             const PreparedClass = Yummies.yummify(DummyClass);
             const preparedInstance = new PreparedClass();
 
-            expect(
-                Yummies.renderToString(
-                    Yummies.createFactory(PreparedClass)()
-                )
-            ).to.be.a('string');
-
             expect(preparedInstance).to.be.an.instanceOf(DummyClass);
         });
 
@@ -111,12 +105,6 @@ describe('yummies', () => {
             const PreparedClass = Yummies.yummify(DummyClass);
             const preparedInstance = new PreparedClass();
 
-            expect(
-                Yummies.renderToString(
-                    Yummies.createFactory(PreparedClass)()
-                )
-            ).to.be.a('string');
-
             expect(preparedInstance).to.be.an.instanceOf(DummyClass);
         });
 
@@ -133,12 +121,6 @@ describe('yummies', () => {
 
             const PreparedClass = Yummies.yummify(DummyClass);
             const preparedInstance = new PreparedClass();
-
-            expect(
-                Yummies.renderToString(
-                    Yummies.createFactory(PreparedClass)()
-                )
-            ).to.be.a('string');
 
             expect(preparedInstance).to.be.an.instanceOf(DummyClass);
         });
