@@ -86,9 +86,11 @@ describe('yummies', () => {
             }
 
             const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = new PreparedClass();
+            const preparedInstance = TestUtils.renderIntoDocument(
+                Yummies.createElement(PreparedClass)
+            );
 
-            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
+            expect(TestUtils.isCompositeComponent(preparedInstance)).to.be.true;
         });
 
         it('null', () => {

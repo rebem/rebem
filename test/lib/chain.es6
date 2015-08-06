@@ -35,94 +35,189 @@ describe('chain', () => {
         });
     });
 
-    it('yummifyChain()', () => {
-        let DummyClass1 = null;
-        let DummyClass2 = null;
+    describe('yummifyChain()', () => {
+        it('with prop-types', () => {
+            let DummyClass1 = null;
+            let DummyClass2 = null;
 
-        const ResultFactory = yummifyChain([
-            {
-                type: 'main',
-                module(Base) {
-                    DummyClass1 = class extends Base {
-                        test1() {}
-                        render() {}
-                    };
+            const ResultFactory = yummifyChain([
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass1 = class extends Base {
+                            test1() {}
+                            render() {}
+                        };
 
-                    return DummyClass1;
+                        return DummyClass1;
+                    }
+                },
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass2 = class extends Base {
+                            test2() {}
+                            render() {}
+                        };
+
+                        return DummyClass2;
+                    }
+                },
+                {
+                    type: 'styles',
+                    module: true
+                },
+                {
+                    type: 'propTypes',
+                    module: {
+                        prop1: Yummies.PropTypes.number,
+                        prop2: Yummies.PropTypes.number
+                    }
                 }
-            },
-            {
-                type: 'main',
-                module(Base) {
-                    DummyClass2 = class extends Base {
-                        test2() {}
-                        render() {}
-                    };
+            ]);
+            const ResultClass = ResultFactory().type;
+            const ResultInstance = new ResultClass();
 
-                    return DummyClass2;
-                }
-            },
-            {
-                type: 'styles',
-                module: true
-            },
-            {
-                type: 'propTypes',
-                module: {
-                    prop1: Yummies.PropTypes.number,
-                    prop2: Yummies.PropTypes.number
-                }
-            }
-        ]);
-        const ResultClass = ResultFactory().type;
-        const ResultInstance = new ResultClass();
+            expect(ResultClass).to.have.property('propTypes');
+            expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
+            expect(ResultInstance).to.have.property('test1');
+            expect(ResultInstance).to.have.property('test2');
+        });
 
-        expect(ResultClass).to.have.property('propTypes');
-        expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
-        expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
-        expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
-        expect(ResultInstance).to.have.property('test1');
-        expect(ResultInstance).to.have.property('test2');
+        it('without prop-types', () => {
+            let DummyClass1 = null;
+            let DummyClass2 = null;
+
+            const ResultFactory = yummifyChain([
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass1 = class extends Base {
+                            test1() {}
+                            render() {}
+                        };
+
+                        return DummyClass1;
+                    }
+                },
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass2 = class extends Base {
+                            test2() {}
+                            render() {}
+                        };
+
+                        return DummyClass2;
+                    }
+                },
+                {
+                    type: 'styles',
+                    module: true
+                }
+            ]);
+            const ResultClass = ResultFactory().type;
+            const ResultInstance = new ResultClass();
+
+            expect(ResultClass).to.not.have.property('propTypes');
+            expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
+            expect(ResultInstance).to.have.property('test1');
+            expect(ResultInstance).to.have.property('test2');
+        });
     });
 
-    it('yummifyChainRaw()', () => {
-        let DummyClass1 = null;
-        let DummyClass2 = null;
+    describe('yummifyChainRaw()', () => {
+        it('with prop-types', () => {
+            let DummyClass1 = null;
+            let DummyClass2 = null;
 
-        const ResultClassFactory = yummifyChainRaw([
-            {
-                type: 'main',
-                module(Base) {
-                    DummyClass1 = class extends Base {
-                        test1() {}
-                    };
+            const ResultClassFactory = yummifyChainRaw([
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass1 = class extends Base {
+                            test1() {}
+                        };
 
-                    return DummyClass1;
+                        return DummyClass1;
+                    }
+                },
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass2 = class extends Base {
+                            test2() {}
+                        };
+
+                        return DummyClass2;
+                    }
+                },
+                {
+                    type: 'styles',
+                    module: true
+                },
+                {
+                    type: 'propTypes',
+                    module: {
+                        prop1: Yummies.PropTypes.number,
+                        prop2: Yummies.PropTypes.number
+                    }
                 }
-            },
-            {
-                type: 'main',
-                module(Base) {
-                    DummyClass2 = class extends Base {
-                        test2() {}
-                    };
+            ]);
+            const ResultClass = ResultClassFactory(Yummies.Component);
+            const ResultInstance = new ResultClass();
 
-                    return DummyClass2;
+            expect(ResultClass).to.have.property('propTypes');
+            expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
+            expect(ResultInstance).to.have.property('test1');
+            expect(ResultInstance).to.have.property('test2');
+        });
+
+        it('without prop-types', () => {
+            let DummyClass1 = null;
+            let DummyClass2 = null;
+
+            const ResultClassFactory = yummifyChainRaw([
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass1 = class extends Base {
+                            test1() {}
+                        };
+
+                        return DummyClass1;
+                    }
+                },
+                {
+                    type: 'main',
+                    module(Base) {
+                        DummyClass2 = class extends Base {
+                            test2() {}
+                        };
+
+                        return DummyClass2;
+                    }
+                },
+                {
+                    type: 'styles',
+                    module: true
                 }
-            },
-            {
-                type: 'styles',
-                module: true
-            }
-        ]);
-        const ResultClass = ResultClassFactory(Yummies.Component);
-        const ResultInstance = new ResultClass();
+            ]);
+            const ResultClass = ResultClassFactory(Yummies.Component);
+            const ResultInstance = new ResultClass();
 
-        expect(ResultClass).to.not.have.property('propTypes');
-        expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
-        expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
-        expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
-        expect(ResultInstance).to.have.property('test1');
-        expect(ResultInstance).to.have.property('test2');
+            expect(ResultClass).to.not.have.property('propTypes');
+            expect(ResultInstance).to.be.an.instanceOf(Yummies.Component);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass1);
+            expect(ResultInstance).to.be.an.instanceOf(DummyClass2);
+            expect(ResultInstance).to.have.property('test1');
+            expect(ResultInstance).to.have.property('test2');
+        });
     });
 });

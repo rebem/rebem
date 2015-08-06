@@ -24,11 +24,6 @@ export default function(arg) {
     }
 
     if (typeof arg.prototype.render === 'function') {
-        // react@<=0.12 class
-        if ('type' in arg) {
-            return false;
-        }
-
         return descendsFromYummiesComponent(arg);
     }
 
