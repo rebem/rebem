@@ -4,6 +4,7 @@ import isPlainObject from 'lodash.isplainobject';
 import buildClassName from './buildClassName';
 import isYummiesClass from './isYummiesClass';
 import convertToReact from './convertToReact';
+import convertToReactType from './convertToReactType';
 import mergeWithProps from './mergeWithProps';
 
 /**
@@ -37,21 +38,15 @@ Yummies.renderToStaticMarkup = function(json) {
  * .createElement(class extends Yummies.Component {})
  * .createElement('div', { foo: 'bar' }, [ … ])
  */
-Yummies.createElement = function(arg, ...rest) {
-    if (isPlainObject(arg)) {
-        return convertToReact(arg);
+Yummies.createElement = function(type, props, ...children) {
+    if (isPlainObject(type)) {
+        return convertToReact(type);
     }
 
-    if (isYummiesClass(arg)) {
-        return React.createElement(
-            Yummies.yummify(
-                Yummies._extendWith(arg)
-            ),
-            ...rest
-        );
-    }
+    const patchedChildren = convertToReact(children);
+    const patchedType = convertToReactType(type);
 
-    return React.createElement(arg, ...rest);
+    return React.createElement(patchedType, props, ...patchedChildren);
 };
 
 /**
