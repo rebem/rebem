@@ -71,7 +71,13 @@
     no-extra-bind: 2
     no-fallthrough: 2
     no-floating-decimal: 2
+    no-implicit-coercion:
+      - 2
+      - boolean: true
+        number: true
+        string: true
     no-implied-eval: 2
+    no-invalid-this: 0
     no-iterator: 2
     no-labels: 2
     no-lone-blocks: 2
@@ -94,6 +100,8 @@
     no-sequences: 2
     no-throw-literal: 2
     no-unused-expressions: 0 # ? (chai)
+    no-useless-call: 2
+    no-useless-concat: 2
     no-void: 2
     no-warning-comments:
       - 1
@@ -113,6 +121,7 @@
       - never
 
     # Variables
+    init-declarations: 1
     no-catch-shadow: 2
     no-delete-var: 2
     no-label-var: 2
@@ -121,10 +130,15 @@
     no-undef: 2
     no-undef-init: 2
     no-undefined: 2
-    no-unused-vars: 2
+    no-unused-vars: 1
     no-use-before-define: 2
 
     # Node.js
+    callback-return:
+      - 1
+      -
+        - callback
+        - done
     handle-callback-err: 2
     no-mixed-requires: 2
     no-new-require: 2
@@ -140,10 +154,13 @@
       - singleValue: true
         objectsInArrays: true
         arraysInArrays: true
+    block-spacing:
+      - 2
+      - always
     indent:
       - 2
       - 4
-      - indentSwitchCase: true
+      - SwitchCase: 1
     brace-style:
       - 2
       - 1tbs
@@ -163,6 +180,13 @@
     eol-last: 2
     func-names: 0
     func-style: 0 # ?
+    id-length:
+      - 2
+      - min: 2
+        max: 30
+        exceptions:
+          - "i"
+          - "e"
     lines-around-comment: 0
     key-spacing:
       - 2
@@ -206,6 +230,7 @@
     quote-props:
       - 2
       - as-needed
+    id-match: 0
     quotes:
       - 2
       - single
@@ -242,12 +267,21 @@
 
     # ECMAScript 6
     arrow-parens: 0
+    arrow-spacing: 2
     constructor-super: 2
     generator-star-spacing: 0
+    no-class-assign: 2
+    no-const-assign: 2
+    no-dupe-class-members: 2
     no-this-before-super: 2
     no-var: 2
     object-shorthand: 0
+    prefer-arrow-callback: 0
     prefer-const: 2
+    prefer-spread: 1
+    prefer-reflect: 0 # todo
+    prefer-template: 0
+    require-yield: 1
 
     # Legacy
     max-depth: 0 # ?
@@ -255,6 +289,10 @@
       - 1
       - 100
       - 4
+      - ignoreComments: true
+        ignoreUrls: true
+        # ignorePattern: "^\\s*var\\s.+=\\s*require\\s*\\(" todo https://github.com/eslint/eslint/blob/master/docs/rules/max-len.md
+
     max-params:
       - 1
       - 4
