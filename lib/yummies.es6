@@ -84,7 +84,7 @@ Yummies._extendWith = function(Base) {
  * Merge collected propTypes.
  */
 Yummies._propTypes = function(chain) {
-    let out;
+    let out = null;
 
     chain.forEach(item => {
         if (item.type === 'propTypes') {

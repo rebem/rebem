@@ -8,7 +8,7 @@ const elemDelim = '__';
  * Build a className string from BEMJSON-object.
  */
 export default function buildClassName(json) {
-    let out;
+    let out = '';
     let entity = '';
 
     if (!isPlainObject(json)) {

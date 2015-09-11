@@ -3,3 +3,5 @@
     mocha: true
   rules:
     no-new: 1
+    id-length: 0
+    init-declarations: 0
