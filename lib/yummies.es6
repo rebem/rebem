@@ -53,16 +53,14 @@ Yummies.createElement = function(type, props, ...children) {
  * .createFactory(class extends Yummies.Component {})
  * .createFactory('div')
  */
-Yummies.createFactory = function(arg) {
-    if (isYummiesClass(arg)) {
-        return React.createFactory(
-            Yummies.yummify(
-                Yummies._extendWith(arg)
-            )
-        );
-    }
+Yummies.createFactory = function(type) {
+    const patchedType = convertToReactType(type);
 
-    return React.createFactory(arg);
+    return function(props, ...children) {
+        const patchedChildren = convertToReact(children);
+
+        return React.createFactory(patchedType)(props, ...patchedChildren);
+    };
 };
 
 Yummies.Component = class extends React.Component {};
