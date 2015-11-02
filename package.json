@@ -1,6 +1,6 @@
 {
   "name": "@yummies/yummies",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "React ❤︎ BEM",
   "keywords": [ "yummies", "react", "bem", "bemjson" ],
   "homepage": "https://github.com/yummies/yummies",
@@ -9,48 +9,47 @@
     "Kir Belevich <kir@soulshine.in> (https://github.com/deepsweet)",
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
-  "main": "build/yummies.js",
+  "main": "build/index.js",
   "files": [
     "build/",
     "LICENSE"
   ],
   "dependencies": {
-    "react": "0.13.x",
+    "react": "0.14.x",
+    "@yummies/core": "0.2.x",
     "lodash.isplainobject": "3.2.x",
     "babel-runtime": "5.8.x"
   },
-  "peerDependencies": {
-    "react": ">=0.12.0"
-  },
   "devDependencies": {
-    "husky": "0.9.x",
-    "mocha": "2.3.x",
-    "chai": "3.2.x",
-    "isparta": "3.0.x",
-    "isparta-loader": "0.2.x",
-    "coveralls": "2.11.x",
-    "eslint": "1.3.x",
-    "babel-eslint": "4.1.x",
-    "eslint-plugin-babel": "2.1.x",
     "babel": "5.8.x",
     "babel-core": "5.8.x",
-    "jsdom": "6.3.x",
-    "mocha-jsdom": "1.0.x"
+    "husky": "0.10.x",
+    "eslint": "1.8.x",
+    "babel-eslint": "4.1.x",
+    "eslint-plugin-babel": "2.1.x",
+    "mocha": "2.3.x",
+    "chai": "3.4.x",
+    "isparta": "3.5.x",
+    "coveralls": "2.11.x",
+    "jsdom": "7.0.x",
+    "mocha-jsdom": "1.0.x",
+    "chokidar-cli": "1.1.x"
   },
   "scripts": {
-    "build": "rm -rf build/ && babel lib/ -d build/",
+    "build": "rm -rf build && babel lib/ -d build/",
     "dev": "npm run build -- -w",
-    "lint": "eslint --ext .es6 lib/ test/",
+    "lint": "eslint lib test",
 
-    "coverage": "rm -rf coverage/ && isparta cover _mocha -i lib/*.es6 --report lcovonly -- -r babel/register test/setup.es6 test/lib/*.es6",
+    "coverage": "rm -rf coverage/ && isparta cover _mocha -i lib/*.js -- -r babel/register test/setup.js test/lib/*.js",
+    "tdd": "chokidar 'lib/*.js' 'test/lib/*.js' -c 'npm run coverage' --initial",
     "test": "npm run lint && npm run coverage",
-    "travis": "npm run test && cat coverage/lcov.info | coveralls",
+    "travis": "npm test && cat coverage/lcov.info | coveralls",
 
-    "prepush": "npm run test",
+    "prepush": "npm test",
     "prepublish": "npm run build"
   },
   "engines": {
-    "node": ">=0.12.0",
+    "node": ">=4.0.0",
     "npm": ">=2.7.0"
   },
   "license": "MIT"
