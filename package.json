@@ -15,25 +15,25 @@
     "LICENSE"
   ],
   "dependencies": {
-    "react": ">=0.14.0-beta1",
-    "@yummies/core": "0.1.x",
+    "react": "0.14.x",
+    "@yummies/core": "0.2.x",
     "lodash.isplainobject": "3.2.x",
     "babel-runtime": "5.8.x"
   },
   "devDependencies": {
     "babel": "5.8.x",
     "babel-core": "5.8.x",
-    "husky": "0.9.x",
-    "mocha": "2.2.x",
-    "chai": "3.2.x",
-    "isparta": "3.0.x",
+    "husky": "0.10.x",
     "eslint": "1.8.x",
     "babel-eslint": "4.1.x",
     "eslint-plugin-babel": "2.1.x",
+    "mocha": "2.3.x",
+    "chai": "3.4.x",
+    "isparta": "3.5.x",
     "coveralls": "2.11.x",
-    "jsdom": "6.0.x",
+    "jsdom": "7.0.x",
     "mocha-jsdom": "1.0.x",
-    "chokidar-cli": "1.0.x"
+    "chokidar-cli": "1.1.x"
   },
   "scripts": {
     "build": "rm -rf build/ && babel lib/ -d build/",
@@ -49,7 +49,7 @@
     "prepublish": "npm run build"
   },
   "engines": {
-    "node": ">=0.12.0",
+    "node": ">=4.0.0",
     "npm": ">=2.7.0"
   },
   "license": "MIT"
