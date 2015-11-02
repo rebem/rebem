@@ -36,16 +36,16 @@
     "chokidar-cli": "1.1.x"
   },
   "scripts": {
-    "build": "rm -rf build/ && babel lib/ -d build/",
+    "build": "rm -rf build && babel lib/ -d build/",
     "dev": "npm run build -- -w",
-    "lint": "eslint --ext .es6 lib/ test/",
+    "lint": "eslint lib test",
 
-    "coverage": "rm -rf coverage/ && isparta cover _mocha -i lib/*.es6",
-    "coverage-dev": "chokidar 'test/lib/*.es6' -c 'npm run coverage' --initial",
+    "coverage": "rm -rf coverage/ && isparta cover _mocha -i lib/*.js -- -r babel/register test/setup.js test/lib/*.js",
+    "tdd": "chokidar 'lib/*.js' 'test/lib/*.js' -c 'npm run coverage' --initial",
     "test": "npm run lint && npm run coverage",
-    "travis": "npm run test && cat coverage/lcov.info | coveralls",
+    "travis": "npm test && cat coverage/lcov.info | coveralls",
 
-    "prepush": "npm run test",
+    "prepush": "npm test",
     "prepublish": "npm run build"
   },
   "engines": {

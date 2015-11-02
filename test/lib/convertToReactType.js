@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { expect } from 'chai';
 import convertToReactType from '../../lib/convertToReactType';
 

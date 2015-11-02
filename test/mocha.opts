@@ -1,3 +1,0 @@
---require babel/register
-test/setup.es6
-test/lib/*.es6
