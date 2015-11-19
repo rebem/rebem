@@ -158,3 +158,7 @@ See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for 
 ```js
 Yummies.yummifyRaw([ … ]);
 ```
+
+### Old browsers support
+
+Please note that IE8-10 are supported only in `0.x.x` legacy branch. Starting from `1.x.x` only IE11 and higher are supported. We are going to keep updating a legacy branch in parallel for some time (until `IE10<=` would not become history).
