@@ -159,6 +159,10 @@ See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for 
 Yummies.yummifyRaw([ … ]);
 ```
 
+### Babel runtime
+
+Since `1.x.x` `babel-runtime` is not included anymore and we inline all helpers. We do it in case to support IE9-10. It may insignificantly increase bundle size, but other than that everything should work fine even if you use `babel-runtime` in your application.
+
 ### Old browsers support
 
-Please note that IE8-10 are supported only in `0.x.x` legacy branch. Starting from `1.x.x` only IE11 and higher are supported. We are going to keep updating a legacy branch in parallel for some time (until `IE10<=` would not become history).
+Please note that IE8 is supported only in `0.x.x` legacy branch. Starting from `1.x.x` only IE9 and higher are supported. We are going to keep updating a legacy branch in parallel for some time (until IE8 would not become history).
