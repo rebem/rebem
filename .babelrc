@@ -1,4 +1,4 @@
 {
-  "optional": "runtime",
+  "optional": "spec.protoToAssign",
   "stage": 0
 }
