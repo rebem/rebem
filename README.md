@@ -159,9 +159,13 @@ See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for 
 Yummies.yummifyRaw([ … ]);
 ```
 
-### Babel runtime
+### Babel environment
+
+There are couple of things worth noticing if you use `babel`.
 
 Since `1.x.x` `babel-runtime` is not included anymore and we inline all helpers. We do it in case to support IE9-10. It may insignificantly increase bundle size, but other than that everything should work fine even if you use `babel-runtime` in your application.
+
+If you need to support IE9-10, you should include on `spec.protoToAssign` into `optional` in your `.babelrc`. This will fix some inheritance incompatibility issues. If you don't need IE9-10, no additional moves required.
 
 ### Old browsers support
 
