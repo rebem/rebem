@@ -40,22 +40,23 @@ describe('yummies', () => {
             ).to.be.true;
         });
 
-        it('type + props', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createElement('span', {})
-                )
-            ).to.be.true;
+        it('type + props + children', () => {
+            const testElement = Yummies.createElement('span', { foo: 'bar' }, null);
+
+            expect(TestUtils.isElement(testElement)).to.be.true;
+            expect(testElement.props.foo).to.be.equal('bar');
+            expect(testElement.props.children).to.be.null;
         });
     });
 
     describe('createFactory()', () => {
-        it('tag', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createFactory('div')()
-                )
-            ).to.be.true;
+        it('type + props + children', () => {
+            const testFactory = Yummies.createFactory('div');
+            const testElement = testFactory({ foo: 'bar' }, null);
+
+            expect(TestUtils.isElement(testElement)).to.be.true;
+            expect(testElement.props.foo).to.be.equal('bar');
+            expect(testElement.props.children).to.be.null;
         });
 
         it('class', () => {
