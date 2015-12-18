@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "react": "0.14.x",
-    "@yummies/core": "1.0.x",
+    "@yummies/core": "2.0.x",
     "lodash.isplainobject": "3.2.x"
   },
   "devDependencies": {
