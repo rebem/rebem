@@ -1,6 +1,6 @@
 {
   "name": "@yummies/yummies",
-  "version": "2.1.1",
+  "version": "3.0.0-alpha.1",
   "description": "React ❤︎ BEM",
   "keywords": [ "yummies", "react", "bem", "bemjson" ],
   "homepage": "https://github.com/yummies/yummies",
