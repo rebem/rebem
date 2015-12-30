@@ -20,7 +20,7 @@
     "lodash.isplainobject": "3.2.x"
   },
   "devDependencies": {
-    "start": "1.1.x",
+    "start": "1.2.x",
     "husky": "0.10.x",
 
     "babel-core": "6.3.x",
