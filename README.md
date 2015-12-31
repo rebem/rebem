@@ -4,6 +4,8 @@
 [![deps](http://img.shields.io/david/yummies/yummies.svg?style=flat-square)](https://david-dm.org/yummies/yummies)
 [![dev deps](http://img.shields.io/david/dev/yummies/yummies.svg?style=flat-square)](https://david-dm.org/yummies/yummies#info=devDependencies)
 
+[![sauce labs](https://saucelabs.com/browser-matrix/yummies.svg)](https://saucelabs.com/u/yummies)
+
 ## Install
 
 ```
