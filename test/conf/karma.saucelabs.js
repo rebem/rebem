@@ -11,7 +11,8 @@ const customLaunchers = {
     },
     SL_Safari: {
         base: 'SauceLabs',
-        browserName: 'safari'
+        browserName: 'safari',
+        version: '9'
     },
     SL_IE: {
         base: 'SauceLabs',
