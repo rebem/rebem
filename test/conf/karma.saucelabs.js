@@ -30,7 +30,8 @@ export default {
     autoWatch: false,
     sauceLabs: {
         testName: 'travis',
-        public: 'public'
+        public: 'public',
+        recordScreenshots: false
     },
     customLaunchers,
     reporters: [ 'mocha', 'saucelabs' ],
