@@ -1,35 +1,28 @@
 import karmaCommonConfig from './karma.common';
 
-const customLaunchers = {
-    SL_Chrome: {
-        base: 'SauceLabs',
-        browserName: 'chrome'
-    },
-    SL_Firefox: {
-        base: 'SauceLabs',
-        browserName: 'firefox'
-    },
-    SL_Safari: {
-        base: 'SauceLabs',
-        browserName: 'safari',
-        version: '9'
-    },
-    SL_IE: {
-        base: 'SauceLabs',
-        browserName: 'internet explorer',
-        version: '11'
-    },
-    SL_iOS: {
-        base: 'SauceLabs',
-        browserName: 'iphone',
-        version: '9.2'
-    },
-    SL_Android: {
-        base: 'SauceLabs',
-        browserName: 'android',
-        version: '5.1'
-    }
-};
+function generateLaunchers(browsers) {
+    return browsers.reduce((result, browser) => {
+        result[JSON.stringify(browser)] = {
+            base: 'SauceLabs',
+            ...browser
+        };
+
+        return result;
+    }, {});
+}
+
+const customLaunchers = generateLaunchers([
+    { browserName: 'chrome' },
+    { browserName: 'firefox' },
+    { browserName: 'safari', version: '8' },
+    { browserName: 'safari', version: '9' },
+    { browserName: 'internet explorer', version: '9' },
+    { browserName: 'internet explorer', version: '10' },
+    { browserName: 'internet explorer', version: '11' },
+    { browserName: 'iphone', version: '9' },
+    { browserName: 'android', version: '4' },
+    { browserName: 'android', version: '5' }
+]);
 
 export default {
     ...karmaCommonConfig,
