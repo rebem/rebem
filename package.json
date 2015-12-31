@@ -47,6 +47,7 @@
     "karma-webpack": "1.7.x",
     "karma-coverage": "0.5.x",
     "karma-clear-screen-reporter": "1.0.x",
+    "karma-sauce-launcher": "0.3.x",
     "coveralls": "2.11.x"
   },
   "scripts": {

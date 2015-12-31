@@ -37,3 +37,11 @@ export function karmaTravis() {
 
     return runKarma(karmaConfig);
 }
+
+export function karmaSauceLabs() {
+    process.env.NODE_ENV = 'development';
+
+    const karmaConfig = require('../test/conf/karma.saucelabs');
+
+    return runKarma(karmaConfig);
+}
