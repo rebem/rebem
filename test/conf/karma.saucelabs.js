@@ -19,9 +19,9 @@ const customLaunchers = generateLaunchers([
     { browserName: 'internet explorer', version: '9' },
     { browserName: 'internet explorer', version: '10' },
     { browserName: 'internet explorer', version: '11' },
-    { browserName: 'iphone', version: '9' },
-    { browserName: 'android', version: '4' },
-    { browserName: 'android', version: '5' }
+    { browserName: 'iphone', version: '9.' },
+    { browserName: 'android', version: '4.' },
+    { browserName: 'android', version: '5.' }
 ]);
 
 export default {
