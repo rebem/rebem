@@ -11,10 +11,9 @@ describe('yummies', () => {
         expect(Yummies).to.exist;
     });
 
+    // TODO: somehow check for prototype in old browsers
     describe('Component', () => {
-        expect(
-            Object.getPrototypeOf(Yummies.Component)
-        ).to.be.equal(React.Component);
+        expect(Yummies.Component.__yummies__).to.be.true;
     });
 
     describe('createElement()', () => {
