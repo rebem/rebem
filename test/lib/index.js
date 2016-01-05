@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import React from 'react';
 import TestUtils from 'react/lib/ReactTestUtils';
 
 import Yummies from '../../lib/';
