@@ -33,7 +33,7 @@ export default {
         public: 'public',
         recordScreenshots: false
     },
-    reporters: [ 'progress', 'saucelabs', 'coverage' ],
+    reporters: [ 'clear-screen', 'progress', 'saucelabs', 'coverage' ],
     coverageReporter: {
         dir: 'coverage/',
         reporters: [
