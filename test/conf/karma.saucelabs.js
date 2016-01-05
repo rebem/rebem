@@ -33,8 +33,16 @@ export default {
         public: 'public',
         recordScreenshots: false
     },
+    reporters: [ 'progress', 'saucelabs', 'coverage' ],
+    coverageReporter: {
+        dir: 'coverage/',
+        reporters: [
+            {
+                type: 'lcovonly', subdir: '.'
+            }
+        ]
+    },
     customLaunchers,
-    reporters: [ 'mocha', 'saucelabs' ],
     browsers: Object.keys(customLaunchers),
     concurrency: 5
 };

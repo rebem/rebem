@@ -4,11 +4,21 @@ export default {
     ...karmaCommonConfig,
     singleRun: false,
     autoWatch: true,
-    reporters: [
-        'clear-screen',
-        'progress',
-        'coverage'
-    ],
+    reporters: [ 'clear-screen', 'progress', 'coverage' ],
+    coverageReporter: {
+        dir: 'coverage/',
+        reporters: [
+            {
+                type: 'html'
+            },
+            {
+                type: 'text-summary'
+            },
+            {
+                type: 'lcovonly', subdir: '.'
+            }
+        ]
+    },
     customLaunchers: {
         ChromeBackground: {
             base: 'Chrome',

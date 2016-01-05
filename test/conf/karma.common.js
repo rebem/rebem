@@ -19,21 +19,6 @@ export default {
         noInfo: true,
         quiet: true
     },
-    reporters: [ 'mocha', 'coverage' ],
-    coverageReporter: {
-        dir: 'coverage/',
-        reporters: [
-            {
-                type: 'html'
-            },
-            {
-                type: 'text-summary'
-            },
-            {
-                type: 'lcovonly', subdir: '.'
-            }
-        ]
-    },
     logLevel: LOG_DISABLE,
     browserNoActivityTimeout: 60 * 1000, // default 10 * 1000
     browserDisconnectTimeout: 10 * 1000, // default 2 * 1000
