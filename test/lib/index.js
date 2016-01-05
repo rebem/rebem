@@ -73,6 +73,66 @@ describe('yummies', () => {
         });
     });
 
+    describe('cloneElement()', () => {
+        it('BEMJSON', () => {
+            const clonedElement = Yummies.cloneElement(dummyBlock);
+
+            expect(TestUtils.isElement(clonedElement)).to.be.true;
+            expect(clonedElement.props.className).to.be.equal(dummyBlock.block);
+        });
+
+        it('BEMJSON + props with mix', () => {
+            const props = {
+                test: 123,
+                mix: {
+                    block: 'block2'
+                }
+            };
+            const clonedElement = Yummies.cloneElement(dummyBlock, props);
+
+            expect(TestUtils.isElement(clonedElement)).to.be.true;
+            expect(clonedElement.props.test).to.be.deep.equal(props.test);
+            expect(clonedElement.props.className).to.be.equal('block block2');
+        });
+
+        it('BEMJSON + props + children', () => {
+            const props = {
+                test: 123
+            };
+            const children = {
+                block: 'block2'
+            };
+            const clonedElement = Yummies.cloneElement(dummyBlock, props, children);
+            const childrenElement = clonedElement.props.children;
+
+            expect(TestUtils.isElement(clonedElement)).to.be.true;
+            expect(TestUtils.isElement(childrenElement)).to.be.true;
+            expect(childrenElement.props.className).to.be.equal('block2');
+        });
+
+        it('element', () => {
+            const dummyElement = Yummies.createElement('div');
+            const clonedElement = Yummies.cloneElement(dummyElement);
+
+            expect(TestUtils.isElement(clonedElement)).to.be.true;
+        });
+
+        it('element + props with mix', () => {
+            const props = {
+                test: 123,
+                mix: {
+                    block: 'block2'
+                }
+            };
+            const dummyElement = Yummies.createElement('div', { className: 'block' });
+            const clonedElement = Yummies.cloneElement(dummyElement, props);
+
+            expect(TestUtils.isElement(clonedElement)).to.be.true;
+            expect(clonedElement.props.test).to.be.deep.equal(props.test);
+            expect(clonedElement.props.className).to.be.equal('block block2');
+        });
+    });
+
     describe('yummify()', () => {
         it('json', () => {
             class DummyClass extends Yummies.Component {
