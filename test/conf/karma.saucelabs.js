@@ -35,5 +35,6 @@ export default {
     },
     customLaunchers,
     reporters: [ 'mocha', 'saucelabs' ],
-    browsers: Object.keys(customLaunchers)
+    browsers: Object.keys(customLaunchers),
+    concurrency: 5
 };
