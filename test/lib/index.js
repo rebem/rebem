@@ -10,9 +10,8 @@ describe('yummies', () => {
         expect(Yummies).to.exist;
     });
 
-    // TODO: somehow check for prototype in old browsers
     describe('Component', () => {
-        expect(Yummies.Component.__yummies__).to.be.true;
+        expect(Yummies.Component.__yummified__).to.be.false;
     });
 
     describe('createElement()', () => {
