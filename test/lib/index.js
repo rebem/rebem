@@ -151,23 +151,6 @@ describe('yummies', () => {
             expect(TestUtils.isCompositeComponent(preparedInstance)).to.be.true;
         });
 
-        it('null', () => {
-            class DummyClass extends Yummies.Component {
-                constructor(props) {
-                    super(props);
-                }
-
-                render() {
-                    return null;
-                }
-            }
-
-            const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = new PreparedClass();
-
-            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
-        });
-
         it('ReactElement', () => {
             class DummyClass extends Yummies.Component {
                 constructor(props) {
@@ -180,9 +163,28 @@ describe('yummies', () => {
             }
 
             const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = new PreparedClass();
+            const preparedInstance = TestUtils.renderIntoDocument(
+                Yummies.createElement(PreparedClass)
+            );
 
-            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
+            expect(TestUtils.isCompositeComponent(preparedInstance)).to.be.true;
+        });
+
+        it('cache', () => {
+            class DummyClass extends Yummies.Component {
+                constructor(props) {
+                    super(props);
+                }
+
+                render() {
+                    return dummyBlock;
+                }
+            }
+
+            const PreparedClass1 = Yummies.yummify(DummyClass);
+            const PreparedClass2 = Yummies.yummify(DummyClass);
+
+            expect(PreparedClass1).to.be.equal(PreparedClass2);
         });
     });
 });
