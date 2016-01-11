@@ -21,7 +21,7 @@ import { Component } from 'react';
 import { render } from 'react-dom';
 import BEM from '@yummies/bem';
 
-class Beep extends Component {
+class BeepClass extends Component {
     render() {
         return BEM({
             block: 'beep',
@@ -37,7 +37,9 @@ class Beep extends Component {
     }
 }
 
-class Boop extends Component {
+const Beep = React.createFactory(BeepClass);
+
+class BoopClass extends Component {
     render() {
         return BEM({
             block: 'boop',
@@ -63,19 +65,16 @@ class Boop extends Component {
     }
 }
 
-const BoopFactory = React.createFactory(Boop);
-const BoopElement = BoopFactory({ disabled: true });
+const Boop = React.createFactory(BoopClass);
 
-render(BoopElement, document.getElementById('app'));
+render(Boop({ disabled: true }), document.body);
 ```
 
 ```html
-<div id="app">
-    <div class="boop boop_disabled">
-        <span class="beep beep_type_simple beep_size_xl boop__oh">oh</div>
-        <div class="boop__hello">hello</div>
-    </div>
-</body>
+<div class="boop boop_disabled">
+    <span class="beep beep_type_simple beep_size_xl boop__oh">oh</div>
+    <div class="boop__hello">hello</div>
+</div>
 ```
 
 ## `BEM()`
