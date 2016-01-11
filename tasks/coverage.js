@@ -1,4 +1,4 @@
-export function coveralls() {
+export function coverage() {
     const path = require('path');
     const codecov = require('codecov').handleInput;
 
