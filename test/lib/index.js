@@ -1,190 +1,225 @@
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
-import TestUtils from 'react/lib/ReactTestUtils';
 
 import Yummies from '../../lib/';
+import buildClassName from '../../lib/buildClassName';
 
-const dummyBlock = { block: 'block' };
-
-describe('yummies', () => {
-    it('exist', () => {
+describe('convertToReact', function() {
+    it('exist', function() {
         expect(Yummies).to.exist;
     });
 
-    describe('Component', () => {
-        expect(Yummies.Component.__yummified__).to.be.false;
+    it('be a function', function() {
+        expect(Yummies).to.be.a('function');
     });
 
-    describe('createElement()', () => {
-        it('class', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createElement(
-                        class extends Yummies.Component {
-                            render() {
-                                return dummyBlock;
+    describe('convert', function() {
+        it('ReactElement', function() {
+            const arg = React.createElement('span');
+
+            expect(Yummies(arg)).to.be.equal(arg);
+        });
+
+        it('Array', function() {
+            const arg = [ 'beep', 'boop' ];
+
+            expect(Yummies(arg)).to.be.deep.equal(arg);
+        });
+
+        it('not plain object', function() {
+            const arg = 'beep';
+
+            expect(Yummies(arg)).to.be.equal(arg);
+        });
+
+        describe('bemjson', function() {
+            describe('{}', function() {
+                const result = Yummies({});
+
+                it('isElement', function() {
+                    expect(TestUtils.isElement(result)).to.be.true;
+                });
+
+                it('default tag', function() {
+                    expect(result).to.have.property('type', 'div');
+                });
+
+                it('no className', function() {
+                    expect(result).to.have.deep.property('props.className', '');
+                });
+            });
+
+            describe('props', function() {
+                const bemjson = {
+                    props: {
+                        beep: 1,
+                        boop: 2
+                    }
+                };
+                const result = Yummies(bemjson);
+
+                it('isElement', function() {
+                    expect(TestUtils.isElement(result)).to.be.true;
+                });
+
+                it('props are passed', function() {
+                    expect(result).to.have.property('props');
+                    expect(result.props.beep).to.be.equal(bemjson.props.beep);
+                    expect(result.props.boop).to.be.equal(bemjson.props.boop);
+                });
+            });
+
+            describe('tag', function() {
+                const bemjson = {
+                    tag: 'span'
+                };
+                const result = Yummies(bemjson);
+
+                it('isElement', function() {
+                    expect(TestUtils.isElement(result)).to.be.true;
+                });
+
+                it('tag is "span"', function() {
+                    expect(result).to.have.property('type', 'span');
+                });
+            });
+
+            describe('block', function() {
+                const bemjson = {
+                    block: 'beep'
+                };
+                const result = Yummies(bemjson);
+
+                it('isElement', function() {
+                    expect(TestUtils.isElement(result)).to.be.true;
+                });
+
+                it('className is "beep"', function() {
+                    expect(result).to.have.deep.property('props.className', buildClassName(bemjson));
+                });
+            });
+
+            describe('block + content with block', function() {
+                const bemjson = {
+                    block: 'beep',
+                    content: {
+                        block: 'boop'
+                    }
+                };
+                const result = Yummies(bemjson);
+
+                it('isElement', function() {
+                    expect(TestUtils.isElement(result)).to.be.true;
+                });
+
+                it('has props.children', function() {
+                    expect(result).to.have.deep.property('props.children');
+                });
+
+                describe('props.children', function() {
+                    const children = result.props.children;
+
+                    it('is an Object', function() {
+                        expect(children).to.be.an('object');
+                    });
+
+                    it('isElement', function() {
+                        expect(TestUtils.isElement(children)).to.be.true;
+                    });
+                });
+            });
+
+            describe('block + content with blocks', function() {
+                const bemjson = {
+                    block: 'beep',
+                    content: [
+                        {
+                            block: 'foo',
+                            props: {
+                                key: 'foo'
+                            }
+                        },
+                        {
+                            block: 'bar',
+                            props: {
+                                key: 'bar'
                             }
                         }
-                    )
-                )
-            ).to.be.true;
-        });
+                    ]
+                };
+                const result = Yummies(bemjson);
 
-        it('BEMJSON', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createElement(dummyBlock)
-                )
-            ).to.be.true;
-        });
+                it('isElement', function() {
+                    expect(TestUtils.isElement(result)).to.be.true;
+                });
 
-        it('type + props + children', () => {
-            const testElement = Yummies.createElement('span', { foo: 'bar' }, null);
+                it('has props.children', function() {
+                    expect(result).to.have.deep.property('props.children');
+                });
 
-            expect(TestUtils.isElement(testElement)).to.be.true;
-            expect(testElement.props.foo).to.be.equal('bar');
-            expect(testElement.props.children).to.be.null;
-        });
-    });
+                describe('props.children', function() {
+                    const children = result.props.children;
 
-    describe('createFactory()', () => {
-        it('type + props + children', () => {
-            const testFactory = Yummies.createFactory('div');
-            const testElement = testFactory({ foo: 'bar' }, null);
+                    it('is an Array', function() {
+                        expect(children).to.be.an('array');
+                    });
 
-            expect(TestUtils.isElement(testElement)).to.be.true;
-            expect(testElement.props.foo).to.be.equal('bar');
-            expect(testElement.props.children).to.be.null;
-        });
+                    it('has length of 2', function() {
+                        expect(children).to.have.length(2);
+                    });
 
-        it('class', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createFactory(
-                        class extends Yummies.Component {
-                            render() {
-                                return dummyBlock;
-                            }
+                    it('contains ReactElements', function() {
+                        expect(TestUtils.isElement(children[0])).to.be.true;
+                        expect(TestUtils.isElement(children[1])).to.be.true;
+                    });
+                });
+            });
+
+            describe('block + content with elem (inherited block context)', function() {
+                const bemjson = {
+                    block: 'beep',
+                    content: {
+                        elem: 'boop'
+                    }
+                };
+                const result = Yummies(bemjson);
+                const children = result.props.children;
+
+                it('children.props.className is "boop"', function() {
+                    expect(children).to.have.deep.property(
+                        'props.className',
+                        buildClassName({
+                            block: 'beep',
+                            elem: 'boop'
                         }
-                    )()
-                )
-            ).to.be.true;
-        });
-    });
+                    ));
+                });
+            });
 
-    describe('cloneElement()', () => {
-        it('BEMJSON', () => {
-            const clonedElement = Yummies.cloneElement(dummyBlock);
+            it('bemjson is not mutated', function() {
+                const bemjson = {
+                    block: 'beep',
+                    props: {
+                        test: true
+                    },
+                    content: {
+                        elem: 'boop'
+                    }
+                };
 
-            expect(TestUtils.isElement(clonedElement)).to.be.true;
-            expect(clonedElement.props.className).to.be.equal(dummyBlock.block);
-        });
+                Yummies(bemjson);
 
-        it('BEMJSON + props with mix', () => {
-            const props = {
-                test: 123,
-                mix: {
-                    block: 'block2'
-                }
-            };
-            const clonedElement = Yummies.cloneElement(dummyBlock, props);
-
-            expect(TestUtils.isElement(clonedElement)).to.be.true;
-            expect(clonedElement.props.test).to.be.deep.equal(props.test);
-            expect(clonedElement.props.className).to.be.equal('block block2');
-        });
-
-        it('BEMJSON + props + children', () => {
-            const props = {
-                test: 123
-            };
-            const children = {
-                block: 'block2'
-            };
-            const clonedElement = Yummies.cloneElement(dummyBlock, props, children);
-            const childrenElement = clonedElement.props.children;
-
-            expect(TestUtils.isElement(clonedElement)).to.be.true;
-            expect(TestUtils.isElement(childrenElement)).to.be.true;
-            expect(childrenElement.props.className).to.be.equal('block2');
-        });
-
-        it('element', () => {
-            const dummyElement = Yummies.createElement('div');
-            const clonedElement = Yummies.cloneElement(dummyElement);
-
-            expect(TestUtils.isElement(clonedElement)).to.be.true;
-        });
-
-        it('element + props with mix', () => {
-            const props = {
-                test: 123,
-                mix: {
-                    block: 'block2'
-                }
-            };
-            const dummyElement = Yummies.createElement('div', { className: 'block' });
-            const clonedElement = Yummies.cloneElement(dummyElement, props);
-
-            expect(TestUtils.isElement(clonedElement)).to.be.true;
-            expect(clonedElement.props.test).to.be.deep.equal(props.test);
-            expect(clonedElement.props.className).to.be.equal('block block2');
-        });
-    });
-
-    describe('yummify()', () => {
-        it('json', () => {
-            class DummyClass extends Yummies.Component {
-                constructor(props) {
-                    super(props);
-                }
-
-                render() {
-                    return dummyBlock;
-                }
-            }
-
-            const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = TestUtils.renderIntoDocument(
-                Yummies.createElement(PreparedClass)
-            );
-
-            expect(TestUtils.isCompositeComponent(preparedInstance)).to.be.true;
-        });
-
-        it('ReactElement', () => {
-            class DummyClass extends Yummies.Component {
-                constructor(props) {
-                    super(props);
-                }
-
-                render() {
-                    return Yummies.createElement(dummyBlock);
-                }
-            }
-
-            const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = TestUtils.renderIntoDocument(
-                Yummies.createElement(PreparedClass)
-            );
-
-            expect(TestUtils.isCompositeComponent(preparedInstance)).to.be.true;
-        });
-
-        it('cache', () => {
-            class DummyClass extends Yummies.Component {
-                constructor(props) {
-                    super(props);
-                }
-
-                render() {
-                    return dummyBlock;
-                }
-            }
-
-            const PreparedClass1 = Yummies.yummify(DummyClass);
-            const PreparedClass2 = Yummies.yummify(DummyClass);
-
-            expect(PreparedClass1).to.be.equal(PreparedClass2);
+                expect(bemjson).to.be.deep.equal({
+                    block: 'beep',
+                    props: {
+                        test: true
+                    },
+                    content: {
+                        elem: 'boop'
+                    }
+                });
+            });
         });
     });
 });
