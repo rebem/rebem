@@ -1,7 +1,7 @@
 export { cleanCoverage } from './clean';
 export { karmaBuild, karmaDev, karmaTravis, karmaSauceLabs } from './karma';
 export { eslint } from './lint';
-export { coveralls } from './coveralls';
+export { coverage } from './coverage';
 
 export const test = [
     exports.eslint,
@@ -18,5 +18,5 @@ export const travis = [
     exports.eslint,
     exports.cleanCoverage,
     exports.karmaSauceLabs,
-    exports.coveralls
+    exports.coverage
 ];
