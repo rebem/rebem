@@ -2,40 +2,40 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
 
-import Yummies from '../../lib/';
+import BEM from '../../lib/';
 import buildClassName from '../../lib/buildClassName';
 
 describe('convertToReact', function() {
     it('exist', function() {
-        expect(Yummies).to.exist;
+        expect(BEM).to.exist;
     });
 
     it('be a function', function() {
-        expect(Yummies).to.be.a('function');
+        expect(BEM).to.be.a('function');
     });
 
     describe('convert', function() {
         it('ReactElement', function() {
             const arg = React.createElement('span');
 
-            expect(Yummies(arg)).to.be.equal(arg);
+            expect(BEM(arg)).to.be.equal(arg);
         });
 
         it('Array', function() {
             const arg = [ 'beep', 'boop' ];
 
-            expect(Yummies(arg)).to.be.deep.equal(arg);
+            expect(BEM(arg)).to.be.deep.equal(arg);
         });
 
         it('not plain object', function() {
             const arg = 'beep';
 
-            expect(Yummies(arg)).to.be.equal(arg);
+            expect(BEM(arg)).to.be.equal(arg);
         });
 
         describe('bemjson', function() {
             describe('{}', function() {
-                const result = Yummies({});
+                const result = BEM({});
 
                 it('isElement', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
@@ -57,7 +57,7 @@ describe('convertToReact', function() {
                         boop: 2
                     }
                 };
-                const result = Yummies(bemjson);
+                const result = BEM(bemjson);
 
                 it('isElement', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
@@ -74,7 +74,7 @@ describe('convertToReact', function() {
                 const bemjson = {
                     tag: 'span'
                 };
-                const result = Yummies(bemjson);
+                const result = BEM(bemjson);
 
                 it('isElement', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
@@ -89,7 +89,7 @@ describe('convertToReact', function() {
                 const bemjson = {
                     block: 'beep'
                 };
-                const result = Yummies(bemjson);
+                const result = BEM(bemjson);
 
                 it('isElement', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
@@ -107,7 +107,7 @@ describe('convertToReact', function() {
                         block: 'boop'
                     }
                 };
-                const result = Yummies(bemjson);
+                const result = BEM(bemjson);
 
                 it('isElement', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
@@ -148,7 +148,7 @@ describe('convertToReact', function() {
                         }
                     ]
                 };
-                const result = Yummies(bemjson);
+                const result = BEM(bemjson);
 
                 it('isElement', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
@@ -183,7 +183,7 @@ describe('convertToReact', function() {
                         elem: 'boop'
                     }
                 };
-                const result = Yummies(bemjson);
+                const result = BEM(bemjson);
                 const children = result.props.children;
 
                 it('children.props.className is "boop"', function() {
@@ -208,7 +208,7 @@ describe('convertToReact', function() {
                     }
                 };
 
-                Yummies(bemjson);
+                BEM(bemjson);
 
                 expect(bemjson).to.be.deep.equal({
                     block: 'beep',
