@@ -35,14 +35,11 @@ describe('convertToReact', function() {
 
         describe('bemjson', function() {
             describe('{}', function() {
-                const result = BEM({});
+                const bemjson = {};
+                const result = BEM(bemjson);
 
                 it('isElement', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
-                });
-
-                it('default tag', function() {
-                    expect(result).to.have.property('type', 'div');
                 });
 
                 it('no className', function() {
@@ -71,17 +68,32 @@ describe('convertToReact', function() {
             });
 
             describe('tag', function() {
-                const bemjson = {
-                    tag: 'span'
-                };
-                const result = BEM(bemjson);
+                describe('default tag', function() {
+                    const bemjson = {};
+                    const result = BEM(bemjson);
 
-                it('isElement', function() {
-                    expect(TestUtils.isElement(result)).to.be.true;
+                    it('isElement', function() {
+                        expect(TestUtils.isElement(result)).to.be.true;
+                    });
+
+                    it('tag is "div"', function() {
+                        expect(result).to.have.property('type', 'div');
+                    });
                 });
 
-                it('tag is "span"', function() {
-                    expect(result).to.have.property('type', 'span');
+                describe('custom tag', function() {
+                    const bemjson = {
+                        tag: 'span'
+                    };
+                    const result = BEM(bemjson);
+
+                    it('isElement', function() {
+                        expect(TestUtils.isElement(result)).to.be.true;
+                    });
+
+                    it('tag is "span"', function() {
+                        expect(result).to.have.property('type', 'span');
+                    });
                 });
             });
 
@@ -95,8 +107,11 @@ describe('convertToReact', function() {
                     expect(TestUtils.isElement(result)).to.be.true;
                 });
 
-                it('className is "beep"', function() {
-                    expect(result).to.have.deep.property('props.className', buildClassName(bemjson));
+                it('has correct props.className', function() {
+                    expect(result).to.have.deep.property(
+                        'props.className',
+                        buildClassName(bemjson)
+                    );
                 });
             });
 
@@ -126,6 +141,13 @@ describe('convertToReact', function() {
 
                     it('isElement', function() {
                         expect(TestUtils.isElement(children)).to.be.true;
+                    });
+
+                    it('has correct props.className', function() {
+                        expect(children).to.have.deep.property(
+                            'props.className',
+                            buildClassName(bemjson.content)
+                        );
                     });
                 });
             });
@@ -169,9 +191,30 @@ describe('convertToReact', function() {
                         expect(children).to.have.length(2);
                     });
 
-                    it('contains ReactElements', function() {
-                        expect(TestUtils.isElement(children[0])).to.be.true;
-                        expect(TestUtils.isElement(children[1])).to.be.true;
+                    describe('props.children[0]', function() {
+                        it('isElement', function() {
+                            expect(TestUtils.isElement(children[0])).to.be.true;
+                        });
+
+                        it('has correct props.className', function() {
+                            expect(children[0]).to.have.deep.property(
+                                'props.className',
+                                buildClassName(bemjson.content[0])
+                            );
+                        });
+                    });
+
+                    describe('props.children[1]', function() {
+                        it('isElement', function() {
+                            expect(TestUtils.isElement(children[1])).to.be.true;
+                        });
+
+                        it('has correct props.className', function() {
+                            expect(children[1]).to.have.deep.property(
+                                'props.className',
+                                buildClassName(bemjson.content[1])
+                            );
+                        });
                     });
                 });
             });
@@ -190,8 +233,8 @@ describe('convertToReact', function() {
                     expect(children).to.have.deep.property(
                         'props.className',
                         buildClassName({
-                            block: 'beep',
-                            elem: 'boop'
+                            block: bemjson.block,
+                            elem: bemjson.content.elem
                         }
                     ));
                 });
