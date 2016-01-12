@@ -25,5 +25,5 @@ export default {
             flags: [ '--disable-background-timer-throttling' ]
         }
     },
-    browsers: [ 'Chrome' ]
+    browsers: [ 'Firefox' ]
 };

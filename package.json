@@ -42,7 +42,7 @@
     "chai": "3.4.x",
     "karma": "0.13.x",
     "karma-mocha": "0.2.x",
-    "karma-chrome-launcher": "0.2.x",
+    "karma-firefox-launcher": "0.1.x",
     "karma-webpack": "1.7.x",
     "karma-coverage": "0.5.x",
     "karma-clear-screen-reporter": "1.0.x",
