@@ -19,11 +19,11 @@ export default {
             }
         ]
     },
-    customLaunchers: {
-        ChromeBackground: {
-            base: 'Chrome',
-            flags: [ '--disable-background-timer-throttling' ]
-        }
-    },
+    // customLaunchers: {
+    //     ChromeBackground: {
+    //         base: 'Chrome',
+    //         flags: [ '--disable-background-timer-throttling' ]
+    //     }
+    // },
     browsers: [ 'Firefox' ]
 };

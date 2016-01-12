@@ -19,5 +19,5 @@ export default {
             }
         ]
     },
-    browsers: [ 'Chrome' ]
+    browsers: [ 'Firefox' ]
 };
