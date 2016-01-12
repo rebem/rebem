@@ -96,6 +96,18 @@ describe('convertToReact', function() {
                         '<div class="block"></div>'
                     );
                 });
+
+                it('props.className + block', function() {
+                    test(
+                        {
+                            block: 'block2',
+                            props: {
+                                className: 'block1'
+                            }
+                        },
+                        '<div class="block1 block2"></div>'
+                    );
+                });
             });
 
             describe('elem', function() {
