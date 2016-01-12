@@ -429,6 +429,20 @@ describe('convertToReact', function() {
                     );
                 });
             });
+
+            it('bemjson is not mutated', function() {
+                const bemjson = {
+                    block: 'block',
+                    props: {
+                        test: true
+                    }
+                };
+
+                BEM(bemjson);
+
+                assert(typeof bemjson.tag === 'undefined');
+                assert(typeof bemjson.props.className === 'undefined');
+            });
         });
     });
 });
