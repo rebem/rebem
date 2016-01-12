@@ -32,6 +32,7 @@
     "babel-eslint": ">5.0.0-beta1",
     "eslint-plugin-babel": "3.0.x",
 
+    "react-dom": "0.14.x",
     "react-addons-test-utils": "0.14.x",
 
     "webpack": "1.12.x",
@@ -39,7 +40,6 @@
     "babel-loader": "6.2.x",
     "babel-istanbul-loader": "0.0.x",
     "mocha": "2.3.x",
-    "chai": "3.4.x",
     "karma": "0.13.x",
     "karma-mocha": "0.2.x",
     "karma-firefox-launcher": "0.1.x",

@@ -1,266 +1,420 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import TestUtils from 'react-addons-test-utils';
-import { expect } from 'chai';
+import assert from 'assert';
 
 import BEM from '../../lib/';
-import buildClassName from '../../lib/buildClassName';
+
+function test(bemjson, html) {
+    assert.strictEqual(
+        ReactDOMServer.renderToStaticMarkup(
+            BEM(bemjson)
+        ),
+        html
+    );
+}
 
 describe('convertToReact', function() {
     it('exist', function() {
-        expect(BEM).to.exist;
+        assert(typeof BEM !== 'undefined');
     });
 
-    it('be a function', function() {
-        expect(BEM).to.be.a('function');
+    it('function', function() {
+        assert(typeof BEM === 'function');
     });
 
     describe('convert', function() {
         it('ReactElement', function() {
             const arg = React.createElement('span');
 
-            expect(BEM(arg)).to.be.equal(arg);
+            assert(BEM(arg) === arg);
         });
 
         it('Array', function() {
             const arg = [ 'beep', 'boop' ];
+            const result = BEM(arg);
 
-            expect(BEM(arg)).to.be.deep.equal(arg);
+            assert(result[0] === arg[0]);
+            assert(result[1] === arg[1]);
         });
 
         it('not plain object', function() {
             const arg = 'beep';
 
-            expect(BEM(arg)).to.be.equal(arg);
+            assert(BEM(arg) === arg);
         });
 
         describe('bemjson', function() {
-            describe('{}', function() {
-                const bemjson = {};
-                const result = BEM(bemjson);
+            it('ReactElement is returned', function() {
+                const result = BEM({});
 
-                it('isElement', function() {
-                    expect(TestUtils.isElement(result)).to.be.true;
-                });
-
-                it('no className', function() {
-                    expect(result).to.have.deep.property('props.className', '');
-                });
+                assert(TestUtils.isElement(result));
             });
 
-            describe('props', function() {
-                const bemjson = {
-                    props: {
-                        beep: 1,
-                        boop: 2
-                    }
-                };
-                const result = BEM(bemjson);
-
-                it('isElement', function() {
-                    expect(TestUtils.isElement(result)).to.be.true;
-                });
-
-                it('props are passed', function() {
-                    expect(result).to.have.property('props');
-                    expect(result.props.beep).to.be.equal(bemjson.props.beep);
-                    expect(result.props.boop).to.be.equal(bemjson.props.boop);
-                });
+            it('default tag', function() {
+                test(
+                    {},
+                    '<div></div>'
+                );
             });
 
-            describe('tag', function() {
-                describe('default tag', function() {
-                    const bemjson = {};
-                    const result = BEM(bemjson);
-
-                    it('isElement', function() {
-                        expect(TestUtils.isElement(result)).to.be.true;
-                    });
-
-                    it('tag is "div"', function() {
-                        expect(result).to.have.property('type', 'div');
-                    });
-                });
-
-                describe('custom tag', function() {
-                    const bemjson = {
+            it('tag', function() {
+                test(
+                    {
                         tag: 'span'
-                    };
-                    const result = BEM(bemjson);
+                    },
+                    '<span></span>'
+                );
+            });
 
-                    it('isElement', function() {
-                        expect(TestUtils.isElement(result)).to.be.true;
-                    });
-
-                    it('tag is "span"', function() {
-                        expect(result).to.have.property('type', 'span');
-                    });
-                });
+            it('props', function() {
+                test(
+                    {
+                        props: {
+                            className: 'test'
+                        }
+                    },
+                    '<div class="test"></div>'
+                );
             });
 
             describe('block', function() {
-                const bemjson = {
-                    block: 'beep'
-                };
-                const result = BEM(bemjson);
-
-                it('isElement', function() {
-                    expect(TestUtils.isElement(result)).to.be.true;
+                it('invalid block', function() {
+                    test(
+                        {
+                            block: true
+                        },
+                        '<div></div>'
+                    );
                 });
 
-                it('has correct props.className', function() {
-                    expect(result).to.have.deep.property(
-                        'props.className',
-                        buildClassName(bemjson)
+                it('valid block', function() {
+                    test(
+                        {
+                            block: 'block'
+                        },
+                        '<div class="block"></div>'
                     );
                 });
             });
 
-            describe('block + content with block', function() {
-                const bemjson = {
-                    block: 'beep',
-                    content: {
-                        block: 'boop'
-                    }
-                };
-                const result = BEM(bemjson);
-
-                it('isElement', function() {
-                    expect(TestUtils.isElement(result)).to.be.true;
+            describe('elem', function() {
+                it('elem without block', function() {
+                    test(
+                        {
+                            elem: 'elem'
+                        },
+                        '<div></div>'
+                    );
                 });
 
-                it('has props.children', function() {
-                    expect(result).to.have.deep.property('props.children');
+                it('invalid elem', function() {
+                    test(
+                        {
+                            elem: true
+                        },
+                        '<div></div>'
+                    );
+                });
+            });
+
+            describe('mods', function() {
+                it('invalid mods', function() {
+                    test(
+                        {
+                            mods: null
+                        },
+                        '<div></div>'
+                    );
                 });
 
-                describe('props.children', function() {
-                    const children = result.props.children;
-
-                    it('is an Object', function() {
-                        expect(children).to.be.an('object');
+                describe('block', function() {
+                    it('mods without block', function() {
+                        test(
+                            {
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div></div>'
+                        );
                     });
 
-                    it('isElement', function() {
-                        expect(TestUtils.isElement(children)).to.be.true;
+                    it('block + invalid mods', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: true
+                            },
+                            '<div class="block"></div>'
+                        );
                     });
 
-                    it('has correct props.className', function() {
-                        expect(children).to.have.deep.property(
-                            'props.className',
-                            buildClassName(bemjson.content)
+                    it('block + mod', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div class="block block_mod_val"></div>'
+                        );
+                    });
+
+                    it('block + few mods', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod1: 'val1',
+                                    mod2: 'val2'
+                                }
+                            },
+                            '<div class="block block_mod1_val1 block_mod2_val2"></div>'
+                        );
+                    });
+
+                    it('block + shorthand mod = true', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod: true
+                                }
+                            },
+                            '<div class="block block_mod"></div>'
+                        );
+                    });
+
+                    it('block + shorthand mod = false', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod: false
+                                }
+                            },
+                            '<div class="block"></div>'
+                        );
+                    });
+                });
+
+                describe('elem', function() {
+                    it('mods without block', function() {
+                        test(
+                            {
+                                elem: 'elem',
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div></div>'
+                        );
+                    });
+
+                    it('block + elem + mod', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div class="block__elem block__elem_mod_val"></div>'
+                        );
+                    });
+
+                    it('block + elem + few mods', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod1: 'val1',
+                                    mod2: 'val2'
+                                }
+                            },
+                            '<div class="block__elem block__elem_mod1_val1 block__elem_mod2_val2"></div>'
+                        );
+                    });
+
+                    it('block + shorthand mod = true', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod: true
+                                }
+                            },
+                            '<div class="block__elem block__elem_mod"></div>'
+                        );
+                    });
+
+                    it('block + shorthand mod = false', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod: false
+                                }
+                            },
+                            '<div class="block__elem"></div>'
                         );
                     });
                 });
             });
 
-            describe('block + content with blocks', function() {
-                const bemjson = {
-                    block: 'beep',
-                    content: [
+            describe('mix', function() {
+                it('invalid mix without block', function() {
+                    test(
                         {
-                            block: 'foo',
-                            props: {
-                                key: 'foo'
+                            mix: false
+                        },
+                        '<div></div>'
+                    );
+                });
+
+                it('simple mix', function() {
+                    test(
+                        {
+                            mix: {
+                                block: 'block'
                             }
                         },
+                        '<div class="block"></div>'
+                    );
+                });
+
+                it('complex mix', function() {
+                    test(
                         {
-                            block: 'bar',
-                            props: {
-                                key: 'bar'
+                            mix: {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod1: 'val1',
+                                    mod2: 'val2'
+                                }
                             }
-                        }
-                    ]
-                };
-                const result = BEM(bemjson);
-
-                it('isElement', function() {
-                    expect(TestUtils.isElement(result)).to.be.true;
+                        },
+                        '<div class="block__elem block__elem_mod1_val1 block__elem_mod2_val2"></div>'
+                    );
                 });
 
-                it('has props.children', function() {
-                    expect(result).to.have.deep.property('props.children');
+                it('multiple mixes', function() {
+                    test(
+                        {
+                            mix: [
+                                {
+                                    block: 'block1'
+                                },
+                                {
+                                    block: 'block2'
+                                }
+                            ]
+                        },
+                        '<div class="block1 block2"></div>'
+                    );
                 });
 
-                describe('props.children', function() {
-                    const children = result.props.children;
-
-                    it('is an Array', function() {
-                        expect(children).to.be.an('array');
-                    });
-
-                    it('has length of 2', function() {
-                        expect(children).to.have.length(2);
-                    });
-
-                    describe('props.children[0]', function() {
-                        it('isElement', function() {
-                            expect(TestUtils.isElement(children[0])).to.be.true;
-                        });
-
-                        it('has correct props.className', function() {
-                            expect(children[0]).to.have.deep.property(
-                                'props.className',
-                                buildClassName(bemjson.content[0])
-                            );
-                        });
-                    });
-
-                    describe('props.children[1]', function() {
-                        it('isElement', function() {
-                            expect(TestUtils.isElement(children[1])).to.be.true;
-                        });
-
-                        it('has correct props.className', function() {
-                            expect(children[1]).to.have.deep.property(
-                                'props.className',
-                                buildClassName(bemjson.content[1])
-                            );
-                        });
-                    });
+                it('recursive mixes', function() {
+                    test(
+                        {
+                            mix: {
+                                block: 'block1',
+                                mix: {
+                                    block: 'block2'
+                                }
+                            }
+                        },
+                        '<div class="block1 block2"></div>'
+                    );
                 });
             });
 
-            describe('block + content with elem (inherited block context)', function() {
-                const bemjson = {
-                    block: 'beep',
-                    content: {
-                        elem: 'boop'
-                    }
-                };
-                const result = BEM(bemjson);
-                const children = result.props.children;
+            describe('content', function() {
+                it('empty', function() {
+                    test(
+                        {
+                            content: true
+                        },
+                        '<div></div>'
+                    );
 
-                it('children.props.className is "boop"', function() {
-                    expect(children).to.have.deep.property(
-                        'props.className',
-                        buildClassName({
-                            block: bemjson.block,
-                            elem: bemjson.content.elem
-                        }
-                    ));
+                    test(
+                        {
+                            content: null
+                        },
+                        '<div></div>'
+                    );
                 });
-            });
 
-            it('bemjson is not mutated', function() {
-                const bemjson = {
-                    block: 'beep',
-                    props: {
-                        test: true
-                    },
-                    content: {
-                        elem: 'boop'
-                    }
-                };
+                it('text content', function() {
+                    test(
+                        {
+                            content: 'abc'
+                        },
+                        '<div>abc</div>'
+                    );
 
-                BEM(bemjson);
+                    test(
+                        {
+                            content: 123
+                        },
+                        '<div>123</div>'
+                    );
+                });
 
-                expect(bemjson).to.be.deep.equal({
-                    block: 'beep',
-                    props: {
-                        test: true
-                    },
-                    content: {
-                        elem: 'boop'
-                    }
+                it('React Element', function() {
+                    test(
+                        {
+                            content: React.createElement('span')
+                        },
+                        '<div><span></span></div>'
+                    );
+                });
+
+                it('array', function() {
+                    test(
+                        {
+                            content: [
+                                1,
+                                2
+                            ]
+                        },
+                        '<div>12</div>'
+                    );
+                });
+
+                it('simple bemjson', function() {
+                    test(
+                        {
+                            content: {
+                                block: 'block',
+                                tag: 'span'
+                            }
+                        },
+                        '<div><span class="block"></span></div>'
+                    );
+                });
+
+                it('inherited block context', function() {
+                    test(
+                        {
+                            block: 'block',
+                            content: {
+                                elem: 'elem1',
+                                content: {
+                                    elem: 'elem2'
+                                }
+                            }
+                        },
+                        '<div class="block"><div class="block__elem1"><div class="block__elem2"></div></div></div>'
+                    );
                 });
             });
         });
