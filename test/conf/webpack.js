@@ -21,7 +21,10 @@ export default {
             {
                 test: /\.js$/,
                 include: path.resolve('lib/'),
-                loader: 'isparta'
+                loader: 'babel-istanbul',
+                query: {
+                    cacheDirectory: true
+                }
             }
         ]
     }

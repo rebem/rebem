@@ -1,172 +1,301 @@
-[![npm](https://img.shields.io/npm/v/@yummies/yummies.svg?style=flat-square)](https://www.npmjs.com/package/@yummies/yummies)
-[![travis](http://img.shields.io/travis/yummies/yummies.svg?style=flat-square)](https://travis-ci.org/yummies/yummies)
-[![coverage](http://img.shields.io/coveralls/yummies/yummies/master.svg?style=flat-square)](https://coveralls.io/r/yummies/yummies)
-[![deps](http://img.shields.io/david/yummies/yummies.svg?style=flat-square)](https://david-dm.org/yummies/yummies)
-[![dev deps](http://img.shields.io/david/dev/yummies/yummies.svg?style=flat-square)](https://david-dm.org/yummies/yummies#info=devDependencies)
+[![npm](https://img.shields.io/npm/v/@yummies/bem.svg?style=flat-square)](https://www.npmjs.com/package/@yummies/bem)
+[![travis](http://img.shields.io/travis/yummies/bem.svg?style=flat-square)](https://travis-ci.org/yummies/bem)
+[![coverage](https://img.shields.io/codecov/c/github/yummies/bem/next.svg?style=flat-square)](https://codecov.io/github/yummies/bem)
+[![deps](http://img.shields.io/david/yummies/bem.svg?style=flat-square)](https://david-dm.org/yummies/bem)
+[![dev deps](http://img.shields.io/david/dev/yummies/bem.svg?style=flat-square)](https://david-dm.org/yummies/bem#info=devDependencies)
+
+[![sauce labs](http://soysauce.berabou.me/u/yummies.svg)](https://saucelabs.com/u/yummies)
 
 ## Install
 
 ```
-npm i -S @yummies/yummies
+npm i -S @yummies/bem
 ```
 
 ## Overview
 
-Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React](https://facebook.github.io/react/)? How about that:
+Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React](https://facebook.github.io/react/)? Give `@yummies/bem` a try:
 
 ```js
-import Yummies from '@yummies/yummies';
+import { Component } from 'react';
+import { render } from 'react-dom';
+import BEM from '@yummies/bem';
 
-class MyComponent extends Yummies.Component {
-    constructor() {
-        this.state = {
-            test: null
-        };
-    }
-
+class BeepClass extends Component {
     render() {
-        return {
-            block: 'my-component',
+        return BEM({
+            block: 'beep',
+            tag: 'span',
             mods: {
-                test: this.state.test
+                type: 'simple',
+                ...this.props.mods
             },
-            content: {
-                elem: 'input',
-                tag: 'input',
-                mods: {
-                    type: 'search'
-                },
-                mix: {
-                    block: 'my-another-component',
-                    elem: 'input'
-                },
-                props: {
-                    placeholder: 'search'
-                }
-            }
-        };
+            mix: this.props.mix,
+            props: this.props,
+            content: this.props.children
+        });
     }
 }
 
-const MyComponentFactory = Yummies.createFactory(MyComponent);
+const Beep = React.createFactory(BeepClass);
 
-Yummies.render(MyComponentFactory(), document.body);
+class BoopClass extends Component {
+    render() {
+        return BEM({
+            block: 'boop',
+            mods: this.props.mods,
+            mix: this.props.mix,
+            props: this.props,
+            content: [
+                Beep({
+                    mix: {
+                        block: 'boop',
+                        elem: 'oh'
+                    },
+                    mods: {
+                        size: 'xl'
+                    }
+                }, 'oh'),
+                {
+                    elem: 'hello',
+                    content: 'hello'
+                }
+            ]
+        });
+    }
+}
+
+const Boop = React.createFactory(BoopClass);
+
+render(Boop({ disabled: true }), document.body);
 ```
 
-## BEM
+```html
+<div class="boop boop_disabled">
+    <span class="beep beep_type_simple beep_size_xl boop__oh">oh</div>
+    <div class="boop__hello">hello</div>
+</div>
+```
 
-Similar to [BEMJSON](https://en.bem.info/technology/bemjson/v2/bemjson/):
+## `BEM()`
 
-##### `block <string>`
+`BEM()` converts `bemjson` into [React Element](https://facebook.github.io/react/blog/2014/10/14/introducing-react-elements.html). Anything except arrays and plain objects will be returned as is, which means that you can use any mixed content including another React Elements as well.
 
-[Block](https://en.bem.info/method/definitions/#block) name.
+## `bemjson`
 
-##### `elem <string>`
+### `block`
 
-[Element](https://en.bem.info/method/definitions/#element) name. Understands current block context so no need to repeat `block` inside nested elements.
-
-##### `mods <object>`
-
-* `block` + `mods` – [block modifiers](https://en.bem.info/method/definitions/#modifiers-for-blocks)
-* `elem` + `mods` – [element modifiers](https://en.bem.info/method/definitions/#element-modifiers)
-
-Can be shorthanded with `true` as modifier value.
-
-##### `mix <array|object>`
-
-[Mix](https://en.bem.info/forum/issues/4/) additional className(s) from another BEM entity(ies).
-
-##### `tag <string>`
-
-HTML tag, `div` by default.
-
-##### `content <*>`
-
-Any possible content such as strings, arrays, BEMJSON, React Elements, …
-
-## Inheritance
-
-Already knows about [BEM Levels of definition](https://en.bem.info/method/filesystem/#levels-of-definition)? Good, because we have it as "Layers" – checkout [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) – multilayer components inheritance for Yummies.
-
-## API
-
-### Patched methods
-
-The following [React Top-Level API](https://facebook.github.io/react/docs/top-level-api.html) methods are patched to support the new format:
-
-##### `render()`
+[Reference](https://en.bem.info/method/key-concepts/#block).
 
 ```js
-Yummies.render({ block: 'my-component' }, document.body);
+BEM({
+    block: 'beep'
+})
 ```
 
-##### `renderToString()`
+```html
+<div class="beep"></div>
+```
+
+### `elem`
+
+[Reference](https://en.bem.info/method/key-concepts/#element).
 
 ```js
-Yummies.renderToString({ block: 'my-component' });
+BEM({
+    block: 'beep',
+    elem: 'boop'
+})
 ```
 
-##### `renderToStaticMarkup()`
+```html
+<div class="beep__boop"></div>
+```
+
+### `mods`
+
+[Reference](https://en.bem.info/method/key-concepts/#modifier).
+
+#### Simple
 
 ```js
-Yummies.renderToStaticMarkup({ block: 'my-component' });
+BEM({
+    block: 'beep',
+    mods: {
+        foo: 'bar'
+    }
+})
 ```
 
-##### `createElement()`
+```html
+<div class="beep beep_foo_bar"></div>
+```
+
+#### Boolean
 
 ```js
-Yummies.createElement({ block: 'my-component' });
+BEM({
+    block: 'beep',
+    mods: {
+        foo: true,
+        bar: false
+    }
+})
 ```
+
+```html
+<div class="beep beep_foo"></div>
+```
+
+#### Element
 
 ```js
-Yummies.createElement(class extends Yummies.Component { … });
+BEM({
+    block: 'beep',
+    elem: 'boop',
+    mods: {
+        foo: 'bar'
+    }
+})
 ```
 
-##### `createFactory()`
+```html
+<div class="beep__boop beep__boop_foo_bar"></div>
+```
+
+### `mix`
+
+[Reference](https://en.bem.info/method/key-concepts/#mix).
+
+#### Simple
 
 ```js
-Yummies.createFactory(class extends Yummies.Component { … });
+BEM({
+    block: 'beep',
+    mix: {
+        block: 'boop',
+        elem: 'foo'
+    }
+})
 ```
 
-### Additional helpers
+```html
+<div class="beep boop__foo"></div>
+```
 
-#### `yummify(<class>)`
-Patch class (extended from `Yummies.Component`) `render()` method to support BEMJSON.
-
-##### `buildClassName(<object>)`
-
-Build className string from BEMJSON object.
+#### Multiple
 
 ```js
-Yummies.buildClassName({ block: 'my-component', elem: 'title' });
+BEM({
+    block: 'beep',
+    mix: [
+      {
+          block: 'boop',
+          elem: 'foo'
+      },
+      {
+          block: 'bar',
+          mods: {
+              test: true
+          }
+      }
+    ]
+})
 ```
 
-##### `yummifyChain(<array>)`
+```html
+<div class="beep boop__foo bar_test"></div>
+```
 
-Collect all the inherited classes chain and return a ReactElement Factory.
-See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for more details.
+### `tag`
+
+#### Default
 
 ```js
-Yummies.yummify([ … ]);
+BEM({})
 ```
 
-##### `yummifyChainRaw(<array>)`
+```html
+<div></div>
+```
 
-Collect all the inherited classes chain and return a resulted Class Factory.
-See [babel-plugin-yummies](https://github.com/yummies/babel-plugin-yummies) for more details.
+#### Custom
 
 ```js
-Yummies.yummifyRaw([ … ]);
+BEM({
+    tag: 'span'
+})
 ```
 
-### Babel environment
+```html
+<span></span>
+```
 
-There are couple of things worth noticing if you use `babel`.
+### `props`
 
-Since `1.x.x` `babel-runtime` is not included anymore and we inline all helpers. We do it in case to support IE9-10. It may insignificantly increase bundle size, but other than that everything should work fine even if you use `babel-runtime` in your application.
+Will be transfered as [React Props](https://facebook.github.io/react/docs/transferring-props.html).
 
-If you need to support IE9-10, you should include on `spec.protoToAssign` into `optional` in your `.babelrc`. This will fix some inheritance incompatibility issues. If you don't need IE9-10, no additional moves required.
+References:
+* [HTML Attributes](https://facebook.github.io/react/docs/tags-and-attributes.html#html-attributes)
+* [Events System](https://facebook.github.io/react/docs/events.html)
 
-### Old browsers support
+```js
+BEM({
+    block: 'image',
+    tag: 'img',
+    props: {
+        src: 'http://funkyimg.com/i/26jtf.gif',
+        alt: 'kitten'
+    }
+})
+```
 
-Please note that IE8 is supported only in `0.x.x` legacy branch. Starting from `1.x.x` only IE9 and higher are supported. We are going to keep updating a legacy branch in parallel for some time (until IE8 would not become history).
+```html
+<img class="image" src="http://funkyimg.com/i/26jtf.gif" alt="kitten"/>
+```
+
+### `content`
+
+Anything including arrays, nested `bemjson`, React Elements, strings, numbers, etc.
+
+#### Simple
+
+```js
+BEM({
+    block: 'beep',
+    content: [
+        {
+            block: 'foo'
+        },
+        {
+            block: 'bar'
+        }
+    ]
+})
+```
+
+```html
+<div class="beep">
+    <div class="foo"></div>
+    <div class="bar"></div>
+</div>
+```
+
+#### Block context
+
+Block context is preserved so there is no need to specify `block` every time for nested `bemjson`.
+
+```js
+BEM({
+    block: 'beep',
+    content: {
+        elem: 'boop'
+    }
+})
+```
+
+```html
+<div class="beep">
+    <div class="beep__boop"></div>
+</div>
+```

@@ -1,131 +1,448 @@
-import { expect } from 'chai';
 import React from 'react';
-import TestUtils from 'react/lib/ReactTestUtils';
+import ReactDOMServer from 'react-dom/server';
+import TestUtils from 'react-addons-test-utils';
+import assert from 'assert';
 
-import Yummies from '../../lib/';
+import BEM from '../../lib/';
 
-const dummyBlock = { block: 'block' };
+function test(bemjson, html) {
+    assert.strictEqual(
+        ReactDOMServer.renderToStaticMarkup(
+            BEM(bemjson)
+        ),
+        html
+    );
+}
 
-describe('yummies', () => {
-    it('exist', () => {
-        expect(Yummies).to.exist;
+describe('convertToReact', function() {
+    it('exist', function() {
+        assert(typeof BEM !== 'undefined');
     });
 
-    describe('Component', () => {
-        expect(
-            Object.getPrototypeOf(Yummies.Component)
-        ).to.be.equal(React.Component);
+    it('function', function() {
+        assert(typeof BEM === 'function');
     });
 
-    describe('createElement()', () => {
-        it('class', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createElement(
-                        class extends Yummies.Component {
-                            render() {
-                                return dummyBlock;
-                            }
+    describe('convert', function() {
+        it('ReactElement', function() {
+            const arg = React.createElement('span');
+
+            assert(BEM(arg) === arg);
+        });
+
+        it('Array', function() {
+            const arg = [ 'beep', 'boop' ];
+            const result = BEM(arg);
+
+            assert(result[0] === arg[0]);
+            assert(result[1] === arg[1]);
+        });
+
+        it('not plain object', function() {
+            const arg = 'beep';
+
+            assert(BEM(arg) === arg);
+        });
+
+        describe('bemjson', function() {
+            it('ReactElement is returned', function() {
+                const result = BEM({});
+
+                assert(TestUtils.isElement(result));
+            });
+
+            it('default tag', function() {
+                test(
+                    {},
+                    '<div></div>'
+                );
+            });
+
+            it('tag', function() {
+                test(
+                    {
+                        tag: 'span'
+                    },
+                    '<span></span>'
+                );
+            });
+
+            it('props', function() {
+                test(
+                    {
+                        props: {
+                            className: 'test'
                         }
-                    )
-                )
-            ).to.be.true;
-        });
+                    },
+                    '<div class="test"></div>'
+                );
+            });
 
-        it('BEMJSON', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createElement(dummyBlock)
-                )
-            ).to.be.true;
-        });
+            describe('block', function() {
+                it('invalid block', function() {
+                    test(
+                        {
+                            block: true
+                        },
+                        '<div></div>'
+                    );
+                });
 
-        it('type + props + children', () => {
-            const testElement = Yummies.createElement('span', { foo: 'bar' }, null);
+                it('valid block', function() {
+                    test(
+                        {
+                            block: 'block'
+                        },
+                        '<div class="block"></div>'
+                    );
+                });
 
-            expect(TestUtils.isElement(testElement)).to.be.true;
-            expect(testElement.props.foo).to.be.equal('bar');
-            expect(testElement.props.children).to.be.null;
-        });
-    });
-
-    describe('createFactory()', () => {
-        it('type + props + children', () => {
-            const testFactory = Yummies.createFactory('div');
-            const testElement = testFactory({ foo: 'bar' }, null);
-
-            expect(TestUtils.isElement(testElement)).to.be.true;
-            expect(testElement.props.foo).to.be.equal('bar');
-            expect(testElement.props.children).to.be.null;
-        });
-
-        it('class', () => {
-            expect(
-                TestUtils.isElement(
-                    Yummies.createFactory(
-                        class extends Yummies.Component {
-                            render() {
-                                return dummyBlock;
+                it('props.className + block', function() {
+                    test(
+                        {
+                            block: 'block2',
+                            props: {
+                                className: 'block1'
                             }
-                        }
-                    )()
-                )
-            ).to.be.true;
-        });
-    });
+                        },
+                        '<div class="block1 block2"></div>'
+                    );
+                });
+            });
 
-    describe('yummify()', () => {
-        it('json', () => {
-            class DummyClass extends Yummies.Component {
-                constructor(props) {
-                    super(props);
-                }
+            describe('elem', function() {
+                it('elem without block', function() {
+                    test(
+                        {
+                            elem: 'elem'
+                        },
+                        '<div></div>'
+                    );
+                });
 
-                render() {
-                    return dummyBlock;
-                }
-            }
+                it('invalid elem', function() {
+                    test(
+                        {
+                            elem: true
+                        },
+                        '<div></div>'
+                    );
+                });
+            });
 
-            const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = TestUtils.renderIntoDocument(
-                Yummies.createElement(PreparedClass)
-            );
+            describe('mods', function() {
+                it('invalid mods', function() {
+                    test(
+                        {
+                            mods: null
+                        },
+                        '<div></div>'
+                    );
+                });
 
-            expect(TestUtils.isCompositeComponent(preparedInstance)).to.be.true;
-        });
+                describe('block', function() {
+                    it('mods without block', function() {
+                        test(
+                            {
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div></div>'
+                        );
+                    });
 
-        it('null', () => {
-            class DummyClass extends Yummies.Component {
-                constructor(props) {
-                    super(props);
-                }
+                    it('block + invalid mods', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: true
+                            },
+                            '<div class="block"></div>'
+                        );
+                    });
 
-                render() {
-                    return null;
-                }
-            }
+                    it('block + mod', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div class="block block_mod_val"></div>'
+                        );
+                    });
 
-            const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = new PreparedClass();
+                    it('block + few mods', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod1: 'val1',
+                                    mod2: 'val2'
+                                }
+                            },
+                            '<div class="block block_mod1_val1 block_mod2_val2"></div>'
+                        );
+                    });
 
-            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
-        });
+                    it('block + shorthand mod = true', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod: true
+                                }
+                            },
+                            '<div class="block block_mod"></div>'
+                        );
+                    });
 
-        it('ReactElement', () => {
-            class DummyClass extends Yummies.Component {
-                constructor(props) {
-                    super(props);
-                }
+                    it('block + shorthand mod = false', function() {
+                        test(
+                            {
+                                block: 'block',
+                                mods: {
+                                    mod: false
+                                }
+                            },
+                            '<div class="block"></div>'
+                        );
+                    });
+                });
 
-                render() {
-                    return Yummies.createElement(dummyBlock);
-                }
-            }
+                describe('elem', function() {
+                    it('mods without block', function() {
+                        test(
+                            {
+                                elem: 'elem',
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div></div>'
+                        );
+                    });
 
-            const PreparedClass = Yummies.yummify(DummyClass);
-            const preparedInstance = new PreparedClass();
+                    it('block + elem + mod', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod: 'val'
+                                }
+                            },
+                            '<div class="block__elem block__elem_mod_val"></div>'
+                        );
+                    });
 
-            expect(preparedInstance).to.be.an.instanceOf(DummyClass);
+                    it('block + elem + few mods', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod1: 'val1',
+                                    mod2: 'val2'
+                                }
+                            },
+                            '<div class="block__elem block__elem_mod1_val1 block__elem_mod2_val2"></div>'
+                        );
+                    });
+
+                    it('block + shorthand mod = true', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod: true
+                                }
+                            },
+                            '<div class="block__elem block__elem_mod"></div>'
+                        );
+                    });
+
+                    it('block + shorthand mod = false', function() {
+                        test(
+                            {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod: false
+                                }
+                            },
+                            '<div class="block__elem"></div>'
+                        );
+                    });
+                });
+            });
+
+            describe('mix', function() {
+                it('invalid mix without block', function() {
+                    test(
+                        {
+                            mix: false
+                        },
+                        '<div></div>'
+                    );
+                });
+
+                it('simple mix', function() {
+                    test(
+                        {
+                            mix: {
+                                block: 'block'
+                            }
+                        },
+                        '<div class="block"></div>'
+                    );
+                });
+
+                it('complex mix', function() {
+                    test(
+                        {
+                            mix: {
+                                block: 'block',
+                                elem: 'elem',
+                                mods: {
+                                    mod1: 'val1',
+                                    mod2: 'val2'
+                                }
+                            }
+                        },
+                        '<div class="block__elem block__elem_mod1_val1 block__elem_mod2_val2"></div>'
+                    );
+                });
+
+                it('multiple mixes', function() {
+                    test(
+                        {
+                            mix: [
+                                {
+                                    block: 'block1'
+                                },
+                                {
+                                    block: 'block2'
+                                }
+                            ]
+                        },
+                        '<div class="block1 block2"></div>'
+                    );
+                });
+
+                it('recursive mixes', function() {
+                    test(
+                        {
+                            mix: {
+                                block: 'block1',
+                                mix: {
+                                    block: 'block2'
+                                }
+                            }
+                        },
+                        '<div class="block1 block2"></div>'
+                    );
+                });
+            });
+
+            describe('content', function() {
+                it('empty', function() {
+                    test(
+                        {
+                            content: true
+                        },
+                        '<div></div>'
+                    );
+
+                    test(
+                        {
+                            content: null
+                        },
+                        '<div></div>'
+                    );
+                });
+
+                it('text content', function() {
+                    test(
+                        {
+                            content: 'abc'
+                        },
+                        '<div>abc</div>'
+                    );
+
+                    test(
+                        {
+                            content: 123
+                        },
+                        '<div>123</div>'
+                    );
+                });
+
+                it('React Element', function() {
+                    test(
+                        {
+                            content: React.createElement('span')
+                        },
+                        '<div><span></span></div>'
+                    );
+                });
+
+                it('array', function() {
+                    test(
+                        {
+                            content: [
+                                1,
+                                2
+                            ]
+                        },
+                        '<div>12</div>'
+                    );
+                });
+
+                it('simple bemjson', function() {
+                    test(
+                        {
+                            content: {
+                                block: 'block',
+                                tag: 'span'
+                            }
+                        },
+                        '<div><span class="block"></span></div>'
+                    );
+                });
+
+                it('inherited block context', function() {
+                    test(
+                        {
+                            block: 'block',
+                            content: {
+                                elem: 'elem1',
+                                content: {
+                                    elem: 'elem2'
+                                }
+                            }
+                        },
+                        '<div class="block"><div class="block__elem1"><div class="block__elem2"></div></div></div>'
+                    );
+                });
+            });
+
+            it('bemjson is not mutated', function() {
+                const bemjson = {
+                    block: 'block',
+                    props: {
+                        test: true
+                    }
+                };
+
+                BEM(bemjson);
+
+                assert(typeof bemjson.tag === 'undefined');
+                assert(typeof bemjson.props.className === 'undefined');
+            });
         });
     });
 });

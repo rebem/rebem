@@ -1,4 +1,4 @@
 {
-  "presets": [ "es2015", "stage-0" ],
-  "plugins": [ "add-module-exports", "transform-proto-to-assign" ]
+  "presets": [ "es2015", "stage-1" ],
+  "plugins": [ "add-module-exports" ]
 }
