@@ -1,16 +1,16 @@
-; editorconfig.org
+# http://editorconfig.org/
 root = true
 
 [*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
 indent_style = space
 indent_size = 4
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
 
-[*.{json,yml,md}]
+[*.{json,yml}]
 indent_size = 2
 
-[.eslintrc]
+[{.babelrc,.eslintrc}]
 indent_size = 2
