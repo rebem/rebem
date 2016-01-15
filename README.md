@@ -11,7 +11,7 @@ npm i -S @yummies/bem
 
 ## Overview
 
-Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React](https://facebook.github.io/react/)? Give `@yummies/bem` a try:
+Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React](https://facebook.github.io/react/)?
 
 ```js
 import { Component } from 'react';
@@ -78,11 +78,21 @@ render(
 </div>
 ```
 
-## `BEM()`
+## Usage
 
-`BEM()` converts `bemjson` into [React Element](https://facebook.github.io/react/blog/2014/10/14/introducing-react-elements.html). Anything except arrays and plain objects will be returned as is, which means that you can use any mixed content including another React Elements as well.
+```js
+BEM(props, ...children)
+```
 
-## `bemjson`
+is almost the same as
+
+```js
+React.createElement(tag/ReactClass, props, ...children)
+```
+
+but `tag` and `props.className` are made from special props:
+
+### BEM PropTypes
 
 ### `block`
 
@@ -210,17 +220,7 @@ BEM({
 
 ### `tag`
 
-#### Default
-
-```js
-BEM({})
-```
-
-```html
-<div></div>
-```
-
-#### Custom
+`div` by default.
 
 ```js
 BEM({
@@ -232,7 +232,7 @@ BEM({
 <span></span>
 ```
 
-### Props
+### React PropTypes
 
 References:
 * [HTML Attributes](https://facebook.github.io/react/docs/tags-and-attributes.html#html-attributes)
