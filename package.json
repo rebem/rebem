@@ -35,7 +35,6 @@
     "react-dom": "0.14.x",
     "react-addons-test-utils": "0.14.x",
 
-    "jsdom": "7.2.x",
     "mocha": "2.3.x",
     "babel-istanbul": "0.6.x",
     "codecov": "1.0.x"
