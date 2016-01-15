@@ -20,17 +20,18 @@ import BEM from '@yummies/bem';
 
 class BeepClass extends Component {
     render() {
-        return BEM({
-            block: 'beep',
-            tag: 'span',
-            mods: {
-                type: 'simple',
-                ...this.props.mods
+        return BEM(
+            {
+                ...this.props,
+                block: 'beep',
+                tag: 'span',
+                mods: {
+                    type: 'simple',
+                    ...this.props.mods
+                }
             },
-            mix: this.props.mix,
-            props: this.props,
-            content: this.props.children
-        });
+            this.props.children
+        );
     }
 }
 
@@ -38,27 +39,24 @@ const Beep = React.createFactory(BeepClass);
 
 class BoopClass extends Component {
     render() {
-        return BEM({
-            block: 'boop',
-            mods: this.props.mods,
-            mix: this.props.mix,
-            props: this.props,
-            content: [
-                Beep({
+        return BEM(
+            {
+                ...this.props,
+                block: 'boop'
+            },
+            Beep(
+                {
                     mix: {
                         block: 'boop',
-                        elem: 'oh'
+                        elem: 'hello'
                     },
                     mods: {
                         size: 'xl'
                     }
-                }, 'oh'),
-                {
-                    elem: 'hello',
-                    content: 'hello'
-                }
-            ]
-        });
+                },
+                'hello'
+            )
+        );
     }
 }
 
@@ -76,8 +74,7 @@ render(
 
 ```html
 <div class="boop boop_disabled">
-    <span class="beep beep_type_simple beep_size_xl boop__oh">oh</div>
-    <div class="boop__hello">hello</div>
+    <span class="beep beep_type_simple beep_size_xl boop__hello">hello</div>
 </div>
 ```
 
@@ -235,9 +232,7 @@ BEM({
 <span></span>
 ```
 
-### `props`
-
-Will be transfered as [React Props](https://facebook.github.io/react/docs/transferring-props.html).
+### Props
 
 References:
 * [HTML Attributes](https://facebook.github.io/react/docs/tags-and-attributes.html#html-attributes)
@@ -247,61 +242,13 @@ References:
 BEM({
     block: 'image',
     tag: 'img',
-    props: {
-        src: 'http://funkyimg.com/i/26jtf.gif',
-        alt: 'kitten'
-    }
+    src: 'http://funkyimg.com/i/26jtf.gif',
+    alt: 'kitten'
 })
 ```
 
 ```html
 <img class="image" src="http://funkyimg.com/i/26jtf.gif" alt="kitten"/>
-```
-
-### `content`
-
-Anything including arrays, nested `bemjson`, React Elements, strings, numbers, etc.
-
-#### Simple
-
-```js
-BEM({
-    block: 'beep',
-    content: [
-        {
-            block: 'foo'
-        },
-        {
-            block: 'bar'
-        }
-    ]
-})
-```
-
-```html
-<div class="beep">
-    <div class="foo"></div>
-    <div class="bar"></div>
-</div>
-```
-
-#### Block context
-
-Block context is preserved so there is no need to specify `block` every time for nested `bemjson`.
-
-```js
-BEM({
-    block: 'beep',
-    content: {
-        elem: 'boop'
-    }
-})
-```
-
-```html
-<div class="beep">
-    <div class="beep__boop"></div>
-</div>
 ```
 
 ## Notes
