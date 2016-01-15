@@ -3,8 +3,6 @@
 [![coverage](https://img.shields.io/codecov/c/github/yummies/bem.svg?style=flat-square)](https://codecov.io/github/yummies/bem)
 [![deps](https://img.shields.io/gemnasium/yummies/bem.svg?style=flat-square)](https://gemnasium.com/yummies/bem)
 
-[![sauce labs](http://soysauce.berabou.me/u/yummies.svg)](https://saucelabs.com/u/yummies)
-
 ## Install
 
 ```
