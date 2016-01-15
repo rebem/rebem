@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/@yummies/bem.svg?style=flat-square)](https://www.npmjs.com/package/@yummies/bem)
-[![travis](http://img.shields.io/travis/yummies/bem.svg?style=flat-square)](https://travis-ci.org/yummies/bem)
-[![coverage](https://img.shields.io/codecov/c/github/yummies/bem.svg?style=flat-square)](https://codecov.io/github/yummies/bem)
+[![travis](http://img.shields.io/travis/yummies/bem/next.svg?style=flat-square)](https://travis-ci.org/yummies/bem)
+[![coverage](https://img.shields.io/codecov/c/github/yummies/bem/next.svg?style=flat-square)](https://codecov.io/github/yummies/bem)
 [![deps](https://img.shields.io/gemnasium/yummies/bem.svg?style=flat-square)](https://gemnasium.com/yummies/bem)
 
 ## Install
