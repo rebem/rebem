@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "react": "0.14.x",
-    "lodash.isplainobject": "3.2.x"
+    "lodash.isplainobject": "4.0.x"
   },
   "devDependencies": {
     "husky": "0.10.x",
