@@ -64,7 +64,14 @@ class BoopClass extends Component {
 
 const Boop = React.createFactory(BoopClass);
 
-render(Boop({ disabled: true }), document.body);
+render(
+    Boop({
+        mods: {
+            disabled: true
+        }
+    }),
+    document.body
+);
 ```
 
 ```html
