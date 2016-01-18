@@ -10,10 +10,7 @@
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
   "main": "build/index.js",
-  "files": [
-    "build/",
-    "LICENSE"
-  ],
+  "files": [ "build/" ],
   "dependencies": {
     "react": "0.14.x",
     "lodash.isplainobject": "4.0.x"
