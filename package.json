@@ -2,7 +2,7 @@
   "name": "rebem",
   "version": "0.1.0",
   "description": "React ❤︎ BEM",
-  "keywords": [ "yummies", "react", "bem", "bemjson" ],
+  "keywords": [ "rebem", "react", "bem", "bemjson" ],
   "homepage": "https://github.com/rebem/rebem",
   "repository": "rebem/rebem",
   "contributors": [
