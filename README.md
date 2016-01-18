@@ -1,12 +1,12 @@
-[![npm](https://img.shields.io/npm/v/@yummies/bem.svg?style=flat-square)](https://www.npmjs.com/package/@yummies/bem)
-[![travis](http://img.shields.io/travis/yummies/bem/next.svg?style=flat-square)](https://travis-ci.org/yummies/bem)
-[![coverage](https://img.shields.io/codecov/c/github/yummies/bem/next.svg?style=flat-square)](https://codecov.io/github/yummies/bem)
-[![deps](https://img.shields.io/gemnasium/yummies/bem.svg?style=flat-square)](https://gemnasium.com/yummies/bem)
+[![npm](https://img.shields.io/npm/v/rebem.svg?style=flat-square)](https://www.npmjs.com/package/rebem)
+[![travis](http://img.shields.io/travis/rebem/rebem/next.svg?style=flat-square)](https://travis-ci.org/rebem/rebem)
+[![coverage](https://img.shields.io/codecov/c/github/rebem/rebem/next.svg?style=flat-square)](https://codecov.io/github/rebem/rebem)
+[![deps](https://img.shields.io/gemnasium/rebem/rebem.svg?style=flat-square)](https://gemnasium.com/rebem/rebem)
 
 ## Install
 
 ```
-npm i -S @yummies/bem
+npm i -S rebem
 ```
 
 ## Overview
@@ -16,7 +16,7 @@ Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React
 ```js
 import { Component } from 'react';
 import { render } from 'react-dom';
-import BEM from '@yummies/bem';
+import { BEM } from 'rebem';
 
 class BeepClass extends Component {
     render() {
