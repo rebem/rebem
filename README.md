@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/@yummies/bem.svg?style=flat-square)](https://www.npmjs.com/package/@yummies/bem)
-[![travis](http://img.shields.io/travis/yummies/bem.svg?style=flat-square)](https://travis-ci.org/yummies/bem)
-[![coverage](https://img.shields.io/codecov/c/github/yummies/bem.svg?style=flat-square)](https://codecov.io/github/yummies/bem)
+[![travis](http://img.shields.io/travis/yummies/bem/next.svg?style=flat-square)](https://travis-ci.org/yummies/bem)
+[![coverage](https://img.shields.io/codecov/c/github/yummies/bem/next.svg?style=flat-square)](https://codecov.io/github/yummies/bem)
 [![deps](https://img.shields.io/gemnasium/yummies/bem.svg?style=flat-square)](https://gemnasium.com/yummies/bem)
 
 ## Install
@@ -11,7 +11,7 @@ npm i -S @yummies/bem
 
 ## Overview
 
-Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React](https://facebook.github.io/react/)? Give `@yummies/bem` a try:
+Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React](https://facebook.github.io/react/)?
 
 ```js
 import { Component } from 'react';
@@ -20,17 +20,18 @@ import BEM from '@yummies/bem';
 
 class BeepClass extends Component {
     render() {
-        return BEM({
-            block: 'beep',
-            tag: 'span',
-            mods: {
-                type: 'simple',
-                ...this.props.mods
+        return BEM(
+            {
+                ...this.props,
+                block: 'beep',
+                tag: 'span',
+                mods: {
+                    type: 'simple',
+                    ...this.props.mods
+                }
             },
-            mix: this.props.mix,
-            props: this.props,
-            content: this.props.children
-        });
+            this.props.children
+        );
     }
 }
 
@@ -38,27 +39,24 @@ const Beep = React.createFactory(BeepClass);
 
 class BoopClass extends Component {
     render() {
-        return BEM({
-            block: 'boop',
-            mods: this.props.mods,
-            mix: this.props.mix,
-            props: this.props,
-            content: [
-                Beep({
+        return BEM(
+            {
+                ...this.props,
+                block: 'boop'
+            },
+            Beep(
+                {
                     mix: {
                         block: 'boop',
-                        elem: 'oh'
+                        elem: 'hello'
                     },
                     mods: {
                         size: 'xl'
                     }
-                }, 'oh'),
-                {
-                    elem: 'hello',
-                    content: 'hello'
-                }
-            ]
-        });
+                },
+                'hello'
+            )
+        );
     }
 }
 
@@ -76,16 +74,25 @@ render(
 
 ```html
 <div class="boop boop_disabled">
-    <span class="beep beep_type_simple beep_size_xl boop__oh">oh</div>
-    <div class="boop__hello">hello</div>
+    <span class="beep beep_type_simple beep_size_xl boop__hello">hello</div>
 </div>
 ```
 
-## `BEM()`
+## Usage
 
-`BEM()` converts `bemjson` into [React Element](https://facebook.github.io/react/blog/2014/10/14/introducing-react-elements.html). Anything except arrays and plain objects will be returned as is, which means that you can use any mixed content including another React Elements as well.
+```js
+BEM(props, ...children)
+```
 
-## `bemjson`
+is almost the same as
+
+```js
+React.createElement(tag/ReactClass, props, ...children)
+```
+
+but `tag` and `props.className` are made from special props:
+
+### BEM PropTypes
 
 ### `block`
 
@@ -213,17 +220,7 @@ BEM({
 
 ### `tag`
 
-#### Default
-
-```js
-BEM({})
-```
-
-```html
-<div></div>
-```
-
-#### Custom
+`div` by default.
 
 ```js
 BEM({
@@ -235,9 +232,7 @@ BEM({
 <span></span>
 ```
 
-### `props`
-
-Will be transfered as [React Props](https://facebook.github.io/react/docs/transferring-props.html).
+### React PropTypes
 
 References:
 * [HTML Attributes](https://facebook.github.io/react/docs/tags-and-attributes.html#html-attributes)
@@ -247,61 +242,13 @@ References:
 BEM({
     block: 'image',
     tag: 'img',
-    props: {
-        src: 'http://funkyimg.com/i/26jtf.gif',
-        alt: 'kitten'
-    }
+    src: 'http://funkyimg.com/i/26jtf.gif',
+    alt: 'kitten'
 })
 ```
 
 ```html
 <img class="image" src="http://funkyimg.com/i/26jtf.gif" alt="kitten"/>
-```
-
-### `content`
-
-Anything including arrays, nested `bemjson`, React Elements, strings, numbers, etc.
-
-#### Simple
-
-```js
-BEM({
-    block: 'beep',
-    content: [
-        {
-            block: 'foo'
-        },
-        {
-            block: 'bar'
-        }
-    ]
-})
-```
-
-```html
-<div class="beep">
-    <div class="foo"></div>
-    <div class="bar"></div>
-</div>
-```
-
-#### Block context
-
-Block context is preserved so there is no need to specify `block` every time for nested `bemjson`.
-
-```js
-BEM({
-    block: 'beep',
-    content: {
-        elem: 'boop'
-    }
-})
-```
-
-```html
-<div class="beep">
-    <div class="beep__boop"></div>
-</div>
 ```
 
 ## Notes

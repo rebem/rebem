@@ -10,10 +10,7 @@
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
   "main": "build/index.js",
-  "files": [
-    "build/",
-    "LICENSE"
-  ],
+  "files": [ "build/" ],
   "dependencies": {
     "react": "0.14.x",
     "lodash.isplainobject": "4.0.x"
@@ -37,7 +34,8 @@
 
     "mocha": "2.3.x",
     "babel-istanbul": "0.6.x",
-    "codecov": "1.0.x"
+    "codecov": "1.0.x",
+    "chokidar-cli": "1.2.x"
   },
   "scripts": {
     "prebuild": "rimraf build/",
@@ -49,6 +47,7 @@
     "test": "mocha --compilers js:babel-register --recursive",
     "precoverage": "rimraf coverage/",
     "coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha -- --recursive",
+    "tdd": "chokidar lib/*.js test/lib/*.js -c 'npm run coverage' --initial",
 
     "precodecov": "npm run coverage",
     "codecov": "codecov --file=coverage/lcov.info --disable=search,gcov",

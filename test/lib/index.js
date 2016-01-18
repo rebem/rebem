@@ -3,446 +3,361 @@ import ReactDOMServer from 'react-dom/server';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'assert';
 
-import BEM from '../../lib/';
+import { BEM, buildClassName } from '../../lib/';
 
-function test(bemjson, html) {
+function test(result, html) {
     assert.strictEqual(
-        ReactDOMServer.renderToStaticMarkup(
-            BEM(bemjson)
-        ),
+        ReactDOMServer.renderToStaticMarkup(result),
         html
     );
 }
 
-describe('convertToReact', function() {
-    it('exist', function() {
-        assert(typeof BEM !== 'undefined');
+describe('buildClassName', function() {
+    it('is function', function() {
+        assert(typeof buildClassName === 'function');
     });
 
-    it('function', function() {
+    it('empty class if called without argument', function() {
+        assert(buildClassName() === '');
+    });
+});
+
+describe('BEM', function() {
+    it('is function', function() {
         assert(typeof BEM === 'function');
     });
 
-    describe('convert', function() {
-        it('ReactElement', function() {
-            const arg = React.createElement('span');
+    describe('bemjson', function() {
+        it('ReactElement is returned', function() {
+            const result = BEM({});
 
-            assert(BEM(arg) === arg);
+            assert(TestUtils.isElement(result));
         });
 
-        it('Array', function() {
-            const arg = [ 'beep', 'boop' ];
-            const result = BEM(arg);
-
-            assert(result[0] === arg[0]);
-            assert(result[1] === arg[1]);
+        it('default tag', function() {
+            test(
+                BEM({}),
+                '<div></div>'
+            );
         });
 
-        it('not plain object', function() {
-            const arg = 'beep';
-
-            assert(BEM(arg) === arg);
+        it('tag', function() {
+            test(
+                BEM({
+                    tag: 'span'
+                }),
+                '<span></span>'
+            );
         });
 
-        describe('bemjson', function() {
-            it('ReactElement is returned', function() {
-                const result = BEM({});
+        it('props', function() {
+            test(
+                BEM({
+                    className: 'test'
+                }),
+                '<div class="test"></div>'
+            );
+        });
 
-                assert(TestUtils.isElement(result));
-            });
-
-            it('default tag', function() {
+        describe('block', function() {
+            it('simple', function() {
                 test(
-                    {},
-                    '<div></div>'
+                    BEM({
+                        block: 'block'
+                    }),
+                    '<div class="block"></div>'
                 );
             });
 
-            it('tag', function() {
+            it('props.className + block', function() {
                 test(
-                    {
-                        tag: 'span'
-                    },
-                    '<span></span>'
+                    BEM({
+                        block: 'block2',
+                        className: 'block1'
+                    }),
+                    '<div class="block1 block2"></div>'
                 );
             });
+        });
 
-            it('props', function() {
-                test(
-                    {
-                        props: {
-                            className: 'test'
-                        }
-                    },
-                    '<div class="test"></div>'
-                );
-            });
-
+        describe('mods', function() {
             describe('block', function() {
-                it('invalid block', function() {
+                it('block + mod', function() {
                     test(
-                        {
-                            block: true
-                        },
-                        '<div></div>'
-                    );
-                });
-
-                it('valid block', function() {
-                    test(
-                        {
-                            block: 'block'
-                        },
-                        '<div class="block"></div>'
-                    );
-                });
-
-                it('props.className + block', function() {
-                    test(
-                        {
-                            block: 'block2',
-                            props: {
-                                className: 'block1'
+                        BEM({
+                            block: 'block',
+                            mods: {
+                                mod: 'val'
                             }
-                        },
-                        '<div class="block1 block2"></div>'
+                        }),
+                        '<div class="block block_mod_val"></div>'
+                    );
+                });
+
+                it('block + few mods', function() {
+                    test(
+                        BEM({
+                            block: 'block',
+                            mods: {
+                                mod1: 'val1',
+                                mod2: 'val2'
+                            }
+                        }),
+                        '<div class="block block_mod1_val1 block_mod2_val2"></div>'
+                    );
+                });
+
+                it('block + shorthand mod = true', function() {
+                    test(
+                        BEM({
+                            block: 'block',
+                            mods: {
+                                mod: true
+                            }
+                        }),
+                        '<div class="block block_mod"></div>'
+                    );
+                });
+
+                it('block + shorthand mod = false', function() {
+                    test(
+                        BEM({
+                            block: 'block',
+                            mods: {
+                                mod: false
+                            }
+                        }),
+                        '<div class="block"></div>'
                     );
                 });
             });
 
             describe('elem', function() {
-                it('elem without block', function() {
+                it('block + elem + mod', function() {
                     test(
-                        {
-                            elem: 'elem'
-                        },
-                        '<div></div>'
-                    );
-                });
-
-                it('invalid elem', function() {
-                    test(
-                        {
-                            elem: true
-                        },
-                        '<div></div>'
-                    );
-                });
-            });
-
-            describe('mods', function() {
-                it('invalid mods', function() {
-                    test(
-                        {
-                            mods: null
-                        },
-                        '<div></div>'
-                    );
-                });
-
-                describe('block', function() {
-                    it('mods without block', function() {
-                        test(
-                            {
-                                mods: {
-                                    mod: 'val'
-                                }
-                            },
-                            '<div></div>'
-                        );
-                    });
-
-                    it('block + invalid mods', function() {
-                        test(
-                            {
-                                block: 'block',
-                                mods: true
-                            },
-                            '<div class="block"></div>'
-                        );
-                    });
-
-                    it('block + mod', function() {
-                        test(
-                            {
-                                block: 'block',
-                                mods: {
-                                    mod: 'val'
-                                }
-                            },
-                            '<div class="block block_mod_val"></div>'
-                        );
-                    });
-
-                    it('block + few mods', function() {
-                        test(
-                            {
-                                block: 'block',
-                                mods: {
-                                    mod1: 'val1',
-                                    mod2: 'val2'
-                                }
-                            },
-                            '<div class="block block_mod1_val1 block_mod2_val2"></div>'
-                        );
-                    });
-
-                    it('block + shorthand mod = true', function() {
-                        test(
-                            {
-                                block: 'block',
-                                mods: {
-                                    mod: true
-                                }
-                            },
-                            '<div class="block block_mod"></div>'
-                        );
-                    });
-
-                    it('block + shorthand mod = false', function() {
-                        test(
-                            {
-                                block: 'block',
-                                mods: {
-                                    mod: false
-                                }
-                            },
-                            '<div class="block"></div>'
-                        );
-                    });
-                });
-
-                describe('elem', function() {
-                    it('mods without block', function() {
-                        test(
-                            {
-                                elem: 'elem',
-                                mods: {
-                                    mod: 'val'
-                                }
-                            },
-                            '<div></div>'
-                        );
-                    });
-
-                    it('block + elem + mod', function() {
-                        test(
-                            {
-                                block: 'block',
-                                elem: 'elem',
-                                mods: {
-                                    mod: 'val'
-                                }
-                            },
-                            '<div class="block__elem block__elem_mod_val"></div>'
-                        );
-                    });
-
-                    it('block + elem + few mods', function() {
-                        test(
-                            {
-                                block: 'block',
-                                elem: 'elem',
-                                mods: {
-                                    mod1: 'val1',
-                                    mod2: 'val2'
-                                }
-                            },
-                            '<div class="block__elem block__elem_mod1_val1 block__elem_mod2_val2"></div>'
-                        );
-                    });
-
-                    it('block + shorthand mod = true', function() {
-                        test(
-                            {
-                                block: 'block',
-                                elem: 'elem',
-                                mods: {
-                                    mod: true
-                                }
-                            },
-                            '<div class="block__elem block__elem_mod"></div>'
-                        );
-                    });
-
-                    it('block + shorthand mod = false', function() {
-                        test(
-                            {
-                                block: 'block',
-                                elem: 'elem',
-                                mods: {
-                                    mod: false
-                                }
-                            },
-                            '<div class="block__elem"></div>'
-                        );
-                    });
-                });
-            });
-
-            describe('mix', function() {
-                it('invalid mix without block', function() {
-                    test(
-                        {
-                            mix: false
-                        },
-                        '<div></div>'
-                    );
-                });
-
-                it('simple mix', function() {
-                    test(
-                        {
-                            mix: {
-                                block: 'block'
+                        BEM({
+                            block: 'block',
+                            elem: 'elem',
+                            mods: {
+                                mod: 'val'
                             }
-                        },
-                        '<div class="block"></div>'
+                        }),
+                        '<div class="block__elem block__elem_mod_val"></div>'
                     );
                 });
 
-                it('complex mix', function() {
+                it('block + elem + few mods', function() {
                     test(
-                        {
-                            mix: {
-                                block: 'block',
-                                elem: 'elem',
-                                mods: {
-                                    mod1: 'val1',
-                                    mod2: 'val2'
-                                }
+                        BEM({
+                            block: 'block',
+                            elem: 'elem',
+                            mods: {
+                                mod1: 'val1',
+                                mod2: 'val2'
                             }
-                        },
+                        }),
                         '<div class="block__elem block__elem_mod1_val1 block__elem_mod2_val2"></div>'
                     );
                 });
 
-                it('multiple mixes', function() {
+                it('block + shorthand mod = true', function() {
                     test(
-                        {
-                            mix: [
-                                {
-                                    block: 'block1'
-                                },
-                                {
-                                    block: 'block2'
-                                }
-                            ]
-                        },
-                        '<div class="block1 block2"></div>'
-                    );
-                });
-
-                it('recursive mixes', function() {
-                    test(
-                        {
-                            mix: {
-                                block: 'block1',
-                                mix: {
-                                    block: 'block2'
-                                }
-                            }
-                        },
-                        '<div class="block1 block2"></div>'
-                    );
-                });
-            });
-
-            describe('content', function() {
-                it('empty', function() {
-                    test(
-                        {
-                            content: true
-                        },
-                        '<div></div>'
-                    );
-
-                    test(
-                        {
-                            content: null
-                        },
-                        '<div></div>'
-                    );
-                });
-
-                it('text content', function() {
-                    test(
-                        {
-                            content: 'abc'
-                        },
-                        '<div>abc</div>'
-                    );
-
-                    test(
-                        {
-                            content: 123
-                        },
-                        '<div>123</div>'
-                    );
-                });
-
-                it('React Element', function() {
-                    test(
-                        {
-                            content: React.createElement('span')
-                        },
-                        '<div><span></span></div>'
-                    );
-                });
-
-                it('array', function() {
-                    test(
-                        {
-                            content: [
-                                1,
-                                2
-                            ]
-                        },
-                        '<div>12</div>'
-                    );
-                });
-
-                it('simple bemjson', function() {
-                    test(
-                        {
-                            content: {
-                                block: 'block',
-                                tag: 'span'
-                            }
-                        },
-                        '<div><span class="block"></span></div>'
-                    );
-                });
-
-                it('inherited block context', function() {
-                    test(
-                        {
+                        BEM({
                             block: 'block',
-                            content: {
-                                elem: 'elem1',
-                                content: {
-                                    elem: 'elem2'
-                                }
+                            elem: 'elem',
+                            mods: {
+                                mod: true
                             }
-                        },
-                        '<div class="block"><div class="block__elem1"><div class="block__elem2"></div></div></div>'
+                        }),
+                        '<div class="block__elem block__elem_mod"></div>'
+                    );
+                });
+
+                it('block + shorthand mod = false', function() {
+                    test(
+                        BEM({
+                            block: 'block',
+                            elem: 'elem',
+                            mods: {
+                                mod: false
+                            }
+                        }),
+                        '<div class="block__elem"></div>'
                     );
                 });
             });
+        });
 
-            it('bemjson is not mutated', function() {
-                const bemjson = {
-                    block: 'block',
-                    props: {
-                        test: true
-                    }
-                };
-
-                BEM(bemjson);
-
-                assert(typeof bemjson.tag === 'undefined');
-                assert(typeof bemjson.props.className === 'undefined');
+        describe('mix', function() {
+            it('mix without block', function() {
+                test(
+                    BEM({
+                        mix: {
+                            block: 'block'
+                        }
+                    }),
+                    '<div class="block"></div>'
+                );
             });
+
+            it('block + mix', function() {
+                test(
+                    BEM({
+                        block: 'block1',
+                        mix: {
+                            block: 'block2'
+                        }
+                    }),
+                    '<div class="block1 block2"></div>'
+                );
+            });
+
+            it('block + mods + mix', function() {
+                test(
+                    BEM({
+                        block: 'block1',
+                        mods: {
+                            mod: 'val'
+                        },
+                        mix: {
+                            block: 'block2'
+                        }
+                    }),
+                    '<div class="block1 block1_mod_val block2"></div>'
+                );
+            });
+
+            it('block + elem + mix', function() {
+                test(
+                    BEM({
+                        block: 'block1',
+                        elem: 'elem',
+                        mix: {
+                            block: 'block2'
+                        }
+                    }),
+                    '<div class="block1__elem block2"></div>'
+                );
+            });
+
+            it('block + elem + mods + mix', function() {
+                test(
+                    BEM({
+                        block: 'block1',
+                        elem: 'elem',
+                        mods: {
+                            mod: 'val'
+                        },
+                        mix: {
+                            block: 'block2'
+                        }
+                    }),
+                    '<div class="block1__elem block1__elem_mod_val block2"></div>'
+                );
+            });
+
+            it('complex mix', function() {
+                test(
+                    BEM({
+                        block: 'block1',
+                        mix: {
+                            block: 'block2',
+                            elem: 'elem',
+                            mods: {
+                                mod1: 'val1',
+                                mod2: 'val2'
+                            }
+                        }
+                    }),
+                    '<div class="block1 block2__elem block2__elem_mod1_val1 block2__elem_mod2_val2"></div>'
+                );
+            });
+
+            it('multiple mixes', function() {
+                test(
+                    BEM({
+                        block: 'block1',
+                        mix: [
+                            {
+                                block: 'block2'
+                            },
+                            {
+                                block: 'block3'
+                            }
+                        ]
+                    }),
+                    '<div class="block1 block2 block3"></div>'
+                );
+            });
+
+            it('recursive mixes', function() {
+                test(
+                    BEM({
+                        block: 'block1',
+                        mix: {
+                            block: 'block2',
+                            mix: {
+                                block: 'block3'
+                            }
+                        }
+                    }),
+                    '<div class="block1 block2 block3"></div>'
+                );
+            });
+        });
+
+        it('bemjson is not mutated', function() {
+            const bemjson = {
+                block: 'block',
+                test: true
+            };
+
+            BEM(bemjson);
+
+            assert(typeof bemjson.tag === 'undefined');
+            assert(typeof bemjson.className === 'undefined');
+        });
+    });
+
+    describe('children', function() {
+        it('simple', function() {
+            test(
+                BEM(
+                    {
+                        tag: 'span'
+                    },
+                    React.createElement('i')
+                ),
+                '<span><i></i></span>'
+            );
+        });
+
+        it('multiple', function() {
+            test(
+                BEM(
+                    {
+                        tag: 'span'
+                    },
+                    React.createElement('i'),
+                    React.createElement('b')
+                ),
+                '<span><i></i><b></b></span>'
+            );
+        });
+
+        it('array', function() {
+            test(
+                BEM(
+                    {
+                        tag: 'span'
+                    },
+                    [
+                        React.createElement('i', { key: 'i' }),
+                        React.createElement('b', { key: 'b' })
+                    ]
+                ),
+                '<span><i></i><b></b></span>'
+            );
         });
     });
 });
