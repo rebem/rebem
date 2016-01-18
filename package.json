@@ -1,10 +1,10 @@
 {
-  "name": "@yummies/bem",
-  "version": "0.0.5",
+  "name": "rebem",
+  "version": "0.1.0",
   "description": "React ❤︎ BEM",
   "keywords": [ "yummies", "react", "bem", "bemjson" ],
-  "homepage": "https://github.com/yummies/bem",
-  "repository": "yummies/bem",
+  "homepage": "https://github.com/rebem/rebem",
+  "repository": "rebem/rebem",
   "contributors": [
     "Kir Belevich <kir@soulshine.in> (https://github.com/deepsweet)",
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
