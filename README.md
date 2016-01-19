@@ -1,17 +1,13 @@
 [![npm](https://img.shields.io/npm/v/rebem.svg?style=flat-square)](https://www.npmjs.com/package/rebem)
-[![travis](http://img.shields.io/travis/rebem/rebem/next.svg?style=flat-square)](https://travis-ci.org/rebem/rebem)
-[![coverage](https://img.shields.io/codecov/c/github/rebem/rebem/next.svg?style=flat-square)](https://codecov.io/github/rebem/rebem)
+[![travis](http://img.shields.io/travis/rebem/rebem.svg?style=flat-square)](https://travis-ci.org/rebem/rebem)
+[![coverage](https://img.shields.io/codecov/c/github/rebem/rebem.svg?style=flat-square)](https://codecov.io/github/rebem/rebem)
 [![deps](https://img.shields.io/gemnasium/rebem/rebem.svg?style=flat-square)](https://gemnasium.com/rebem/rebem)
 
-## Install
-
-```
-npm i -S rebem
-```
+React + BEM.
 
 ## Overview
 
-Like [BEM methodology](https://en.bem.info/method/definitions/) and using [React](https://facebook.github.io/react/)?
+Using [React](https://facebook.github.io/react/) and like [BEM methodology](https://en.bem.info/method/definitions/)?
 
 ```js
 import { Component } from 'react';
@@ -76,6 +72,12 @@ render(
 <div class="boop boop_disabled">
     <span class="beep beep_type_simple beep_size_xl boop__hello">hello</div>
 </div>
+```
+
+## Install
+
+```
+npm i -S rebem
 ```
 
 ## Usage
