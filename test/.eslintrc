@@ -1,9 +1,5 @@
----
-  env:
-    mocha: true
-  rules:
-    no-new: 1
-    id-length: 0
-    init-declarations: 0
-    max-nested-callbacks: 0
-    max-len: 0
+{
+  "extends": [
+    "rebem/configs/test"
+  ]
+}

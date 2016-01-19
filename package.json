@@ -28,6 +28,7 @@
     "eslint": "1.10.x",
     "babel-eslint": ">5.0.0-beta1",
     "eslint-plugin-babel": "3.0.x",
+    "eslint-config-rebem": "0.2.x",
 
     "react-dom": "0.14.x",
     "react-addons-test-utils": "0.14.x",
