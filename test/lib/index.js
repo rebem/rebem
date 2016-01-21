@@ -359,21 +359,5 @@ describe('BEM', function() {
                 '<span><i></i><b></b></span>'
             );
         });
-
-        it('block in context', function() {
-            test(
-                BEM(
-                    {
-                        block: 'block'
-                    },
-                    BEM(
-                        {
-                            elem: 'elem'
-                        }
-                    )
-                ),
-                '<div class="block"><div class="block__elem"></div></div>'
-            );
-        });
     });
 });
