@@ -202,22 +202,23 @@ BEM({
 BEM({
     block: 'beep',
     mix: [
-      {
-          block: 'boop',
-          elem: 'foo'
-      },
-      {
-          block: 'bar',
-          mods: {
-              test: true
-          }
-      }
+        {
+            block: 'boop',
+            elem: 'foo'
+        },
+        {
+            block: 'bar',
+            elem: 'baz',
+            mods: {
+                test: true
+            }
+        }
     ]
 })
 ```
 
 ```html
-<div class="beep boop__foo bar_test"></div>
+<div class="beep boop__foo bar__baz bar__baz_test"></div>
 ```
 
 #### Nested
