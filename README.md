@@ -220,6 +220,24 @@ BEM({
 <div class="beep boop__foo bar_test"></div>
 ```
 
+#### Nested
+
+`block` is passed to the children through [React context](https://facebook.github.io/react/docs/context.html).
+
+```js
+BEM({ block: 'beep' },
+    BEM({ elem: 'foo' }),
+    BEM({ elem: 'boop', mods: { test: true } })
+})
+```
+
+```html
+<div class="beep">
+    <div class="beep__foo"></div>
+    <div class="beep__boop beep__boop_test"></div>
+</div>
+```
+
 ### `tag`
 
 `div` by default.

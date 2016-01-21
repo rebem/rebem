@@ -1,3 +1,4 @@
+import ReactDOMServer from 'react-dom/server';
 import assert from 'assert';
 
 import { BEM } from '../../lib/';
@@ -7,10 +8,9 @@ function test(bemjson, message) {
 
     console.warn = function(warning, obj) {
         assert.strictEqual(warning, message);
-        assert.deepEqual(obj, bemjson);
     };
 
-    BEM(bemjson);
+    ReactDOMServer.renderToStaticMarkup(BEM(bemjson));
 
     console.warn = origConsoleWarn;
 }
