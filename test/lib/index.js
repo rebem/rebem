@@ -3,7 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'assert';
 
-import { BEM, buildClassName } from '../../lib/';
+import { buildClassName, BEM, blockFactory } from '../../lib/';
 
 function test(result, html) {
     assert.strictEqual(
@@ -359,5 +359,20 @@ describe('BEM', function() {
                 '<span><i></i><b></b></span>'
             );
         });
+    });
+});
+
+describe('blockFactory', function() {
+    it('is function', function() {
+        assert(typeof blockFactory === 'function');
+    });
+
+    it('isEqual BEM', function() {
+        const block = blockFactory('block');
+
+        assert.deepEqual(
+            BEM({ block: 'block', elem: 'elem' }),
+            block({ elem: 'elem' })
+        );
     });
 });
