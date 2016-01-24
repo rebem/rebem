@@ -3,7 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'assert';
 
-import { buildClassName, BEM, blockFactory } from '../../lib/';
+import { BEM, blockFactory, buildClassName } from '../../lib/';
 
 function test(result, html) {
     assert.strictEqual(
@@ -15,10 +15,6 @@ function test(result, html) {
 describe('buildClassName', function() {
     it('is function', function() {
         assert(typeof buildClassName === 'function');
-    });
-
-    it('empty class if called without argument', function() {
-        assert(buildClassName() === '');
     });
 });
 
