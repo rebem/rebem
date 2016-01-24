@@ -1,6 +1,6 @@
 import { createElement } from 'react';
-import ReactDOMServer from 'react-dom/server';
-import TestUtils from 'react-addons-test-utils';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { isElement } from 'react-addons-test-utils';
 import assert from 'assert';
 
 import {
@@ -17,14 +17,14 @@ import {
 
 function test(props, result) {
     assert.strictEqual(
-        ReactDOMServer.renderToStaticMarkup(
+        renderToStaticMarkup(
             BEM(props)
         ),
         result
     );
 
     assert.strictEqual(
-        ReactDOMServer.renderToStaticMarkup(
+        renderToStaticMarkup(
             createElement(BEMJSX, props)
         ),
         result
@@ -48,13 +48,13 @@ describe('rebem', function() {
         describe('bemjson', function() {
             it('ReactElement is returned', function() {
                 assert.ok(
-                    TestUtils.isElement(
+                    isElement(
                         BEM({})
                     )
                 );
 
                 assert.ok(
-                    TestUtils.isElement(
+                    isElement(
                         createElement(BEMJSX)
                     )
                 );
@@ -383,14 +383,14 @@ describe('rebem', function() {
             const result = '<div class="block__elem"></div>';
 
             assert.strictEqual(
-                ReactDOMServer.renderToStaticMarkup(
+                renderToStaticMarkup(
                     block({ elem: 'elem' })
                 ),
                 result
             );
 
             assert.strictEqual(
-                ReactDOMServer.renderToStaticMarkup(
+                renderToStaticMarkup(
                     createElement(blockJSX, { elem: 'elem' })
                 ),
                 result
