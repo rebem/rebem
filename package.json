@@ -12,8 +12,7 @@
   "main": "build/index.js",
   "files": [ "build/", "jsx.js" ],
   "dependencies": {
-    "react": "0.14.x",
-    "lodash.isplainobject": "4.0.x"
+    "react": "0.14.x"
   },
   "devDependencies": {
     "husky": "0.10.x",
