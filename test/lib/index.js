@@ -15,19 +15,19 @@ import {
     buildClassName as buildClassNameJSX
 } from '../../lib/jsx';
 
-function test(props, html) {
+function test(props, result) {
     assert.strictEqual(
         ReactDOMServer.renderToStaticMarkup(
             BEM(props)
         ),
-        html
+        result
     );
 
     assert.strictEqual(
         ReactDOMServer.renderToStaticMarkup(
             createElement(BEMJSX, props)
         ),
-        html
+        result
     );
 }
 
