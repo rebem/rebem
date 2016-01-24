@@ -39,7 +39,7 @@
     "chokidar-cli": "1.2.x"
   },
   "scripts": {
-    "prebuild": "rimraf build/",
+    "prebuild": "rimraf build/ jsx.js",
     "build": "babel lib/ -d build/",
     "postbuild": "cpy build/jsx.js ./",
     "dev": "npm run build -- -w",
