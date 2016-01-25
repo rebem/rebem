@@ -316,6 +316,22 @@ describe('rebem', function() {
                     );
                 });
 
+                it('multiple mixes with holes', function() {
+                    test(
+                        {
+                            block: 'block1',
+                            mix: [
+                                undefined,
+                                {
+                                    block: 'block2'
+                                },
+                                null
+                            ]
+                        },
+                        '<div class="block1 block2"></div>'
+                    );
+                });
+
                 it('recursive mixes', function() {
                     test(
                         {
