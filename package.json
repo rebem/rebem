@@ -56,7 +56,8 @@
     "travis": "npm run codecov",
 
     "prepush": "npm test",
-    "prepublish": "npm run clean"
+    "prepublish": "npm run build",
+    "postpublish": "npm run clean"
   },
   "engines": {
     "node": ">=0.12.0",
