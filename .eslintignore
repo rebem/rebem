@@ -1,3 +1,6 @@
 build/
 coverage/
 tmp/
+index.js
+buildClassName.js
+jsx.js

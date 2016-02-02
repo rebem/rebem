@@ -9,7 +9,7 @@
     "Kir Belevich <kir@soulshine.in> (https://github.com/deepsweet)",
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
-  "main": "build/index.js",
+  "main": "index.js",
   "files": [ "index.js", "buildClassName.js", "jsx.js" ],
   "dependencies": {
     "react": "0.14.x"
@@ -17,7 +17,6 @@
   "devDependencies": {
     "husky": "0.10.x",
     "rimraf": "2.5.x",
-    "cpy-cli": "1.0.x",
 
     "babel-cli": "6.4.x",
     "babel-core": "6.4.x",
@@ -39,9 +38,9 @@
     "chokidar-cli": "1.2.x"
   },
   "scripts": {
-    "prebuild": "rimraf build/",
-    "build": "babel lib/ -d build/",
-    "copyforpublish": "cpy build/*.js ./",
+    "clean": "rimraf index.js buildClassName.js jsx.js",
+    "prebuild": "npm run clean",
+    "build": "babel lib/ -d ./",
     "dev": "npm run build -- -w",
 
     "lint": "eslint .",
@@ -57,8 +56,7 @@
     "travis": "npm run codecov",
 
     "prepush": "npm test",
-    "prepublish": "npm run build && npm run copyforpublish",
-    "postpublish": "rimraf index.js buildClassName.js jsx.js"
+    "prepublish": "npm run clean"
   },
   "engines": {
     "node": ">=0.12.0",
