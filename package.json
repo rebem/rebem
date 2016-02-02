@@ -10,7 +10,7 @@
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
   "main": "build/index.js",
-  "files": [ "build/", "jsx.js" ],
+  "files": [ "index.js", "buildClassName.js", "jsx.js" ],
   "dependencies": {
     "react": "0.14.x"
   },
@@ -39,9 +39,9 @@
     "chokidar-cli": "1.2.x"
   },
   "scripts": {
-    "prebuild": "rimraf build/ jsx.js",
+    "prebuild": "rimraf build/",
     "build": "babel lib/ -d build/",
-    "postbuild": "cpy build/jsx.js ./",
+    "copyforpublish": "cpy build/*.js ./",
     "dev": "npm run build -- -w",
 
     "lint": "eslint .",
@@ -57,7 +57,8 @@
     "travis": "npm run codecov",
 
     "prepush": "npm test",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build && npm run copyforpublish",
+    "postpublish": "rimraf index.js buildClassName.js jsx.js"
   },
   "engines": {
     "node": ">=0.12.0",

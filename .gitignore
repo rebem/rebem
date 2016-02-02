@@ -2,7 +2,6 @@ node_modules/
 tmp/
 build/
 coverage/
-jsx.js
 *.sublime-*
 *.log
 .DS_Store
