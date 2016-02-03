@@ -9,23 +9,10 @@ import {
     buildClassName
 } from '../../lib/';
 
-import {
-    BEM as BEMJSX,
-    blockFactory as blockFactoryJSX,
-    buildClassName as buildClassNameJSX
-} from '../../lib/jsx';
-
 function test(props, result) {
     assert.strictEqual(
         renderToStaticMarkup(
             BEM(props)
-        ),
-        result
-    );
-
-    assert.strictEqual(
-        renderToStaticMarkup(
-            createElement(BEMJSX, props)
         ),
         result
     );
@@ -35,14 +22,12 @@ describe('rebem', function() {
     describe('buildClassName', function() {
         it('is function', function() {
             assert(typeof buildClassName === 'function');
-            assert(typeof buildClassNameJSX === 'function');
         });
     });
 
     describe('BEM', function() {
         it('is function', function() {
             assert(typeof BEM === 'function');
-            assert(typeof BEMJSX === 'function');
         });
 
         describe('bemjson', function() {
@@ -50,12 +35,6 @@ describe('rebem', function() {
                 assert.ok(
                     isElement(
                         BEM({})
-                    )
-                );
-
-                assert.ok(
-                    isElement(
-                        createElement(BEMJSX)
                     )
                 );
             });
@@ -390,24 +369,15 @@ describe('rebem', function() {
     describe('blockFactory', function() {
         it('is function', function() {
             assert(typeof blockFactory === 'function');
-            assert(typeof blockFactoryJSX === 'function');
         });
 
         it('isEqual BEM', function() {
             const block = blockFactory('block');
-            const blockJSX = blockFactoryJSX('block');
             const result = '<div class="block__elem"></div>';
 
             assert.strictEqual(
                 renderToStaticMarkup(
                     block({ elem: 'elem' })
-                ),
-                result
-            );
-
-            assert.strictEqual(
-                renderToStaticMarkup(
-                    createElement(blockJSX, { elem: 'elem' })
                 ),
                 result
             );
