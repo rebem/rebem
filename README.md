@@ -3,11 +3,9 @@
 [![coverage](https://img.shields.io/codecov/c/github/rebem/rebem.svg?style=flat-square)](https://codecov.io/github/rebem/rebem)
 [![deps](https://img.shields.io/gemnasium/rebem/rebem.svg?style=flat-square)](https://gemnasium.com/rebem/rebem)
 
-React + BEM.
+[React](https://facebook.github.io/react/) + [BEM](http://getbem.com/).
 
 ## Overview
-
-Using [React](https://facebook.github.io/react/) and like [BEM methodology](https://en.bem.info/method/definitions/)?
 
 ```js
 import { Component } from 'react';
