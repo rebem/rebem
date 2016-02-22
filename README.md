@@ -233,6 +233,21 @@ BEM({
 <span></span>
 ```
 
+### `className`
+
+If className is specified, it will be preserved along with BEM classNames.
+
+```js
+BEM({
+    block: 'boop',
+    className: 'beep'
+})
+```
+
+```html
+<div class="boop beep"></div>
+```
+
 ### React PropTypes
 
 References:
