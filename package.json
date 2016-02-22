@@ -12,7 +12,8 @@
   "main": "build/index.js",
   "files": [ "build/" ],
   "dependencies": {
-    "react": "0.14.x"
+    "react": "0.14.x",
+    "rebem-classname": "0.1.x"
   },
   "devDependencies": {
     "husky": "0.11.x",
