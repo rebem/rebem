@@ -3,9 +3,11 @@
 [![coverage](https://img.shields.io/codecov/c/github/rebem/rebem.svg?style=flat-square)](https://codecov.io/github/rebem/rebem)
 [![deps](https://img.shields.io/gemnasium/rebem/rebem.svg?style=flat-square)](https://gemnasium.com/rebem/rebem)
 
-[React](https://facebook.github.io/react/) + [BEM](http://getbem.com/).
+Probably the best way to work with [BEM](http://getbem.com/) in [React](https://facebook.github.io/react/) ecosystem.
 
 ## Overview
+
+There are two ways to use `rebem` — with jsx ([a separate babel plugin](https://github.com/rebem/rebem-jsx)) and without it (out of the box), like this:
 
 ```js
 import { Component } from 'react';
