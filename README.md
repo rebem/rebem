@@ -248,6 +248,44 @@ BEM({
 <div class="boop beep"></div>
 ```
 
+### blockFactory
+
+`blockFactory` can save you a couple of bytes when you have a lot of BEM-entities in the component:
+
+```js
+import React from 'react';
+import { render } from 'react-dom';
+import { blockFactory } from 'rebem';
+
+const Block = blockFactory('beep');
+
+class Beep extends React.Component {
+  render() {
+    return Block(this.props,
+      Block({ elem: 'hello', mods: { size: 'xl' } },
+        'hello'
+      ),
+      Block({ elem: 'jack', mix: { block: 'man' } },
+        'Jack'
+      )
+    );
+  }
+}
+
+render(
+  React.createElement(Beep),
+  document.body
+);
+
+```
+
+```html
+<div class="beep">
+  <div class="beep__hello beep__hello_size_xl">hello</div>
+  <div class="beep__jack man">hello</div>
+</div>
+```
+
 ### React PropTypes
 
 References:
