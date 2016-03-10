@@ -2,8 +2,9 @@
 [![travis](http://img.shields.io/travis/rebem/rebem.svg?style=flat-square)](https://travis-ci.org/rebem/rebem)
 [![coverage](https://img.shields.io/codecov/c/github/rebem/rebem.svg?style=flat-square)](https://codecov.io/github/rebem/rebem)
 [![deps](https://img.shields.io/gemnasium/rebem/rebem.svg?style=flat-square)](https://gemnasium.com/rebem/rebem)
+[![gitter](https://img.shields.io/badge/gitter-join_chat_%E2%86%92-46bc99.svg?style=flat-square)](https://gitter.im/rebem/rebem)
 
-Probably the best way to work with [BEM](http://getbem.com/) in [React](https://facebook.github.io/react/) ecosystem.
+[React](https://facebook.github.io/react/) :heart: [BEM](http://getbem.com/).
 
 ## Overview
 
