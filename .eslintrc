@@ -2,8 +2,5 @@
   "extends": [
     "rebem/configs/common",
     "rebem/configs/babel"
-  ],
-  "rules": {
-    "no-console": 0
-  }
+  ]
 }
