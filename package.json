@@ -16,47 +16,39 @@
     "rebem-classname": "0.1.x"
   },
   "devDependencies": {
-    "husky": "0.11.x",
-    "rimraf": "2.5.x",
+    "start": "4.x.x",
+    "start-babel-cli": "1.x.x",
+    "start-pretty-reporter": "0.x.x",
+    "start-env": "0.x.x",
+    "start-files": "0.x.x",
+    "start-watch": "1.x.x",
+    "start-clean": "1.x.x",
+    "start-read": "0.x.x",
+    "start-babel": "2.x.x",
+    "start-write": "1.x.x",
+    "start-eslint": "1.x.x",
+    "start-mocha": "1.x.x",
+    "start-istanbul": "1.x.x",
+    "start-codecov": "1.x.x",
 
-    "babel-cli": "6.6.x",
-    "babel-core": "6.6.x",
     "babel-preset-es2015": "6.6.x",
     "babel-preset-stage-2": "6.5.x",
     "babel-plugin-add-module-exports": "0.1.x",
 
-    "eslint": "2.1.x",
     "babel-eslint": "5.0.x",
     "eslint-plugin-babel": "3.1.x",
-    "eslint-config-rebem": ">1.0.0-alpha.1",
+    "eslint-config-rebem": "0.3.x",
 
     "react-dom": "0.14.x",
     "react-addons-test-utils": "0.14.x",
 
-    "mocha": "2.4.x",
     "babel-istanbul": "0.6.x",
-    "codecov": "1.0.x",
-    "chokidar-cli": "1.2.x"
+    "husky": "0.11.x"
   },
   "scripts": {
-    "prebuild": "rimraf build/",
-    "build": "babel lib/ -d build/",
-    "dev": "npm run build -- -w",
-
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "mocha --compilers js:babel-register --recursive",
-    "precoverage": "rimraf coverage/",
-    "coverage": "babel-node node_modules/.bin/babel-istanbul cover _mocha -- --recursive",
-    "tdd": "chokidar lib/*.js test/lib/*.js -c 'npm run coverage' --initial",
-
-    "precodecov": "npm run coverage",
-    "codecov": "codecov --file=coverage/lcov.info --disable=search,gcov",
-    "pretravis": "npm run lint",
-    "travis": "npm run codecov",
-
-    "prepush": "npm test",
-    "prepublish": "npm run build"
+    "start": "start-runner ./tasks.js",
+    "prepush": "npm start lint",
+    "prepublish": "npm start build"
   },
   "engines": {
     "node": ">=0.12.0",
