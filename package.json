@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "start-runner start-rebem-preset",
-    "prepush": "npm start lint",
+    "prepush": "npm start prepush",
     "prepublish": "npm start build"
   },
   "engines": {
