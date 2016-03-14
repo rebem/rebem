@@ -15,7 +15,7 @@
     "rebem-classname": "0.1.x"
   },
   "devDependencies": {
-    "react": "0.14.x",
+    "react": "15.0.0-rc.1",
     "start-babel-cli": "1.x.x",
     "start-rebem-preset": "0.x.x",
 
@@ -30,7 +30,7 @@
     "react-dom": "0.14.x",
     "react-addons-test-utils": "0.14.x",
 
-    "babel-istanbul": "0.6.x",
+    "babel-istanbul": "0.7.x",
     "husky": "0.11.x"
   },
   "peerDependencies": {
