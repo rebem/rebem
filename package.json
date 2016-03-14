@@ -10,6 +10,7 @@
     "Denis Koltsov <iam@mistadikay.com> (https://github.com/mistadikay)"
   ],
   "main": "build/index.js",
+  "typings": "build/index.d.ts",
   "files": [ "build/" ],
   "dependencies": {
     "rebem-classname": "0.1.x"
