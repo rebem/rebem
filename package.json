@@ -12,10 +12,10 @@
   "main": "build/index.js",
   "files": [ "build/" ],
   "dependencies": {
-    "react": "0.14.x",
     "rebem-classname": "0.1.x"
   },
   "devDependencies": {
+    "react": "0.14.x",
     "start-babel-cli": "1.x.x",
     "start-rebem-preset": "0.x.x",
 
@@ -32,6 +32,9 @@
 
     "babel-istanbul": "0.6.x",
     "husky": "0.11.x"
+  },
+  "peerDependencies": {
+    "react": "0.14.x || >=15.0.0-rc.1"
   },
   "scripts": {
     "start": "start-runner start-rebem-preset",
