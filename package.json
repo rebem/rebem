@@ -13,7 +13,7 @@
   "typings": "build/index.d.ts",
   "files": [ "build/" ],
   "dependencies": {
-    "rebem-classname": "0.2.x"
+    "rebem-classname": "0.x.x"
   },
   "devDependencies": {
     "start-babel-cli": "1.x.x",
